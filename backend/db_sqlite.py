@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS Vendas (
     status TEXT NOT NULL,                        -- Status da compra (ex: Preparando, A caminho, Pronto)
     chassi_moto TEXT NOT NULL,                   -- Chassi da moto (referencia a tabela Motos)
     cpf_cliente TEXT NOT NULL,                   -- CPF do cliente (referencia a tabela Clientes),
+    preco REAL NOT NULL,                         -- Preço da moto,
     FOREIGN KEY (chassi_moto) REFERENCES Motos(chassi), -- Referência para a moto comprada
     FOREIGN KEY (cpf_cliente) REFERENCES Clientes(cpf)  -- Referência para o cliente que fez a compra
 )

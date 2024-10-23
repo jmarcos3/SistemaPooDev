@@ -47,6 +47,15 @@ class MotoDAO:
         moto = cursor.fetchone()
         conn.close()
         return moto
+    
+    def buscar_preco(self, chassi):
+        # Busca uma moto pelo chassi
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('SELECT preco FROM Motos WHERE chassi = ?', (chassi,))
+        preco = cursor.fetchone()
+        conn.close()
+        return preco    
 
     def atualizar_moto(self, chassi, ano=None, preco=None, cor=None, modelo=None):
         # Atualiza os dados de uma moto específica

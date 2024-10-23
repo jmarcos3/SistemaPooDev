@@ -2,11 +2,12 @@ import sqlite3
 
 # Classe Venda que define o objeto Venda
 class Venda:
-    def __init__(self, data, status, chassi_moto, cpf_cliente):
+    def __init__(self, data, status, chassi_moto, cpf_cliente, preco):
         self.data = data
         self.status = status
         self.chassi_moto = chassi_moto
         self.cpf_cliente = cpf_cliente
+        self.preco = preco  # Adicionando o atributo preço
 
 # Classe VendaDAO para acessar os dados da tabela Vendas
 class VendaDAO:
@@ -17,15 +18,14 @@ class VendaDAO:
         # Conecta ao banco de dados
         return sqlite3.connect(self.db_path)
 
-
     def adicionar_venda(self, venda):
         # Adiciona uma nova venda à tabela Vendas
         conn = self.conectar()
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO Vendas (data, status, chassi_moto, cpf_cliente) 
-            VALUES (?, ?, ?, ?)
-        ''', (venda.data, venda.status, venda.chassi_moto, venda.cpf_cliente))
+            INSERT INTO Vendas (data, status, chassi_moto, cpf_cliente, preco)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (venda.data, venda.status, venda.chassi_moto, venda.cpf_cliente, venda.preco))  # Passando o preço
         conn.commit()
         conn.close()
         print("Venda adicionada com sucesso!")
@@ -48,7 +48,7 @@ class VendaDAO:
         conn.close()
         return venda
 
-    def atualizar_venda(self, id_compra, data=None, status=None, chassi_moto=None, cpf_cliente=None):
+    def atualizar_venda(self, id_compra, data=None, status=None, chassi_moto=None, cpf_cliente=None, preco=None):
         # Atualiza os dados de uma venda específica
         conn = self.conectar()
         cursor = conn.cursor()
@@ -62,7 +62,9 @@ class VendaDAO:
             cursor.execute('UPDATE Vendas SET chassi_moto = ? WHERE id_compra = ?', (chassi_moto, id_compra))
         if cpf_cliente:
             cursor.execute('UPDATE Vendas SET cpf_cliente = ? WHERE id_compra = ?', (cpf_cliente, id_compra))
-        
+        if preco is not None:  # Verifica se o preço foi fornecido
+            cursor.execute('UPDATE Vendas SET preco = ? WHERE id_compra = ?', (preco, id_compra))
+
         conn.commit()
         conn.close()
         print("Venda atualizada com sucesso!")
@@ -76,14 +78,13 @@ class VendaDAO:
         conn.close()
         print("Venda deletada com sucesso!")
 
-
 # Testando o CRUD para vendas
 if __name__ == "__main__":
     venda_dao = VendaDAO('db.db')
 
     # Criar algumas vendas
-    venda1 = Venda("2023-10-15", "Preparando", "ABC123456789", "12345678900")
-    venda2 = Venda("2023-10-16", "A caminho", "DEF987654321", "98765432100")
+    venda1 = Venda("2023-10-15", "Preparando", "ABC123456789", "12345678900", 21000.0)
+    venda2 = Venda("2023-10-16", "A caminho", "DEF987654321", "98765432100", 15000.0)
     
     # Adicionar vendas ao banco de dados
     venda_dao.adicionar_venda(venda1)
@@ -100,7 +101,7 @@ if __name__ == "__main__":
 
     # Atualizar uma venda
     print("\nAtualizando o status da venda com ID 1...")
-    venda_dao.atualizar_venda(1, status="Pronto")
+    venda_dao.atualizar_venda(1, status="Pronto", preco=22000.0)  # Atualizando o preço também
 
     # Listar todas as vendas após atualização
     print("\nLista de Vendas após atualização:")
