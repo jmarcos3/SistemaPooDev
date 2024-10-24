@@ -59,7 +59,7 @@ class GerenteApp:
         label_remover_moto = ttk.Label(self.tab_motos, text="Remover Moto")
         label_remover_moto.grid(row=7, column=0, columnspan=2, pady=5)
 
-        label_id_moto_remover = ttk.Label(self.tab_motos, text="ID da Moto:")
+        label_id_moto_remover = ttk.Label(self.tab_motos, text="Chassi")
         label_id_moto_remover.grid(row=8, column=0, padx=5, pady=5)
         self.entry_id_moto_remover = ttk.Entry(self.tab_motos)
         self.entry_id_moto_remover.grid(row=8, column=1, padx=5, pady=5)
@@ -71,7 +71,7 @@ class GerenteApp:
         label_atualizar_moto = ttk.Label(self.tab_motos, text="Atualizar Moto")
         label_atualizar_moto.grid(row=10, column=0, columnspan=2, pady=5)
 
-        label_id_moto_atualizar = ttk.Label(self.tab_motos, text="ID da Moto:")
+        label_id_moto_atualizar = ttk.Label(self.tab_motos, text="Chassi")
         label_id_moto_atualizar.grid(row=11, column=0, padx=5, pady=5)
         self.entry_id_moto_atualizar = ttk.Entry(self.tab_motos)
         self.entry_id_moto_atualizar.grid(row=11, column=1, padx=5, pady=5)
@@ -186,7 +186,7 @@ class GerenteApp:
         self.entry_cpf_cliente = ttk.Entry(self.tab_venda)
         self.entry_cpf_cliente.grid(row=1, column=1, padx=5, pady=5)
 
-        label_chassi_moto = ttk.Label(self.tab_venda, text="Chassi da Moto:")
+        label_chassi_moto = ttk.Label(self.tab_venda, text="Chassi:")
         label_chassi_moto.grid(row=2, column=0, padx=5, pady=5)
         self.entry_chassi_moto = ttk.Entry(self.tab_venda)
         self.entry_chassi_moto.grid(row=2, column=1, padx=5, pady=5)
@@ -214,7 +214,7 @@ class GerenteApp:
         label_agendar_revisao = ttk.Label(self.tab_agenda, text="Agendar Revisão")
         label_agendar_revisao.grid(row=0, column=0, columnspan=2, pady=5)
 
-        label_id_moto_revisao = ttk.Label(self.tab_agenda, text="ID da Moto:")
+        label_id_moto_revisao = ttk.Label(self.tab_agenda, text="Chassi:")
         label_id_moto_revisao.grid(row=1, column=0, padx=5, pady=5)
         self.entry_id_moto_revisao = ttk.Entry(self.tab_agenda)
         self.entry_id_moto_revisao.grid(row=1, column=1, padx=5, pady=5)
@@ -229,7 +229,7 @@ class GerenteApp:
         self.entry_mecanico_revisao = ttk.Entry(self.tab_agenda)
         self.entry_mecanico_revisao.grid(row=3, column=1, padx=5, pady=5)
 
-        btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", command="")#self.agendar_revisao)
+        btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", command=self.agendar_revisao)
         btn_agendar_revisao.grid(row=4, column=1, pady=10)
 
         # Seção para listar revisões agendadas
@@ -237,7 +237,7 @@ class GerenteApp:
         label_listar_revisoes.grid(row=5, column=0, pady=5)
 
         # Botão para listar revisões e abrir um pop-up
-        btn_listar_revisoes = ttk.Button(self.tab_agenda, text="Listar Revisões", command="")#self.listar_revisoes_popup)
+        btn_listar_revisoes = ttk.Button(self.tab_agenda, text="Listar Revisões", command=self.listar_revisoes_popup)
         btn_listar_revisoes.grid(row=5, column=1, pady=5)
 
 
@@ -479,70 +479,79 @@ class GerenteApp:
 
 
     
-    # def agendar_revisao(self):
-    #     # Obter dados da entrada
-    #     id_moto = self.entry_id_moto_revisao.get()
-    #     data_revisao = self.entry_data_revisao.get()
-    #     mecanico = self.entry_mecanico_revisao.get()
+    def agendar_revisao(self):
+        # Obter dados da entrada
+        id_moto = self.entry_id_moto_revisao.get()
+        data_revisao = self.entry_data_revisao.get()
+        mecanico = self.entry_mecanico_revisao.get()
 
-    #     # Validar entradas
-    #     if not id_moto or not data_revisao or not mecanico:
-    #         messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
-    #         return
+        # Validar entradas
+        if not id_moto or not data_revisao or not mecanico:
+            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
+            return
 
-    #     # Inserir revisão no banco de dados
-    #     try:
-    #         self.revisao_dao.agendar_revisao(id_moto, data_revisao, mecanico)
-    #         messagebox.showinfo("Sucesso", "Revisão agendada com sucesso!")
-    #         # Limpar campos após agendar
-    #         self.entry_id_moto_revisao.delete(0, tk.END)
-    #         self.entry_data_revisao.delete(0, tk.END)
-    #         self.entry_mecanico_revisao.delete(0, tk.END)
-    #     except Exception as e:
-    #         messagebox.showerror("Erro", f"Erro ao agendar revisão: {e}")
+        # Inserir revisão no banco de dados
+        try:
+            self.agenda_revisao_dao.agendar_revisao(id_moto, data_revisao, mecanico)
+            messagebox.showinfo("Sucesso", "Revisão agendada com sucesso!")
+            # Limpar campos após agendar
+            self.entry_id_moto_revisao.delete(0, tk.END)
+            self.entry_data_revisao.delete(0, tk.END)
+            self.entry_mecanico_revisao.delete(0, tk.END)
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao agendar revisão: {e}")
 
 
-    # def listar_revisoes_popup(self):
-    #     # Criar uma nova janela (pop-up) para listar as revisões
-    #     popup = tk.Toplevel(self.root)
-    #     popup.title("Revisões Agendadas")
+    def listar_revisoes_popup(self):
+        # Criar uma nova janela (pop-up) para listar as revisões
+        popup = tk.Toplevel(self.root)
+        popup.title("Revisões Agendadas")
 
-    #     # Definir o tamanho da nova janela
-    #     popup.geometry("600x300")
+        # Definir o tamanho da nova janela
+        popup.geometry("700x300")
 
-    #     # Criar um Treeview para exibir as revisões como uma tabela
-    #     colunas = ('ID Moto', 'Data', 'Mecânico')
-    #     tree = ttk.Treeview(popup, columns=colunas, show='headings')
+        # Criar um Treeview para exibir as revisões como uma tabela
+        colunas = ('ID Manutenção', 'Chassi Moto', 'Data', 'Mecânico', 'Status Revisão')
+        tree = ttk.Treeview(popup, columns=colunas, show='headings')
 
-    #     # Definir os títulos das colunas
-    #     tree.heading('ID Moto', text='ID Moto')
-    #     tree.heading('Data', text='Data')
-    #     tree.heading('Mecânico', text='Mecânico')
+        # Definir os títulos das colunas
+        tree.heading('ID Manutenção', text='ID Manutenção')
+        tree.heading('Chassi Moto', text='Chassi Moto')
+        tree.heading('Data', text='Data')
+        tree.heading('Mecânico', text='Mecânico')
+        tree.heading('Status Revisão', text='Status Revisão')
 
-    #     # Ajustar o tamanho das colunas
-    #     tree.column('ID Moto', width=100)
-    #     tree.column('Data', width=100)
-    #     tree.column('Mecânico', width=150)
+        # Ajustar o tamanho das colunas
+        tree.column('ID Manutenção', width=100)
+        tree.column('Chassi Moto', width=150)
+        tree.column('Data', width=100)
+        tree.column('Mecânico', width=150)
+        tree.column('Status Revisão', width=150)
 
-    #     # Inserir os dados das revisões no Treeview
-    #     revisoes = self.revisao_dao.listar_revisoes()
-        
-    #     if revisoes:
-    #         for revisao in revisoes:
-    #             id_moto = revisao[0]  # Primeiro campo (ID Moto)
-    #             data = revisao[1]  # Segundo campo (Data)
-    #             mecanico = revisao[2]  # Terceiro campo (Mecânico)
-    #             tree.insert('', tk.END, values=(id_moto, data, mecanico))
-    #     else:
-    #         # Caso não haja revisões, mostrar uma linha indicando isso
-    #         tree.insert('', tk.END, values=('Nenhuma revisão encontrada', '', ''))
+        # Inserir os dados das revisões no Treeview
+        revisoes = self.agenda_revisao_dao.listar_revisoes()
 
-    #     # Posicionar o Treeview na janela pop-up
-    #     tree.pack(padx=10, pady=10, expand=True, fill='both')
+        if revisoes:
+            for revisao in revisoes:
+                id_manutencao = revisao[0]  # ID da manutenção
+                chassi_moto = revisao[3]    # Chassi da moto
+                data = revisao[1]           # Data da revisão
+                mecanico = revisao[5]       # Nome do mecânico (ajustar conforme sua lógica)
+                status_revisao = revisao[2] # Status da revisão
+                tree.insert('', tk.END, values=(id_manutencao, chassi_moto, data, mecanico, status_revisao))
+        else:
+            # Caso não haja revisões, mostrar uma linha indicando isso
+            tree.insert('', tk.END, values=('Nenhuma revisão encontrada', '', '', '', ''))
 
-    #     # Adicionar um botão para fechar o pop-up
-    #     btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
-    #     btn_fechar.pack(pady=10)
+        # Posicionar o Treeview na janela pop-up
+        tree.pack(padx=10, pady=10, expand=True, fill='both')
+
+        # Adicionar um botão para fechar o pop-up
+        btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
+        btn_fechar.pack(pady=10)
+
+
+
 
     
 # Inicializando a aplicação
