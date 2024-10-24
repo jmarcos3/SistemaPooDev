@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from backend.Routes import AgendaRevisaoDAO,AgendaRevisao,ClienteDAO,Cliente,FuncionarioDAO,Funcionario,MotoDAO,Moto,VendaDAO,Venda
+from backend.Routes import AgendaRevisaoDAO,Revisao,ClienteDAO,Cliente,FuncionarioDAO,Funcionario,MotoDAO,Moto,VendaDAO,Venda
 import datetime  # Para obter a data atual automaticamente
 
 class GerenteApp:
@@ -14,6 +14,7 @@ class GerenteApp:
         self.cliente_dao = ClienteDAO('db.db')
         self.venda_dao = VendaDAO('db.db')
         self.agenda_revisao_dao = AgendaRevisaoDAO('db.db')
+        self.funcionario_dao = FuncionarioDAO('db.db')
 
         # Criando o notebook (abas)
         self.notebook = ttk.Notebook(self.root)
@@ -96,10 +97,6 @@ class GerenteApp:
         # Botão para listar motos e abrir um pop-up
         btn_listar_motos = ttk.Button(self.tab_motos, text="Listar Motos", command=self.listar_motos_popup)
         btn_listar_motos.grid(row=15, column=1, pady=5)
-
-
-
-
 
 
         # Aba de Clientes
@@ -214,20 +211,15 @@ class GerenteApp:
         label_agendar_revisao = ttk.Label(self.tab_agenda, text="Agendar Revisão")
         label_agendar_revisao.grid(row=0, column=0, columnspan=2, pady=5)
 
-        label_id_moto_revisao = ttk.Label(self.tab_agenda, text="Chassi:")
-        label_id_moto_revisao.grid(row=1, column=0, padx=5, pady=5)
-        self.entry_id_moto_revisao = ttk.Entry(self.tab_agenda)
-        self.entry_id_moto_revisao.grid(row=1, column=1, padx=5, pady=5)
+        label_chassi_moto_revisao = ttk.Label(self.tab_agenda, text="Chassi:")
+        label_chassi_moto_revisao.grid(row=1, column=0, padx=5, pady=5)
+        self.entry_chassi_moto_revisao = ttk.Entry(self.tab_agenda)
+        self.entry_chassi_moto_revisao.grid(row=1, column=1, padx=5, pady=5)
 
-        label_data_revisao = ttk.Label(self.tab_agenda, text="Data da Revisão:")
-        label_data_revisao.grid(row=2, column=0, padx=5, pady=5)
-        self.entry_data_revisao = ttk.Entry(self.tab_agenda)
-        self.entry_data_revisao.grid(row=2, column=1, padx=5, pady=5)
-
-        label_mecanico_revisao = ttk.Label(self.tab_agenda, text="Mecânico Responsável:")
-        label_mecanico_revisao.grid(row=3, column=0, padx=5, pady=5)
-        self.entry_mecanico_revisao = ttk.Entry(self.tab_agenda)
-        self.entry_mecanico_revisao.grid(row=3, column=1, padx=5, pady=5)
+        label_cpf_cliente_revisao = ttk.Label(self.tab_agenda, text="CPF do Cliente:")
+        label_cpf_cliente_revisao.grid(row=3, column=0, padx=5, pady=5)
+        self.entry_cpf_cliente_revisao = ttk.Entry(self.tab_agenda)
+        self.entry_cpf_cliente_revisao.grid(row=3, column=1, padx=5, pady=5)
 
         btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", command=self.agendar_revisao)
         btn_agendar_revisao.grid(row=4, column=1, pady=10)
@@ -242,6 +234,64 @@ class GerenteApp:
 
 
 
+
+        # Adicionando a aba de Funcionários
+        self.tab_funcionarios = ttk.Frame(self.notebook)
+        self.notebook.add(self.tab_funcionarios, text="Funcionários")
+
+        # Seção para adicionar funcionário
+        label_add_funcionario = ttk.Label(self.tab_funcionarios, text="Adicionar Funcionário")
+        label_add_funcionario.grid(row=0, column=0, columnspan=2, pady=5)
+
+        label_nome_funcionario = ttk.Label(self.tab_funcionarios, text="Nome:")
+        label_nome_funcionario.grid(row=1, column=0, padx=5, pady=5)
+        self.entry_nome_funcionario = ttk.Entry(self.tab_funcionarios)
+        self.entry_nome_funcionario.grid(row=1, column=1, padx=5, pady=5)
+
+        label_cpf_funcionario = ttk.Label(self.tab_funcionarios, text="CPF:")
+        label_cpf_funcionario.grid(row=2, column=0, padx=5, pady=5)
+        self.entry_cpf_funcionario = ttk.Entry(self.tab_funcionarios)
+        self.entry_cpf_funcionario.grid(row=2, column=1, padx=5, pady=5)
+
+        label_cargo_funcionario = ttk.Label(self.tab_funcionarios, text="Cargo:")
+        label_cargo_funcionario.grid(row=3, column=0, padx=5, pady=5)
+        self.entry_cargo_funcionario = ttk.Entry(self.tab_funcionarios)
+        self.entry_cargo_funcionario.grid(row=3, column=1, padx=5, pady=5)
+
+        # Botão para adicionar funcionário
+        btn_add_funcionario = ttk.Button(self.tab_funcionarios, text="Adicionar Funcionário", command=self.adicionar_funcionario)
+        btn_add_funcionario.grid(row=4, column=1, pady=10)
+
+        # Seção para listar funcionários
+        label_listar_funcionarios = ttk.Label(self.tab_funcionarios, text="Funcionários Cadastrados")
+        label_listar_funcionarios.grid(row=5, column=0, pady=5)
+
+        # Criando o Treeview para listar funcionários
+        colunas = ('Nome', 'CPF', 'Cargo')
+        self.tree_funcionarios = ttk.Treeview(self.tab_funcionarios, columns=colunas, show='headings')
+
+        # Definindo os títulos das colunas
+        self.tree_funcionarios.heading('Nome', text='Nome')
+        self.tree_funcionarios.heading('CPF', text='CPF')
+        self.tree_funcionarios.heading('Cargo', text='Cargo')
+
+        # Ajustar o tamanho das colunas
+        self.tree_funcionarios.column('Nome', width=150)
+        self.tree_funcionarios.column('CPF', width=120)
+        self.tree_funcionarios.column('Cargo', width=100)
+
+        # Posicionar o Treeview
+        self.tree_funcionarios.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+
+        # Botões para editar e deletar funcionários
+        btn_editar_funcionario = ttk.Button(self.tab_funcionarios, text="Editar Funcionário", command=self.editar_funcionario)
+        btn_editar_funcionario.grid(row=7, column=0, pady=10)
+
+        btn_deletar_funcionario = ttk.Button(self.tab_funcionarios, text="Deletar Funcionário", command=self.deletar_funcionario)
+        btn_deletar_funcionario.grid(row=7, column=1, pady=10)
+        
+        self.listar_funcionarios()
+        
 
 
 
@@ -478,26 +528,28 @@ class GerenteApp:
 
 
 
-    
+
+
     def agendar_revisao(self):
         # Obter dados da entrada
-        id_moto = self.entry_id_moto_revisao.get()
-        data_revisao = self.entry_data_revisao.get()
-        mecanico = self.entry_mecanico_revisao.get()
+        chassi_moto = self.entry_chassi_moto_revisao.get()
+        data_revisao = datetime.datetime.now().strftime("%Y-%m-%d")
+        cpf = self.entry_cpf_cliente_revisao.get()
 
+        revisao = Revisao(data=data_revisao, custo=0, status_revisao="Aguardando Moto", chassi_moto=chassi_moto, cpf_cliente=cpf)
         # Validar entradas
-        if not id_moto or not data_revisao or not mecanico:
+        if not chassi_moto or not data_revisao or not cpf:
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
         # Inserir revisão no banco de dados
         try:
-            self.agenda_revisao_dao.agendar_revisao(id_moto, data_revisao, mecanico)
+            self.agenda_revisao_dao.adicionar_revisao(revisao)
             messagebox.showinfo("Sucesso", "Revisão agendada com sucesso!")
             # Limpar campos após agendar
-            self.entry_id_moto_revisao.delete(0, tk.END)
+            self.entry_chassi_moto_revisao.delete(0, tk.END)
             self.entry_data_revisao.delete(0, tk.END)
-            self.entry_mecanico_revisao.delete(0, tk.END)
+            self.entry_cpf_cliente_revisao.delete(0, tk.END)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao agendar revisão: {e}")
 
@@ -508,25 +560,27 @@ class GerenteApp:
         popup.title("Revisões Agendadas")
 
         # Definir o tamanho da nova janela
-        popup.geometry("700x300")
+        popup.geometry("700x400")
 
         # Criar um Treeview para exibir as revisões como uma tabela
-        colunas = ('ID Manutenção', 'Chassi Moto', 'Data', 'Mecânico', 'Status Revisão')
+        colunas = ('ID Manutenção', 'Chassi Moto', 'Data', 'CPF', 'Status Revisão','Custo')
         tree = ttk.Treeview(popup, columns=colunas, show='headings')
 
         # Definir os títulos das colunas
         tree.heading('ID Manutenção', text='ID Manutenção')
         tree.heading('Chassi Moto', text='Chassi Moto')
         tree.heading('Data', text='Data')
-        tree.heading('Mecânico', text='Mecânico')
+        tree.heading('CPF', text='CPF')
         tree.heading('Status Revisão', text='Status Revisão')
+        tree.heading('Custo', text='Custo')
 
         # Ajustar o tamanho das colunas
         tree.column('ID Manutenção', width=100)
-        tree.column('Chassi Moto', width=150)
+        tree.column('Chassi Moto', width=100)
         tree.column('Data', width=100)
-        tree.column('Mecânico', width=150)
-        tree.column('Status Revisão', width=150)
+        tree.column('CPF', width=100)
+        tree.column('Status Revisão', width=120)
+        tree.column('Custo', width=100)
 
         # Inserir os dados das revisões no Treeview
         revisoes = self.agenda_revisao_dao.listar_revisoes()
@@ -534,11 +588,12 @@ class GerenteApp:
         if revisoes:
             for revisao in revisoes:
                 id_manutencao = revisao[0]  # ID da manutenção
-                chassi_moto = revisao[3]    # Chassi da moto
+                chassi_moto = revisao[4]    # Chassi da moto
                 data = revisao[1]           # Data da revisão
-                mecanico = revisao[5]       # Nome do mecânico (ajustar conforme sua lógica)
+                cpf = revisao[5]       # Nome do mecânico (ajustar conforme sua lógica)
+                custo = revisao[3] # Status da revisão
                 status_revisao = revisao[2] # Status da revisão
-                tree.insert('', tk.END, values=(id_manutencao, chassi_moto, data, mecanico, status_revisao))
+                tree.insert('', tk.END, values=(id_manutencao, chassi_moto, data, cpf, custo,status_revisao))
         else:
             # Caso não haja revisões, mostrar uma linha indicando isso
             tree.insert('', tk.END, values=('Nenhuma revisão encontrada', '', '', '', ''))
@@ -552,6 +607,142 @@ class GerenteApp:
 
 
 
+    def adicionar_funcionario(self):
+        nome = self.entry_nome_funcionario.get()
+        cpf = self.entry_cpf_funcionario.get()
+        cargo = self.entry_cargo_funcionario.get()
+
+        # Validações básicas
+        if not nome or not cpf or not cargo:
+            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
+            return
+
+       
+        # Inserir o funcionário no banco de dados
+        try:
+            funcionario = Funcionario(cpf=cpf,nome=nome,usuario=cpf,senha=cpf,funcao=cargo)
+            self.funcionario_dao.adicionar_funcionario(funcionario)
+            messagebox.showinfo("Sucesso", "Funcionário adicionado com sucesso!")
+            self.listar_funcionarios()  # Atualizar a lista
+            # Limpar os campos de entrada
+            self.entry_nome_funcionario.delete(0, tk.END)
+            self.entry_cpf_funcionario.delete(0, tk.END)
+            self.entry_cargo_funcionario.delete(0, tk.END)
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao adicionar funcionário: {e}")
+
+
+    def listar_funcionarios(self):
+        # Limpar o Treeview antes de listar os dados
+        for i in self.tree_funcionarios.get_children():
+            self.tree_funcionarios.delete(i)
+
+        # Buscar os funcionários no banco de dados
+        funcionarios = self.funcionario_dao.listar_funcionarios()
+
+        # Verifique se a lista de funcionários não está vazia
+        if funcionarios:
+            # Inserir cada funcionário na Treeview
+            for funcionario in funcionarios:
+                # Lembrando que funcionario é uma tupla, então acessar por índices
+                
+                nome_funcionario = funcionario[1]
+                cpf_funcionario = funcionario[0]
+                cargo_funcionario = funcionario[4]
+
+                self.tree_funcionarios.insert('', 'end', values=(nome_funcionario, cpf_funcionario, cargo_funcionario))
+        else:
+            messagebox.showinfo("Informação", "Nenhum funcionário encontrado.")
+
+
+
+    def editar_funcionario(self):
+        # Obter o funcionário selecionado
+        selected_item = self.tree_funcionarios.selection()
+
+        if not selected_item:
+            messagebox.showerror("Erro", "Selecione um funcionário para editar.")
+            return
+
+        item = self.tree_funcionarios.item(selected_item)
+        funcionario_nome = item['values'][0]  # Nome
+        funcionario_cpf = item['values'][1]    # CPF
+        funcionario_cargo = item['values'][2]  # Cargo
+
+        # Aqui você deve obter os dados de usuario e senha do banco de dados se necessário
+        usuario_atual = "usuario_exemplo"  # Substitua isso pelo valor correto
+        senha_atual = "senha_exemplo"      # Substitua isso pelo valor correto
+
+        # Criar uma nova janela para editar o funcionário
+        editar_popup = tk.Toplevel(self.root)
+        editar_popup.title("Editar Funcionário")
+
+        # Criar campos de entrada para editar os dados
+        label_nome = ttk.Label(editar_popup, text="Nome:")
+        label_nome.grid(row=0, column=0, padx=5, pady=5)
+        entry_nome = ttk.Entry(editar_popup)
+        entry_nome.insert(0, funcionario_nome)  # Preencher o nome atual
+        entry_nome.grid(row=0, column=1, padx=5, pady=5)
+
+        label_cpf = ttk.Label(editar_popup, text="CPF:")
+        label_cpf.grid(row=1, column=0, padx=5, pady=5)
+        entry_cpf = ttk.Entry(editar_popup)
+        entry_cpf.insert(0, funcionario_cpf)  # Preencher o CPF atual
+        entry_cpf.config(state='readonly')  # Não permitir editar o CPF
+        entry_cpf.grid(row=1, column=1, padx=5, pady=5)
+
+        label_cargo = ttk.Label(editar_popup, text="Cargo:")
+        label_cargo.grid(row=2, column=0, padx=5, pady=5)
+        entry_cargo = ttk.Entry(editar_popup)
+        entry_cargo.insert(0, funcionario_cargo)  # Preencher o cargo atual
+        entry_cargo.grid(row=2, column=1, padx=5, pady=5)
+
+        # Botão para salvar as alterações
+        def salvar_edicao():
+            novo_nome = entry_nome.get()
+            novo_cargo = entry_cargo.get()
+
+            # Criar um objeto Funcionario com os dados atualizados
+            funcionario_atualizado = Funcionario(nome=novo_nome,cpf=funcionario_cpf, usuario=usuario_atual, senha=senha_atual, funcao=novo_cargo)
+
+            # Chamar o método para atualizar o funcionário no banco de dados
+            self.funcionario_dao.atualizar_funcionario(funcionario_atualizado)
+
+            # Fechar a janela popup
+            editar_popup.destroy()
+
+            # Atualizar a lista de funcionários no Treeview
+            self.listar_funcionarios()
+
+        btn_salvar = ttk.Button(editar_popup, text="Salvar", command=salvar_edicao)
+        btn_salvar.grid(row=3, column=0, columnspan=2, pady=10)
+
+        # Tornar a janela modal
+        editar_popup.transient(self.root)
+        editar_popup.grab_set()
+        self.root.wait_window(editar_popup)
+
+
+
+
+    def deletar_funcionario(self):
+        selected_item = self.tree_funcionarios.selection()
+
+        if not selected_item:
+            messagebox.showerror("Erro", "Selecione um funcionário para deletar.")
+            return
+
+        item = self.tree_funcionarios.item(selected_item)
+        funcionario_id = item['values'][1]
+
+
+        try:
+            self.funcionario_dao.deletar_funcionario(funcionario_id)
+            messagebox.showinfo("Sucesso", "Funcionário deletado com sucesso!")
+            self.listar_funcionarios()  # Atualizar a lista
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao deletar funcionário: {e}")
+
 
     
 # Inicializando a aplicação
@@ -560,6 +751,5 @@ if __name__ == "__main__":
     app = GerenteApp(root)
     root.mainloop()
 
-
-    # revisões não está funcionando, não está criando nem listando
-    # criar a tela adicionar funcionnário, crud
+# atualizar moto está trocado as informações, ano está no lugar de preço
+# 

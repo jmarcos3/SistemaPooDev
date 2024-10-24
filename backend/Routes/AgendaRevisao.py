@@ -1,7 +1,7 @@
 import sqlite3
 
 # Classe AgendaRevisao que define o objeto Revisao
-class AgendaRevisao:
+class Revisao:
     def __init__(self, data, custo, status_revisao, chassi_moto, cpf_cliente):
         self.data = data
         self.custo = custo
@@ -84,8 +84,8 @@ if __name__ == "__main__":
     revisao_dao = AgendaRevisaoDAO('db.db')
 
     # Criar algumas revisões
-    revisao1 = AgendaRevisao("2024-10-20", 250.00, "Aguardando", "ABC123456789", "12345678900")
-    revisao2 = AgendaRevisao("2024-11-01", 300.00, "Aguardando Peça", "DEF987654321", "98765432100")
+    revisao1 = Revisao("2024-10-20", 250.00, "Aguardando", "ABC123456789", "12345678900")
+    revisao2 = Revisao("2024-11-01", 300.00, "Aguardando Peça", "DEF987654321", "98765432100")
     
     # Adicionar revisões ao banco de dados
     revisao_dao.adicionar_revisao(revisao1)
