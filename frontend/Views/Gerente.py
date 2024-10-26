@@ -8,6 +8,7 @@ class GerenteApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Sistema de Controle de Motos")
+        #self.root.geometry("600x800")  # Ajuste o tamanho da janela conforme necessário
 
         # Inicializando DAOs
         self.moto_dao = MotoDAO('db.db')  # Altere o nome do banco conforme necessário
@@ -20,251 +21,234 @@ class GerenteApp:
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(pady=10, expand=True)
 
+        # Estilos personalizados
+        estilo_label = {"font": ("Arial", 14, "bold"), "foreground": "#333"}
+        estilo_entrada = {"width": 25, "font": ("Arial", 12)}
+
         # Aba de Motos
-        self.tab_motos = ttk.Frame(self.notebook)
+        self.tab_motos = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_motos, text="Motos")
 
         # Seção para adicionar moto
-        label_adicionar_moto = ttk.Label(self.tab_motos, text="Adicionar Moto")
-        label_adicionar_moto.grid(row=0, column=0, columnspan=2, pady=5)
+        label_adicionar_moto = ttk.Label(self.tab_motos, text="Adicionar Moto", **estilo_label)
+        label_adicionar_moto.grid(row=0, column=0, columnspan=2, pady=(0, 15))
 
-        label_modelo = ttk.Label(self.tab_motos, text="Modelo:")
-        label_modelo.grid(row=1, column=0, padx=5, pady=5)
-        self.entry_modelo = ttk.Entry(self.tab_motos)
+        label_modelo = ttk.Label(self.tab_motos, text="Modelo:", **estilo_label)
+        label_modelo.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_modelo = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_modelo.grid(row=1, column=1, padx=5, pady=5)
 
-        label_ano = ttk.Label(self.tab_motos, text="Ano:")
-        label_ano.grid(row=2, column=0, padx=5, pady=5)
-        self.entry_ano = ttk.Entry(self.tab_motos)
+        label_ano = ttk.Label(self.tab_motos, text="Ano:", **estilo_label)
+        label_ano.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+        self.entry_ano = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_ano.grid(row=2, column=1, padx=5, pady=5)
 
-        label_preco = ttk.Label(self.tab_motos, text="Preço:")
-        label_preco.grid(row=3, column=0, padx=5, pady=5)
-        self.entry_preco = ttk.Entry(self.tab_motos)
+        label_preco = ttk.Label(self.tab_motos, text="Preço:", **estilo_label)
+        label_preco.grid(row=3, column=0, padx=5, pady=5, sticky="e")
+        self.entry_preco = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_preco.grid(row=3, column=1, padx=5, pady=5)
 
-        label_cor = ttk.Label(self.tab_motos, text="Cor:")
-        label_cor.grid(row=4, column=0, padx=5, pady=5)
-        self.entry_cor = ttk.Entry(self.tab_motos)
+        label_cor = ttk.Label(self.tab_motos, text="Cor:", **estilo_label)
+        label_cor.grid(row=4, column=0, padx=5, pady=5, sticky="e")
+        self.entry_cor = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_cor.grid(row=4, column=1, padx=5, pady=5)
 
-        label_chassi = ttk.Label(self.tab_motos, text="Chassi:")
-        label_chassi.grid(row=5, column=0, padx=5, pady=5)
-        self.entry_chassi = ttk.Entry(self.tab_motos)
+        label_chassi = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
+        label_chassi.grid(row=5, column=0, padx=5, pady=5, sticky="e")
+        self.entry_chassi = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_chassi.grid(row=5, column=1, padx=5, pady=5)
 
         btn_adicionar_moto = ttk.Button(self.tab_motos, text="Adicionar", command=self.adicionar_moto)
-        btn_adicionar_moto.grid(row=6, column=1, pady=10)
+        btn_adicionar_moto.grid(row=6, column=1, pady=10, sticky="n")
 
         # Seção para remover moto
-        label_remover_moto = ttk.Label(self.tab_motos, text="Remover Moto")
-        label_remover_moto.grid(row=7, column=0, columnspan=2, pady=5)
+        label_remover_moto = ttk.Label(self.tab_motos, text="Remover Moto", **estilo_label)
+        label_remover_moto.grid(row=7, column=0, columnspan=2, pady=(15, 5))
 
-        label_id_moto_remover = ttk.Label(self.tab_motos, text="Chassi")
-        label_id_moto_remover.grid(row=8, column=0, padx=5, pady=5)
-        self.entry_id_moto_remover = ttk.Entry(self.tab_motos)
+        label_id_moto_remover = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
+        label_id_moto_remover.grid(row=8, column=0, padx=5, pady=5, sticky="e")
+        self.entry_id_moto_remover = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_id_moto_remover.grid(row=8, column=1, padx=5, pady=5)
 
         btn_remover_moto = ttk.Button(self.tab_motos, text="Remover", command=self.remover_moto)
-        btn_remover_moto.grid(row=9, column=1, pady=5)
+        btn_remover_moto.grid(row=9, column=1, pady=5, sticky="n")
 
         # Seção para atualizar moto
-        label_atualizar_moto = ttk.Label(self.tab_motos, text="Atualizar Moto")
-        label_atualizar_moto.grid(row=10, column=0, columnspan=2, pady=5)
+        label_atualizar_moto = ttk.Label(self.tab_motos, text="Atualizar Moto", **estilo_label)
+        label_atualizar_moto.grid(row=10, column=0, columnspan=2, pady=(15, 5))
 
-        label_id_moto_atualizar = ttk.Label(self.tab_motos, text="Chassi")
-        label_id_moto_atualizar.grid(row=11, column=0, padx=5, pady=5)
-        self.entry_id_moto_atualizar = ttk.Entry(self.tab_motos)
+        label_id_moto_atualizar = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
+        label_id_moto_atualizar.grid(row=11, column=0, padx=5, pady=5, sticky="e")
+        self.entry_id_moto_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_id_moto_atualizar.grid(row=11, column=1, padx=5, pady=5)
 
-        label_campo_atualizar = ttk.Label(self.tab_motos, text="Campo a Atualizar:")
-        label_campo_atualizar.grid(row=12, column=0, padx=5, pady=5)
-        self.entry_campo_atualizar = ttk.Entry(self.tab_motos)
-        self.entry_campo_atualizar.grid(row=12, column=1, padx=5, pady=5)
+        label_campo_atualizar_moto = ttk.Label(self.tab_motos, text="Campo a Atualizar:", **estilo_label)
+        label_campo_atualizar_moto.grid(row=12, column=0, padx=5, pady=5, sticky="e")
+        self.entry_campo_atualizar_moto = ttk.Entry(self.tab_motos, **estilo_entrada)
+        self.entry_campo_atualizar_moto.grid(row=12, column=1, padx=5, pady=5)
 
-        label_novo_valor = ttk.Label(self.tab_motos, text="Novo Valor:")
-        label_novo_valor.grid(row=13, column=0, padx=5, pady=5)
-        self.entry_valor_atualizar = ttk.Entry(self.tab_motos)
+        label_novo_valor = ttk.Label(self.tab_motos, text="Novo Valor:", **estilo_label)
+        label_novo_valor.grid(row=13, column=0, padx=5, pady=5, sticky="e")
+        self.entry_valor_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_valor_atualizar.grid(row=13, column=1, padx=5, pady=5)
 
         btn_atualizar_moto = ttk.Button(self.tab_motos, text="Atualizar", command=self.atualizar_moto)
-        btn_atualizar_moto.grid(row=14, column=1, pady=10)
+        btn_atualizar_moto.grid(row=14, column=1, pady=10, sticky="n")
 
         # Seção para listar motos
-        label_listar_motos = ttk.Label(self.tab_motos, text="Listar Motos:")
+        label_listar_motos = ttk.Label(self.tab_motos, text="Listar Motos:", **estilo_label)
         label_listar_motos.grid(row=15, column=0, pady=5)
 
-        # Botão para listar motos e abrir um pop-up
         btn_listar_motos = ttk.Button(self.tab_motos, text="Listar Motos", command=self.listar_motos_popup)
-        btn_listar_motos.grid(row=15, column=1, pady=5)
+        btn_listar_motos.grid(row=15, column=1, pady=10, sticky="s")
 
 
         # Aba de Clientes
-        self.tab_cliente = ttk.Frame(self.notebook)
+        self.tab_cliente = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_cliente, text="Clientes")
-        
-        # Seção para adicionar cliente
-        label_adicionar_cliente = ttk.Label(self.tab_cliente, text="Adicionar Cliente")
-        label_adicionar_cliente.grid(row=0, column=0, columnspan=2, pady=5)
 
-        label_nome = ttk.Label(self.tab_cliente, text="Nome:")
-        label_nome.grid(row=1, column=0, padx=5, pady=5)
-        self.entry_nome = ttk.Entry(self.tab_cliente)
+        # Seção para adicionar cliente
+        label_adicionar_cliente = ttk.Label(self.tab_cliente, text="Adicionar Cliente", **estilo_label)
+        label_adicionar_cliente.grid(row=0, column=0, columnspan=2, pady=(0, 15))
+
+        label_nome = ttk.Label(self.tab_cliente, text="Nome:", **estilo_label)
+        label_nome.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_nome = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_nome.grid(row=1, column=1, padx=5, pady=5)
 
-        label_cpf = ttk.Label(self.tab_cliente, text="CPF:")
-        label_cpf.grid(row=2, column=0, padx=5, pady=5)
-        self.entry_cpf = ttk.Entry(self.tab_cliente)
+        label_cpf = ttk.Label(self.tab_cliente, text="CPF:", **estilo_label)
+        label_cpf.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+        self.entry_cpf = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_cpf.grid(row=2, column=1, padx=5, pady=5)
 
-        label_email = ttk.Label(self.tab_cliente, text="Email:")
-        label_email.grid(row=3, column=0, padx=5, pady=5)
-        self.entry_email = ttk.Entry(self.tab_cliente)
+        label_email = ttk.Label(self.tab_cliente, text="Email:", **estilo_label)
+        label_email.grid(row=3, column=0, padx=5, pady=5, sticky="e")
+        self.entry_email = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_email.grid(row=3, column=1, padx=5, pady=5)
 
         btn_adicionar_cliente = ttk.Button(self.tab_cliente, text="Adicionar", command=self.adicionar_cliente)
-        btn_adicionar_cliente.grid(row=4, column=1, pady=10)
-
-        # # Seção para remover cliente
-        # label_remover_cliente = ttk.Label(self.tab_cliente, text="Remover Cliente")
-        # label_remover_cliente.grid(row=5, column=0, pady=5)
-
-        # label_remover_cpf = ttk.Label(self.tab_cliente, text="CPF:")
-        # label_remover_cpf.grid(row=6, column=0, padx=5, pady=5)
-        # self.entry_remover_cpf = ttk.Entry(self.tab_cliente)
-        # self.entry_remover_cpf.grid(row=6, column=1, padx=5, pady=5)
-
-        # btn_remover_cliente = ttk.Button(self.tab_cliente, text="Remover", command=self.remover_cliente)
-        # btn_remover_cliente.grid(row=7, column=1, pady=10)
+        btn_adicionar_cliente.grid(row=4, column=1, pady=10, sticky="n")
 
         # Seção para atualizar cliente
-        label_atualizar_cliente = ttk.Label(self.tab_cliente, text="Atualizar Cliente")
-        label_atualizar_cliente.grid(row=8, column=0, columnspan=2, pady=5)
+        label_atualizar_cliente = ttk.Label(self.tab_cliente, text="Atualizar Cliente", **estilo_label)
+        label_atualizar_cliente.grid(row=8, column=0, columnspan=2, pady=(15, 5))
 
-        label_atualizar_cpf = ttk.Label(self.tab_cliente, text="CPF do Cliente:")
-        label_atualizar_cpf.grid(row=9, column=0, padx=5, pady=5)
-        self.entry_atualizar_cpf = ttk.Entry(self.tab_cliente)
+        label_atualizar_cpf = ttk.Label(self.tab_cliente, text="CPF do Cliente:", **estilo_label)
+        label_atualizar_cpf.grid(row=9, column=0, padx=5, pady=5, sticky="e")
+        self.entry_atualizar_cpf = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_atualizar_cpf.grid(row=9, column=1, padx=5, pady=5)
 
-        label_campo_atualizar = ttk.Label(self.tab_cliente, text="Campo a Atualizar:")
-        label_campo_atualizar.grid(row=10, column=0, padx=5, pady=5)
-        self.entry_campo_atualizar = ttk.Entry(self.tab_cliente)
+        label_campo_atualizar = ttk.Label(self.tab_cliente, text="Campo a Atualizar:", **estilo_label)
+        label_campo_atualizar.grid(row=10, column=0, padx=5, pady=5, sticky="e")
+        self.entry_campo_atualizar = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_campo_atualizar.grid(row=10, column=1, padx=5, pady=5)
 
-        label_novo_valor = ttk.Label(self.tab_cliente, text="Novo Valor:")
-        label_novo_valor.grid(row=11, column=0, padx=5, pady=5)
-        self.entry_novo_valor = ttk.Entry(self.tab_cliente)
+        label_novo_valor = ttk.Label(self.tab_cliente, text="Novo Valor:", **estilo_label)
+        label_novo_valor.grid(row=11, column=0, padx=5, pady=5, sticky="e")
+        self.entry_novo_valor = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_novo_valor.grid(row=11, column=1, padx=5, pady=5)
 
         btn_atualizar_cliente = ttk.Button(self.tab_cliente, text="Atualizar", command=self.atualizar_cliente)
-        btn_atualizar_cliente.grid(row=12, column=1, pady=10)
+        btn_atualizar_cliente.grid(row=12, column=1, pady=10, sticky="n")
 
-        # Label para a seção de listar clientes
-        label_listar_clientes = ttk.Label(self.tab_cliente, text="Listar Clientes: ")
-        label_listar_clientes.grid(row=14, column=0,pady=5)
+        # Seção para listar clientes
+        label_listar_clientes = ttk.Label(self.tab_cliente, text="Listar Clientes:", **estilo_label)
+        label_listar_clientes.grid(row=14, column=0, pady=5)
 
-        # Botão para listar clientes e abrir um pop-up
         btn_listar_clientes = ttk.Button(self.tab_cliente, text="Listar Clientes", command=self.listar_clientes_popup)
-        btn_listar_clientes.grid(row=14, column=1, columnspan=2, pady=5)
-
-
+        btn_listar_clientes.grid(row=14, column=1, pady=5, sticky="n")
 
 
         # Aba de Vendas
-        self.tab_venda = ttk.Frame(self.notebook)
+        self.tab_venda = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_venda, text="Vendas")
 
         # Seção para gerar venda
-        label_gerar_venda = ttk.Label(self.tab_venda, text="Gerar Venda")
-        label_gerar_venda.grid(row=0, column=0, columnspan=2, pady=5)
+        label_gerar_venda = ttk.Label(self.tab_venda, text="Gerar Venda", **estilo_label)
+        label_gerar_venda.grid(row=0, column=0, columnspan=2, pady=(0, 15))
 
-        label_cpf_cliente = ttk.Label(self.tab_venda, text="CPF do Cliente:")
-        label_cpf_cliente.grid(row=1, column=0, padx=5, pady=5)
-        self.entry_cpf_cliente = ttk.Entry(self.tab_venda)
+        label_cpf_cliente = ttk.Label(self.tab_venda, text="Cliente:", **estilo_label)
+        label_cpf_cliente.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_cpf_cliente = ttk.Entry(self.tab_venda, **estilo_entrada)
         self.entry_cpf_cliente.grid(row=1, column=1, padx=5, pady=5)
 
-        label_chassi_moto = ttk.Label(self.tab_venda, text="Chassi:")
-        label_chassi_moto.grid(row=2, column=0, padx=5, pady=5)
-        self.entry_chassi_moto = ttk.Entry(self.tab_venda)
+        label_chassi_moto = ttk.Label(self.tab_venda, text="Chassi:", **estilo_label)
+        label_chassi_moto.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+        self.entry_chassi_moto = ttk.Entry(self.tab_venda, **estilo_entrada)
         self.entry_chassi_moto.grid(row=2, column=1, padx=5, pady=5)
 
         btn_gerar_venda = ttk.Button(self.tab_venda, text="Gerar Venda", command=self.adicionar_venda)
-        btn_gerar_venda.grid(row=3, column=1, pady=10)
+        btn_gerar_venda.grid(row=3, column=1, pady=10, sticky="n")
 
         # Label para a seção de listar vendas
-        label_listar_vendas = ttk.Label(self.tab_venda, text="Listar Vendas: ")
-        label_listar_vendas.grid(row=14, column=0, pady=5)
+        label_listar_vendas = ttk.Label(self.tab_venda, text="Listar Vendas: ", **estilo_label)
+        label_listar_vendas.grid(row=14, column=0, pady=(5))
 
         # Botão para listar vendas e abrir um pop-up
         btn_listar_vendas = ttk.Button(self.tab_venda, text="Listar Vendas", command=self.listar_vendas_popup)
-        btn_listar_vendas.grid(row=14, column=1, pady=10)
-
-
-
+        btn_listar_vendas.grid(row=14, column=1, pady=10, sticky="n")
 
 
         # Adicionando a aba de Agenda de Revisões
-        self.tab_agenda = ttk.Frame(self.notebook)
+        self.tab_agenda = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_agenda, text="Agenda de Revisões")
 
         # Seção para agendar revisão
-        label_agendar_revisao = ttk.Label(self.tab_agenda, text="Agendar Revisão")
-        label_agendar_revisao.grid(row=0, column=0, columnspan=2, pady=5)
+        label_agendar_revisao = ttk.Label(self.tab_agenda, text="Agendar Revisão", **estilo_label)
+        label_agendar_revisao.grid(row=0, column=0, columnspan=2, pady=(0,15))
 
-        label_chassi_moto_revisao = ttk.Label(self.tab_agenda, text="Chassi:")
-        label_chassi_moto_revisao.grid(row=1, column=0, padx=5, pady=5)
-        self.entry_chassi_moto_revisao = ttk.Entry(self.tab_agenda)
+        label_chassi_moto_revisao = ttk.Label(self.tab_agenda, text="Chassi:", **estilo_label)
+        label_chassi_moto_revisao.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_chassi_moto_revisao = ttk.Entry(self.tab_agenda, **estilo_entrada)
         self.entry_chassi_moto_revisao.grid(row=1, column=1, padx=5, pady=5)
 
-        label_cpf_cliente_revisao = ttk.Label(self.tab_agenda, text="CPF do Cliente:")
-        label_cpf_cliente_revisao.grid(row=3, column=0, padx=5, pady=5)
-        self.entry_cpf_cliente_revisao = ttk.Entry(self.tab_agenda)
+        label_cpf_cliente_revisao = ttk.Label(self.tab_agenda, text="CPF do Cliente:", **estilo_label)
+        label_cpf_cliente_revisao.grid(row=3, column=0, padx=5, pady=5, sticky="e")
+        self.entry_cpf_cliente_revisao = ttk.Entry(self.tab_agenda, **estilo_entrada)
         self.entry_cpf_cliente_revisao.grid(row=3, column=1, padx=5, pady=5)
 
         btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", command=self.agendar_revisao)
-        btn_agendar_revisao.grid(row=4, column=1, pady=10)
+        btn_agendar_revisao.grid(row=4, column=1, pady=10, sticky="n")
 
         # Seção para listar revisões agendadas
-        label_listar_revisoes = ttk.Label(self.tab_agenda, text="Mostrar Agenda:")
-        label_listar_revisoes.grid(row=5, column=0, pady=5)
+        label_listar_revisoes = ttk.Label(self.tab_agenda, text="Mostrar Agenda:", **estilo_label)
+        label_listar_revisoes.grid(row=5, column=0, pady=(5))
 
         # Botão para listar revisões e abrir um pop-up
         btn_listar_revisoes = ttk.Button(self.tab_agenda, text="Listar Revisões", command=self.listar_revisoes_popup)
-        btn_listar_revisoes.grid(row=5, column=1, pady=5)
-
-
+        btn_listar_revisoes.grid(row=5, column=1, pady=5, sticky="n")
 
 
         # Adicionando a aba de Funcionários
-        self.tab_funcionarios = ttk.Frame(self.notebook)
+        self.tab_funcionarios = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_funcionarios, text="Funcionários")
 
         # Seção para adicionar funcionário
-        label_add_funcionario = ttk.Label(self.tab_funcionarios, text="Adicionar Funcionário")
-        label_add_funcionario.grid(row=0, column=0, columnspan=2, pady=5)
+        label_add_funcionario = ttk.Label(self.tab_funcionarios, text="Adicionar Funcionário", **estilo_label)
+        label_add_funcionario.grid(row=0, column=0, columnspan=2, pady=(0,15))
 
-        label_nome_funcionario = ttk.Label(self.tab_funcionarios, text="Nome:")
-        label_nome_funcionario.grid(row=1, column=0, padx=5, pady=5)
-        self.entry_nome_funcionario = ttk.Entry(self.tab_funcionarios)
+        label_nome_funcionario = ttk.Label(self.tab_funcionarios, text="Nome:", **estilo_label)
+        label_nome_funcionario.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_nome_funcionario = ttk.Entry(self.tab_funcionarios, **estilo_entrada)
         self.entry_nome_funcionario.grid(row=1, column=1, padx=5, pady=5)
 
-        label_cpf_funcionario = ttk.Label(self.tab_funcionarios, text="CPF:")
-        label_cpf_funcionario.grid(row=2, column=0, padx=5, pady=5)
-        self.entry_cpf_funcionario = ttk.Entry(self.tab_funcionarios)
+        label_cpf_funcionario = ttk.Label(self.tab_funcionarios, text="CPF:", **estilo_label)
+        label_cpf_funcionario.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+        self.entry_cpf_funcionario = ttk.Entry(self.tab_funcionarios, **estilo_entrada)
         self.entry_cpf_funcionario.grid(row=2, column=1, padx=5, pady=5)
 
-        label_cargo_funcionario = ttk.Label(self.tab_funcionarios, text="Cargo:")
-        label_cargo_funcionario.grid(row=3, column=0, padx=5, pady=5)
-        self.entry_cargo_funcionario = ttk.Entry(self.tab_funcionarios)
+        label_cargo_funcionario = ttk.Label(self.tab_funcionarios, text="Cargo:", **estilo_label)
+        label_cargo_funcionario.grid(row=3, column=0, padx=5, pady=5, sticky="e")
+        self.entry_cargo_funcionario = ttk.Entry(self.tab_funcionarios, **estilo_entrada)
         self.entry_cargo_funcionario.grid(row=3, column=1, padx=5, pady=5)
 
         # Botão para adicionar funcionário
-        btn_add_funcionario = ttk.Button(self.tab_funcionarios, text="Adicionar Funcionário", command=self.adicionar_funcionario)
-        btn_add_funcionario.grid(row=4, column=1, pady=10)
+        btn_add_funcionario = ttk.Button(self.tab_funcionarios, text="Adicionar", command=self.adicionar_funcionario)
+        btn_add_funcionario.grid(row=4, column=1, pady=10, sticky="n")
 
         # Seção para listar funcionários
-        label_listar_funcionarios = ttk.Label(self.tab_funcionarios, text="Funcionários Cadastrados")
-        label_listar_funcionarios.grid(row=5, column=0, pady=5)
+        label_listar_funcionarios = ttk.Label(self.tab_funcionarios, text="Funcionários Cadastrados", **estilo_label)
+        label_listar_funcionarios.grid(row=5, column=0, pady=(5), columnspan=2)
 
         # Criando o Treeview para listar funcionários
         colunas = ('Nome', 'CPF', 'Cargo')
@@ -285,13 +269,14 @@ class GerenteApp:
 
         # Botões para editar e deletar funcionários
         btn_editar_funcionario = ttk.Button(self.tab_funcionarios, text="Editar Funcionário", command=self.editar_funcionario)
-        btn_editar_funcionario.grid(row=7, column=0, pady=10)
+        btn_editar_funcionario.grid(row=7, column=0, pady=10, sticky="n")
 
         btn_deletar_funcionario = ttk.Button(self.tab_funcionarios, text="Deletar Funcionário", command=self.deletar_funcionario)
-        btn_deletar_funcionario.grid(row=7, column=1, pady=10)
+        btn_deletar_funcionario.grid(row=7, column=1, pady=10, sticky="n")
         
         self.listar_funcionarios()
         
+
 
 
 
@@ -299,25 +284,58 @@ class GerenteApp:
     def adicionar_moto(self):
         modelo = self.entry_modelo.get()
         ano = self.entry_ano.get()
-        preco = float(self.entry_preco.get())  # Converter para float, caso seja necessário
+        preco = float(self.entry_preco.get())  # Converter para float
         cor = self.entry_cor.get()
-        chassi = self.entry_chassi.get()  # Supondo que você tenha um campo para o chassi
+        chassi = self.entry_chassi.get()  # Chassi da moto
 
+        # Aqui você poderia adicionar uma lógica para mudar o status se for necessário
         moto = Moto(modelo=modelo, ano=ano, preco=preco, cor=cor, chassi=chassi)
         self.moto_dao.adicionar_moto(moto)
         print("Moto adicionada com sucesso!")
 
+
     def atualizar_moto(self):
-        id_moto = self.entry_id_moto_atualizar.get()
-        campo = self.entry_campo_atualizar.get()
-        novo_valor = self.entry_valor_atualizar.get()
+        chassi = self.entry_id_moto_atualizar.get()  # Chassi da moto
+        campo = self.entry_campo_atualizar_moto.get().lower().strip()  # Campo a ser atualizado
+        novo_valor = self.entry_valor_atualizar.get().strip()  # Novo valor a ser atualizado
 
-        # Verifica qual campo será atualizado e o formata corretamente
-        if campo.lower() in ["preco", "ano"]:  # Certificando-se de que o preço e o ano são do tipo correto
-            novo_valor = float(novo_valor) if campo.lower() == "preco" else int(novo_valor)
+        print(f"Campo a ser atualizado: {campo}")
+        print(f"Novo valor: {novo_valor}")
 
-        self.moto_dao.atualizar_moto(id_moto, campo, novo_valor)
+        if campo == "preco":
+            try:
+                novo_valor = float(novo_valor)  # Converte para float
+                self.moto_dao.atualizar_moto(chassi=chassi, preco=novo_valor)
+            except ValueError:
+                print("Erro: O valor fornecido para 'preco' deve ser numérico.")
+                return
+        elif campo == "ano":
+            try:
+                novo_valor = int(novo_valor)  # Converte para int
+                self.moto_dao.atualizar_moto(chassi=chassi, ano=novo_valor)
+            except ValueError:
+                print("Erro: O valor fornecido para 'ano' deve ser um número inteiro.")
+                return
+        elif campo == "cor":
+            try:
+                novo_valor = str(novo_valor)  # Converte para str
+                self.moto_dao.atualizar_moto(chassi=chassi, cor=novo_valor)
+            except ValueError:
+                print("Erro: O valor fornecido para 'cor' deve ser uma string")
+                return
+        elif campo == "modelo":
+            try:
+                novo_valor = str(novo_valor)  # Converte para str
+                self.moto_dao.atualizar_moto(chassi=chassi, modelo=novo_valor)
+            except ValueError:
+                print("Erro: O valor fornecido para 'modelo' deve ser uma string.")
+                return
+        else:
+            print("Campo inválido. Só é possível atualizar 'preco','ano','cor' e 'modelo'.")
+            return
+
         print("Moto atualizada com sucesso!")
+
 
     def remover_moto(self):
         id_moto = self.entry_id_moto_remover.get()
@@ -451,25 +469,46 @@ class GerenteApp:
         btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
         btn_fechar.pack(pady=10)
 
+    def remover_moto_posvenda(self,chassi):
+        self.moto_dao.deletar_moto(chassi)  # Verifique se o método de remoção se chama deletar_moto
+        print("Moto removida com sucesso!")
 
     def adicionar_venda(self):
         cpf_cliente = self.entry_cpf_cliente.get()
         chassi_moto = self.entry_chassi_moto.get()
+       
+        try:
+            item = self.cliente_dao.buscar_cliente(cpf_cliente)
+            if item != None: 
+                print('pass')
+            else:
+                if cpf_cliente == "":
+                    raise ValueError
+                else:
+                    raise TypeError
+        except TypeError:
+            messagebox.showerror("Erro", "Digite um cliente cadastrado")
+        except ValueError:
+            messagebox.showerror("Erro", "Todos os campos precisam ser preenchidos")
 
-        # Gerar a data atual da venda
-        data_venda = datetime.datetime.now().strftime("%Y-%m-%d")
-
-        # Definir o status inicial da venda (por exemplo, "Em andamento")
-        status = "Preparando"
-
-        preco = self.moto_dao.buscar_preco(chassi_moto)
-
-        # Cria um objeto Venda apenas com CPF do cliente, chassi da moto, data e status
-        venda = Venda(data=data_venda, status=status, chassi_moto=chassi_moto, cpf_cliente=cpf_cliente, preco=preco[0])
-        
-        # Chama o método do DAO para adicionar a venda no banco de dados
-        self.venda_dao.adicionar_venda(venda)
-        print("Venda gerada com sucesso!")
+        try:
+            item = self.moto_dao.buscar_moto(chassi_moto)
+            if item != None: 
+                data_venda = datetime.datetime.now().strftime("%Y-%m-%d")
+                status = "Preparando"
+                preco = self.moto_dao.buscar_preco(chassi_moto)
+                self.remover_moto_posvenda(chassi_moto)
+                venda = Venda(data=data_venda, status=status, chassi_moto=chassi_moto, cpf_cliente=cpf_cliente, preco=preco[0])
+                self.venda_dao.adicionar_venda(venda)
+            else:
+                if chassi_moto == "":
+                    raise ValueError
+                else:
+                    raise TypeError
+        except TypeError:
+            messagebox.showerror("Erro", "Digite uma moto cadastrada")  
+        except ValueError:
+            messagebox.showerror("Erro", "Todos os campos precisam ser preenchidos")
 
 
 
@@ -536,23 +575,35 @@ class GerenteApp:
         data_revisao = datetime.datetime.now().strftime("%Y-%m-%d")
         cpf = self.entry_cpf_cliente_revisao.get()
 
-        revisao = Revisao(data=data_revisao, custo=0, status_revisao="Aguardando Moto", chassi_moto=chassi_moto, cpf_cliente=cpf)
         # Validar entradas
         if not chassi_moto or not data_revisao or not cpf:
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
-        # Inserir revisão no banco de dados
         try:
-            self.agenda_revisao_dao.adicionar_revisao(revisao)
-            messagebox.showinfo("Sucesso", "Revisão agendada com sucesso!")
-            # Limpar campos após agendar
-            self.entry_chassi_moto_revisao.delete(0, tk.END)
-            self.entry_data_revisao.delete(0, tk.END)
-            self.entry_cpf_cliente_revisao.delete(0, tk.END)
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro ao agendar revisão: {e}")
+            item = self.moto_dao.buscar_moto(chassi_moto)
+            if item != None:
+                pass
+            else:
+                raise Exception
 
+        except Exception as e:
+            messagebox.showerror("Erro", f"Digite um chassi válido")
+
+        try:
+            item = self.cliente_dao.buscar_cliente(cpf)
+            if item != None:
+                revisao = Revisao(data=data_revisao, custo=250, status_revisao="Aguardando Moto", chassi_moto=chassi_moto, cpf_cliente=cpf)
+                self.agenda_revisao_dao.adicionar_revisao(revisao)
+                messagebox.showinfo("Sucesso", "Revisão agendada com sucesso!")
+                # Limpar campos após agendar
+                self.entry_chassi_moto_revisao.delete(0, tk.END)
+                self.entry_data_revisao.delete(0, tk.END)
+                self.entry_cpf_cliente_revisao.delete(0, tk.END)
+            else: 
+                raise Exception      
+        except Exception:
+            messagebox.showerror("Erro", f"Digite um cpf válido")
 
     def listar_revisoes_popup(self):
         # Criar uma nova janela (pop-up) para listar as revisões
@@ -745,11 +796,6 @@ class GerenteApp:
 
 
     
-# Inicializando a aplicação
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GerenteApp(root)
-    root.mainloop()
+ 
 
-# atualizar moto está trocado as informações, ano está no lugar de preço
-# 
+# remover legenda do botão atualizar e aumentar o mesmo

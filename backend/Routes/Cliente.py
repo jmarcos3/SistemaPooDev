@@ -30,6 +30,7 @@ class ClienteDAO:
     def buscar_cliente(self, cpf):
         self.cursor.execute('SELECT * FROM Clientes WHERE cpf = ?', (cpf,))
         cliente = self.cursor.fetchone()
+        
         return cliente
 
     def atualizar_cliente(self, cliente):
