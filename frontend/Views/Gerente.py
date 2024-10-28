@@ -25,6 +25,9 @@ class GerenteApp:
         estilo_label = {"font": ("Arial", 14, "bold"), "foreground": "#333"}
         estilo_entrada = {"width": 25, "font": ("Arial", 12)}
 
+        style = ttk.Style()
+        style.configure("Custom.TButton", font=("Arial", 14))
+
         # Aba de Motos
         self.tab_motos = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_motos, text="Motos")
@@ -58,7 +61,7 @@ class GerenteApp:
         self.entry_chassi = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_chassi.grid(row=5, column=1, padx=5, pady=5)
 
-        btn_adicionar_moto = ttk.Button(self.tab_motos, text="Adicionar", command=self.adicionar_moto)
+        btn_adicionar_moto = ttk.Button(self.tab_motos, text="Adicionar", style="Custom.TButton", command=self.adicionar_moto)
         btn_adicionar_moto.grid(row=6, column=1, pady=10, sticky="n")
 
         # Seção para remover moto
@@ -70,7 +73,7 @@ class GerenteApp:
         self.entry_id_moto_remover = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_id_moto_remover.grid(row=8, column=1, padx=5, pady=5)
 
-        btn_remover_moto = ttk.Button(self.tab_motos, text="Remover", command=self.remover_moto)
+        btn_remover_moto = ttk.Button(self.tab_motos, text="Remover", style="Custom.TButton", command=self.remover_moto)
         btn_remover_moto.grid(row=9, column=1, pady=5, sticky="n")
 
         # Seção para atualizar moto
@@ -92,14 +95,14 @@ class GerenteApp:
         self.entry_valor_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
         self.entry_valor_atualizar.grid(row=13, column=1, padx=5, pady=5)
 
-        btn_atualizar_moto = ttk.Button(self.tab_motos, text="Atualizar", command=self.atualizar_moto)
+        btn_atualizar_moto = ttk.Button(self.tab_motos, text="Atualizar", style="Custom.TButton", command=self.atualizar_moto)
         btn_atualizar_moto.grid(row=14, column=1, pady=10, sticky="n")
 
         # Seção para listar motos
         label_listar_motos = ttk.Label(self.tab_motos, text="Listar Motos:", **estilo_label)
         label_listar_motos.grid(row=15, column=0, pady=5)
 
-        btn_listar_motos = ttk.Button(self.tab_motos, text="Listar Motos", command=self.listar_motos_popup)
+        btn_listar_motos = ttk.Button(self.tab_motos, text="Listar Motos", style="Custom.TButton", command=self.listar_motos_popup)
         btn_listar_motos.grid(row=15, column=1, pady=10, sticky="s")
 
 
@@ -126,7 +129,7 @@ class GerenteApp:
         self.entry_email = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_email.grid(row=3, column=1, padx=5, pady=5)
 
-        btn_adicionar_cliente = ttk.Button(self.tab_cliente, text="Adicionar", command=self.adicionar_cliente)
+        btn_adicionar_cliente = ttk.Button(self.tab_cliente, text="Adicionar", style="Custom.TButton", command=self.adicionar_cliente)
         btn_adicionar_cliente.grid(row=4, column=1, pady=10, sticky="n")
 
         # Seção para atualizar cliente
@@ -148,14 +151,14 @@ class GerenteApp:
         self.entry_novo_valor = ttk.Entry(self.tab_cliente, **estilo_entrada)
         self.entry_novo_valor.grid(row=11, column=1, padx=5, pady=5)
 
-        btn_atualizar_cliente = ttk.Button(self.tab_cliente, text="Atualizar", command=self.atualizar_cliente)
+        btn_atualizar_cliente = ttk.Button(self.tab_cliente, text="Atualizar", style="Custom.TButton", command=self.atualizar_cliente)
         btn_atualizar_cliente.grid(row=12, column=1, pady=10, sticky="n")
 
         # Seção para listar clientes
         label_listar_clientes = ttk.Label(self.tab_cliente, text="Listar Clientes:", **estilo_label)
         label_listar_clientes.grid(row=14, column=0, pady=5)
 
-        btn_listar_clientes = ttk.Button(self.tab_cliente, text="Listar Clientes", command=self.listar_clientes_popup)
+        btn_listar_clientes = ttk.Button(self.tab_cliente, text="Listar Clientes", style="Custom.TButton", command=self.listar_clientes_popup)
         btn_listar_clientes.grid(row=14, column=1, pady=5, sticky="n")
 
 
@@ -177,7 +180,7 @@ class GerenteApp:
         self.entry_chassi_moto = ttk.Entry(self.tab_venda, **estilo_entrada)
         self.entry_chassi_moto.grid(row=2, column=1, padx=5, pady=5)
 
-        btn_gerar_venda = ttk.Button(self.tab_venda, text="Gerar Venda", command=self.adicionar_venda)
+        btn_gerar_venda = ttk.Button(self.tab_venda, text="Gerar Venda", style="Custom.TButton", command=self.adicionar_venda)
         btn_gerar_venda.grid(row=3, column=1, pady=10, sticky="n")
 
         # Label para a seção de listar vendas
@@ -185,7 +188,7 @@ class GerenteApp:
         label_listar_vendas.grid(row=14, column=0, pady=(5))
 
         # Botão para listar vendas e abrir um pop-up
-        btn_listar_vendas = ttk.Button(self.tab_venda, text="Listar Vendas", command=self.listar_vendas_popup)
+        btn_listar_vendas = ttk.Button(self.tab_venda, text="Listar Vendas", style="Custom.TButton", command=self.listar_vendas_popup)
         btn_listar_vendas.grid(row=14, column=1, pady=10, sticky="n")
 
 
@@ -207,7 +210,7 @@ class GerenteApp:
         self.entry_cpf_cliente_revisao = ttk.Entry(self.tab_agenda, **estilo_entrada)
         self.entry_cpf_cliente_revisao.grid(row=3, column=1, padx=5, pady=5)
 
-        btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", command=self.agendar_revisao)
+        btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", style="Custom.TButton", command=self.agendar_revisao)
         btn_agendar_revisao.grid(row=4, column=1, pady=10, sticky="n")
 
         # Seção para listar revisões agendadas
@@ -215,7 +218,7 @@ class GerenteApp:
         label_listar_revisoes.grid(row=5, column=0, pady=(5))
 
         # Botão para listar revisões e abrir um pop-up
-        btn_listar_revisoes = ttk.Button(self.tab_agenda, text="Listar Revisões", command=self.listar_revisoes_popup)
+        btn_listar_revisoes = ttk.Button(self.tab_agenda, text="Listar Revisões", style="Custom.TButton", command=self.listar_revisoes_popup)
         btn_listar_revisoes.grid(row=5, column=1, pady=5, sticky="n")
 
 
@@ -243,7 +246,7 @@ class GerenteApp:
         self.entry_cargo_funcionario.grid(row=3, column=1, padx=5, pady=5)
 
         # Botão para adicionar funcionário
-        btn_add_funcionario = ttk.Button(self.tab_funcionarios, text="Adicionar", command=self.adicionar_funcionario)
+        btn_add_funcionario = ttk.Button(self.tab_funcionarios, text="Adicionar", style="Custom.TButton", command=self.adicionar_funcionario)
         btn_add_funcionario.grid(row=4, column=1, pady=10, sticky="n")
 
         # Seção para listar funcionários
@@ -268,10 +271,10 @@ class GerenteApp:
         self.tree_funcionarios.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 
         # Botões para editar e deletar funcionários
-        btn_editar_funcionario = ttk.Button(self.tab_funcionarios, text="Editar Funcionário", command=self.editar_funcionario)
+        btn_editar_funcionario = ttk.Button(self.tab_funcionarios, text="Editar Funcionário", style="Custom.TButton", command=self.editar_funcionario)
         btn_editar_funcionario.grid(row=7, column=0, pady=10, sticky="n")
 
-        btn_deletar_funcionario = ttk.Button(self.tab_funcionarios, text="Deletar Funcionário", command=self.deletar_funcionario)
+        btn_deletar_funcionario = ttk.Button(self.tab_funcionarios, text="Deletar Funcionário", style="Custom.TButton", command=self.deletar_funcionario)
         btn_deletar_funcionario.grid(row=7, column=1, pady=10, sticky="n")
         
         self.listar_funcionarios()
@@ -389,7 +392,7 @@ class GerenteApp:
         tree.pack(padx=10, pady=10, expand=True, fill='both')
 
         # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
+        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
         btn_fechar.pack(pady=10)
 
 
@@ -466,7 +469,7 @@ class GerenteApp:
         tree.pack(padx=10, pady=10, expand=True, fill='both')
 
         # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
+        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
         btn_fechar.pack(pady=10)
 
     def remover_moto_posvenda(self,chassi):
@@ -561,7 +564,7 @@ class GerenteApp:
         tree.pack(padx=10, pady=10, expand=True, fill='both')
 
         # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
+        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
         btn_fechar.pack(pady=10)
 
 
@@ -653,7 +656,7 @@ class GerenteApp:
         tree.pack(padx=10, pady=10, expand=True, fill='both')
 
         # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", command=popup.destroy)
+        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
         btn_fechar.pack(pady=10)
 
 
@@ -765,7 +768,7 @@ class GerenteApp:
             # Atualizar a lista de funcionários no Treeview
             self.listar_funcionarios()
 
-        btn_salvar = ttk.Button(editar_popup, text="Salvar", command=salvar_edicao)
+        btn_salvar = ttk.Button(editar_popup, text="Salvar", style="Custom.TButton", command=salvar_edicao)
         btn_salvar.grid(row=3, column=0, columnspan=2, pady=10)
 
         # Tornar a janela modal
