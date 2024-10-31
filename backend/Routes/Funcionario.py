@@ -28,11 +28,17 @@ class FuncionarioDAO:
         self.cursor.execute('SELECT * FROM Funcionarios')
         funcionarios = self.cursor.fetchall()
         return funcionarios
+    
 
     def buscar_funcionario(self, cpf):
         self.cursor.execute('SELECT * FROM Funcionarios WHERE cpf = ?', (cpf,))
         funcionario = self.cursor.fetchone()
         return funcionario
+    
+    def buscar_funcao(self, username,password):
+        self.cursor.execute('SELECT funcao FROM Funcionarios WHERE usuario = ? AND senha = ?', (username, password))
+        funcionario = self.cursor.fetchone()
+        return funcionario[0] if funcionario else None
 
     def atualizar_funcionario(self, funcionario):
         if funcionario.nome:

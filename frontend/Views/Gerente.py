@@ -22,11 +22,11 @@ class GerenteApp:
         self.notebook.pack(pady=10, expand=True)
 
         # Estilos personalizados
-        estilo_label = {"font": ("Arial", 14, "bold"), "foreground": "#333"}
-        estilo_entrada = {"width": 25, "font": ("Arial", 12)}
+        estilo_label = {"font": ("Arial", 12, "bold"), "foreground": "#333"}
+        estilo_entrada = {"width": 25, "font": ("Arial", 11)}
 
         style = ttk.Style()
-        style.configure("Custom.TButton", font=("Arial", 14))
+        style.configure("Custom.TButton", font=("Arial", 10))
 
         # Aba de Motos
         self.tab_motos = ttk.Frame(self.notebook, padding=15)
@@ -801,4 +801,3 @@ class GerenteApp:
     
  
 
-# remover legenda do botão atualizar e aumentar o mesmo
