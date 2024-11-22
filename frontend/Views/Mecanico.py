@@ -8,7 +8,7 @@ class MecanicoApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Sistema de Controle de Motos")
-        #self.root.geometry("600x800")  # Ajuste o tamanho da janela conforme necessário
+        self.root.state('zoomed')
 
         # Inicializando DAOs
         self.agenda_revisao_dao = AgendaRevisaoDAO('db.db')

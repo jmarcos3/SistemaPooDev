@@ -8,7 +8,7 @@ class VendedorApp:
     def __init__(self, root):
       self.root = root
       self.root.title("Sistema de Controle de Motos")
-      #self.root.geometry("600x800")  # Ajuste o tamanho da janela conforme necessário
+      self.root.state('zoomed')
 
         # Inicializando DAOs
       self.moto_dao = MotoDAO('db.db')  # Altere o nome do banco conforme necessário
@@ -31,7 +31,7 @@ class VendedorApp:
       self.tab_cliente = ttk.Frame(self.notebook, padding=15)
       self.notebook.add(self.tab_cliente, text="Clientes")
 
-
+        
       # Seção para adicionar cliente
       label_adicionar_cliente = ttk.Label(self.tab_cliente, text="Adicionar Cliente", **estilo_label)
       label_adicionar_cliente.grid(row=0, column=0, columnspan=2, pady=(0, 15))

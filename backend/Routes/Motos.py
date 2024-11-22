@@ -57,20 +57,20 @@ class MotoDAO:
         conn.close()
         return preco    
 
-    def atualizar_moto(self, chassi, ano=None, preco=None, cor=None, modelo=None):
+    def atualizar_moto(self, moto):
         # Atualiza os dados de uma moto específica
         conn = self.conectar()
         cursor = conn.cursor()
         
         # Atualiza os dados conforme os parâmetros fornecidos
-        if ano:
-            cursor.execute('UPDATE Motos SET ano = ? WHERE chassi = ?', (ano, chassi))
-        if preco:
-            cursor.execute('UPDATE Motos SET preco = ? WHERE chassi = ?', (preco, chassi))
-        if cor:
-            cursor.execute('UPDATE Motos SET cor = ? WHERE chassi = ?', (cor, chassi))
-        if modelo:
-            cursor.execute('UPDATE Motos SET modelo = ? WHERE chassi = ?', (modelo, chassi))
+        if moto.ano:
+            cursor.execute('UPDATE Motos SET ano = ? WHERE chassi = ?', (moto.ano, moto.chassi))
+        if moto.preco:
+            cursor.execute('UPDATE Motos SET preco = ? WHERE chassi = ?', (moto.preco, moto.chassi))
+        if moto.cor:
+            cursor.execute('UPDATE Motos SET cor = ? WHERE chassi = ?', (moto.cor, moto.chassi))
+        if moto.modelo:
+            cursor.execute('UPDATE Motos SET modelo = ? WHERE chassi = ?', (moto.modelo, moto.chassi))
         
         conn.commit()
         conn.close()

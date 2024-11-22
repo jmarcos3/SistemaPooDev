@@ -8,7 +8,7 @@ class GerenteApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Sistema de Controle de Motos")
-        #self.root.geometry("600x800")  # Ajuste o tamanho da janela conforme necessário
+        self.root.state('zoomed')
 
         # Inicializando DAOs
         self.moto_dao = MotoDAO('db.db')  # Altere o nome do banco conforme necessário
@@ -19,7 +19,7 @@ class GerenteApp:
 
         # Criando o notebook (abas)
         self.notebook = ttk.Notebook(self.root)
-        self.notebook.pack(pady=10, expand=True)
+        self.notebook.pack(fill="both", expand=True)
 
         # Estilos personalizados
         estilo_label = {"font": ("Arial", 12, "bold"), "foreground": "#333"}
@@ -28,7 +28,12 @@ class GerenteApp:
         style = ttk.Style()
         style.configure("Custom.TButton", font=("Arial", 10))
 
-        # Aba de Motos
+        # Personaliazndo abas 
+        style = ttk.Style()
+        style.theme_use("default")  # Use o tema padrão, garante compatibilidade
+        style.configure("TNotebook.Tab", width=self.root.winfo_screenwidth() // len(["Motos", "Clientes", "Vendas", "Agenda de Revisões", "Funcionários"])) 
+       
+       # Aba de Motos
         self.tab_motos = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_motos, text="Motos")
 
@@ -64,48 +69,82 @@ class GerenteApp:
         btn_adicionar_moto = ttk.Button(self.tab_motos, text="Adicionar", style="Custom.TButton", command=self.adicionar_moto)
         btn_adicionar_moto.grid(row=6, column=1, pady=10, sticky="n")
 
-        # Seção para remover moto
-        label_remover_moto = ttk.Label(self.tab_motos, text="Remover Moto", **estilo_label)
-        label_remover_moto.grid(row=7, column=0, columnspan=2, pady=(15, 5))
+        # # Seção para remover moto
+        # label_remover_moto = ttk.Label(self.tab_motos, text="Remover Moto", **estilo_label)
+        # label_remover_moto.grid(row=7, column=0, columnspan=2, pady=(15, 5))
 
-        label_id_moto_remover = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
-        label_id_moto_remover.grid(row=8, column=0, padx=5, pady=5, sticky="e")
-        self.entry_id_moto_remover = ttk.Entry(self.tab_motos, **estilo_entrada)
-        self.entry_id_moto_remover.grid(row=8, column=1, padx=5, pady=5)
+        # label_id_moto_remover = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
+        # label_id_moto_remover.grid(row=8, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_id_moto_remover = ttk.Entry(self.tab_motos, **estilo_entrada)
+        # self.entry_id_moto_remover.grid(row=8, column=1, padx=5, pady=5)
 
-        btn_remover_moto = ttk.Button(self.tab_motos, text="Remover", style="Custom.TButton", command=self.remover_moto)
-        btn_remover_moto.grid(row=9, column=1, pady=5, sticky="n")
+        # btn_remover_moto = ttk.Button(self.tab_motos, text="Remover", style="Custom.TButton", command=self.remover_moto)
+        # btn_remover_moto.grid(row=9, column=1, pady=5, sticky="n")
 
-        # Seção para atualizar moto
-        label_atualizar_moto = ttk.Label(self.tab_motos, text="Atualizar Moto", **estilo_label)
-        label_atualizar_moto.grid(row=10, column=0, columnspan=2, pady=(15, 5))
+        # # Seção para atualizar moto
+        # label_atualizar_moto = ttk.Label(self.tab_motos, text="Atualizar Moto", **estilo_label)
+        # label_atualizar_moto.grid(row=10, column=0, columnspan=2, pady=(15, 5))
 
-        label_id_moto_atualizar = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
-        label_id_moto_atualizar.grid(row=11, column=0, padx=5, pady=5, sticky="e")
-        self.entry_id_moto_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
-        self.entry_id_moto_atualizar.grid(row=11, column=1, padx=5, pady=5)
+        # label_id_moto_atualizar = ttk.Label(self.tab_motos, text="Chassi:", **estilo_label)
+        # label_id_moto_atualizar.grid(row=11, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_id_moto_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
+        # self.entry_id_moto_atualizar.grid(row=11, column=1, padx=5, pady=5)
 
-        label_campo_atualizar_moto = ttk.Label(self.tab_motos, text="Campo a Atualizar:", **estilo_label)
-        label_campo_atualizar_moto.grid(row=12, column=0, padx=5, pady=5, sticky="e")
-        self.entry_campo_atualizar_moto = ttk.Entry(self.tab_motos, **estilo_entrada)
-        self.entry_campo_atualizar_moto.grid(row=12, column=1, padx=5, pady=5)
+        # label_campo_atualizar_moto = ttk.Label(self.tab_motos, text="Campo a Atualizar:", **estilo_label)
+        # label_campo_atualizar_moto.grid(row=12, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_campo_atualizar_moto = ttk.Entry(self.tab_motos, **estilo_entrada)
+        # self.entry_campo_atualizar_moto.grid(row=12, column=1, padx=5, pady=5)
 
-        label_novo_valor = ttk.Label(self.tab_motos, text="Novo Valor:", **estilo_label)
-        label_novo_valor.grid(row=13, column=0, padx=5, pady=5, sticky="e")
-        self.entry_valor_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
-        self.entry_valor_atualizar.grid(row=13, column=1, padx=5, pady=5)
+        # label_novo_valor = ttk.Label(self.tab_motos, text="Novo Valor:", **estilo_label)
+        # label_novo_valor.grid(row=13, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_valor_atualizar = ttk.Entry(self.tab_motos, **estilo_entrada)
+        # self.entry_valor_atualizar.grid(row=13, column=1, padx=5, pady=5)
 
-        btn_atualizar_moto = ttk.Button(self.tab_motos, text="Atualizar", style="Custom.TButton", command=self.atualizar_moto)
-        btn_atualizar_moto.grid(row=14, column=1, pady=10, sticky="n")
+        # btn_atualizar_moto = ttk.Button(self.tab_motos, text="Atualizar", style="Custom.TButton", command=self.atualizar_moto)
+        # btn_atualizar_moto.grid(row=14, column=1, pady=10, sticky="n")
 
-        # Seção para listar motos
-        label_listar_motos = ttk.Label(self.tab_motos, text="Listar Motos:", **estilo_label)
-        label_listar_motos.grid(row=15, column=0, pady=5)
+        # # Seção para listar motos
+        # label_listar_motos = ttk.Label(self.tab_motos, text="Listar Motos:", **estilo_label)
+        # label_listar_motos.grid(row=15, column=0, pady=5)
 
-        btn_listar_motos = ttk.Button(self.tab_motos, text="Listar Motos", style="Custom.TButton", command=self.listar_motos_popup)
-        btn_listar_motos.grid(row=15, column=1, pady=10, sticky="s")
+        # btn_listar_motos = ttk.Button(self.tab_motos, text="Listar Motos", style="Custom.TButton", command=self.listar_motos_popup)
+        # btn_listar_motos.grid(row=15, column=1, pady=10, sticky="s")
+#############################################################################################
+        # Seção para listar 
+        label_listar_funcionarios = ttk.Label(self.tab_motos, text="Motos Cadastradas", **estilo_label)
+        label_listar_funcionarios.grid(row=10, column=0, pady=(5), columnspan=2)
 
+        # Criando o Treeview para listar 
+        colunas = ('Chassi', 'Ano', 'Preço', 'Cor','Modelo')
+        self.tree_moto = ttk.Treeview(self.tab_motos, columns=colunas, show='headings')
 
+        # Definindo os títulos das colunas
+        self.tree_moto.heading('Chassi', text='Chassi')
+        self.tree_moto.heading('Ano', text='Ano')
+        self.tree_moto.heading('Preço', text='Preço')
+        self.tree_moto.heading('Cor', text='Cor')
+        self.tree_moto.heading('Modelo', text='Modelo')
+
+        # Ajustar o tamanho das colunas
+        self.tree_moto.column('Chassi', width=150)
+        self.tree_moto.column('Ano', width=120)
+        self.tree_moto.column('Preço', width=100)
+        self.tree_moto.column('Cor', width=100)
+        self.tree_moto.column('Modelo', width=100)
+
+        # Posicionar o Treeview
+        self.tree_moto.grid(row=10, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        
+        # Botões para editar e deletar funcionários
+        btn_editar_moto = ttk.Button(self.tab_motos, text="Editar Moto", style="Custom.TButton", command=self.editar_moto)
+        btn_editar_moto.grid(row=11, column=0, pady=10, sticky="n")
+
+        btn_deletar_moto = ttk.Button(self.tab_motos, text="Deletar Moto", style="Custom.TButton", command=self.deletar_moto)
+        btn_deletar_moto.grid(row=11, column=1, pady=10, sticky="n")
+        
+        self.listar_motos()
+
+#####################################
         # Aba de Clientes
         self.tab_cliente = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_cliente, text="Clientes")
@@ -132,36 +171,64 @@ class GerenteApp:
         btn_adicionar_cliente = ttk.Button(self.tab_cliente, text="Adicionar", style="Custom.TButton", command=self.adicionar_cliente)
         btn_adicionar_cliente.grid(row=4, column=1, pady=10, sticky="n")
 
-        # Seção para atualizar cliente
-        label_atualizar_cliente = ttk.Label(self.tab_cliente, text="Atualizar Cliente", **estilo_label)
-        label_atualizar_cliente.grid(row=8, column=0, columnspan=2, pady=(15, 5))
+        # # Seção para atualizar cliente
+        # label_atualizar_cliente = ttk.Label(self.tab_cliente, text="Atualizar Cliente", **estilo_label)
+        # label_atualizar_cliente.grid(row=8, column=0, columnspan=2, pady=(15, 5))
 
-        label_atualizar_cpf = ttk.Label(self.tab_cliente, text="CPF do Cliente:", **estilo_label)
-        label_atualizar_cpf.grid(row=9, column=0, padx=5, pady=5, sticky="e")
-        self.entry_atualizar_cpf = ttk.Entry(self.tab_cliente, **estilo_entrada)
-        self.entry_atualizar_cpf.grid(row=9, column=1, padx=5, pady=5)
+        # label_atualizar_cpf = ttk.Label(self.tab_cliente, text="CPF do Cliente:", **estilo_label)
+        # label_atualizar_cpf.grid(row=9, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_atualizar_cpf = ttk.Entry(self.tab_cliente, **estilo_entrada)
+        # self.entry_atualizar_cpf.grid(row=9, column=1, padx=5, pady=5)
 
-        label_campo_atualizar = ttk.Label(self.tab_cliente, text="Campo a Atualizar:", **estilo_label)
-        label_campo_atualizar.grid(row=10, column=0, padx=5, pady=5, sticky="e")
-        self.entry_campo_atualizar = ttk.Entry(self.tab_cliente, **estilo_entrada)
-        self.entry_campo_atualizar.grid(row=10, column=1, padx=5, pady=5)
+        # label_campo_atualizar = ttk.Label(self.tab_cliente, text="Campo a Atualizar:", **estilo_label)
+        # label_campo_atualizar.grid(row=10, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_campo_atualizar = ttk.Entry(self.tab_cliente, **estilo_entrada)
+        # self.entry_campo_atualizar.grid(row=10, column=1, padx=5, pady=5)
 
-        label_novo_valor = ttk.Label(self.tab_cliente, text="Novo Valor:", **estilo_label)
-        label_novo_valor.grid(row=11, column=0, padx=5, pady=5, sticky="e")
-        self.entry_novo_valor = ttk.Entry(self.tab_cliente, **estilo_entrada)
-        self.entry_novo_valor.grid(row=11, column=1, padx=5, pady=5)
+        # label_novo_valor = ttk.Label(self.tab_cliente, text="Novo Valor:", **estilo_label)
+        # label_novo_valor.grid(row=11, column=0, padx=5, pady=5, sticky="e")
+        # self.entry_novo_valor = ttk.Entry(self.tab_cliente, **estilo_entrada)
+        # self.entry_novo_valor.grid(row=11, column=1, padx=5, pady=5)
 
-        btn_atualizar_cliente = ttk.Button(self.tab_cliente, text="Atualizar", style="Custom.TButton", command=self.atualizar_cliente)
-        btn_atualizar_cliente.grid(row=12, column=1, pady=10, sticky="n")
-
-        # Seção para listar clientes
-        label_listar_clientes = ttk.Label(self.tab_cliente, text="Listar Clientes:", **estilo_label)
-        label_listar_clientes.grid(row=14, column=0, pady=5)
-
-        btn_listar_clientes = ttk.Button(self.tab_cliente, text="Listar Clientes", style="Custom.TButton", command=self.listar_clientes_popup)
-        btn_listar_clientes.grid(row=14, column=1, pady=5, sticky="n")
+        # btn_atualizar_cliente = ttk.Button(self.tab_cliente, text="Atualizar", style="Custom.TButton", command=self.atualizar_cliente)
+        # btn_atualizar_cliente.grid(row=12, column=1, pady=10, sticky="n")
 
 
+        # # Seção para listar clientes
+        # label_listar_clientes = ttk.Label(self.tab_cliente, text="Listar Clientes:", **estilo_label)
+        # label_listar_clientes.grid(row=14, column=0, pady=5)
+
+        # btn_listar_clientes = ttk.Button(self.tab_cliente, text="Listar Clientes", style="Custom.TButton", command=self.listar_clientes_popup)
+        # btn_listar_clientes.grid(row=14, column=1, pady=5, sticky="n")
+
+        # Seção para listar 
+        label_listar_funcionarios = ttk.Label(self.tab_cliente, text="Funcionários Cadastrados", **estilo_label)
+        label_listar_funcionarios.grid(row=15, column=0, pady=(5), columnspan=2)
+
+        # Criando o Treeview para listar 
+        colunas = ('CPF', 'Nome', 'Email')
+        self.tree = ttk.Treeview(self.tab_cliente, columns=colunas, show='headings')
+
+        # Definindo os títulos das colunas
+        self.tree.heading('CPF', text='CPF')
+        self.tree.heading('Nome', text='Nome')
+        self.tree.heading('Email', text='Email')
+
+        # Ajustar o tamanho das colunas
+        self.tree.column('CPF', width=150)
+        self.tree.column('Nome', width=120)
+        self.tree.column('Email', width=200)
+
+        # Posicionar o Treeview
+        self.tree.grid(row=15, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+
+        # Botões para editar e deletar 
+        btn_editar_cliente = ttk.Button(self.tab_cliente, text="Editar cliente", style="Custom.TButton", command=self.atualizar_cliente)
+        btn_editar_cliente.grid(row=16, column=1, pady=10, sticky="n")
+
+        self.listar_clientes()
+
+###################################################################################################
         # Aba de Vendas
         self.tab_venda = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_venda, text="Vendas")
@@ -183,14 +250,35 @@ class GerenteApp:
         btn_gerar_venda = ttk.Button(self.tab_venda, text="Gerar Venda", style="Custom.TButton", command=self.adicionar_venda)
         btn_gerar_venda.grid(row=3, column=1, pady=10, sticky="n")
 
-        # Label para a seção de listar vendas
-        label_listar_vendas = ttk.Label(self.tab_venda, text="Listar Vendas: ", **estilo_label)
-        label_listar_vendas.grid(row=14, column=0, pady=(5))
+        # Seção para listar 
+        label_listar_funcionarios = ttk.Label(self.tab_venda, text="Lista de Vendas", **estilo_label)
+        label_listar_funcionarios.grid(row=5, column=0, pady=(5), columnspan=2)
 
-        # Botão para listar vendas e abrir um pop-up
-        btn_listar_vendas = ttk.Button(self.tab_venda, text="Listar Vendas", style="Custom.TButton", command=self.listar_vendas_popup)
-        btn_listar_vendas.grid(row=14, column=1, pady=10, sticky="n")
+        # Criando o Treeview para listar 
+        colunas = ('ID','Chassi', 'CPF', 'Data', 'Status', 'Preço')
+        self.tree = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
 
+        # Definindo os títulos das colunas
+        self.tree.heading('ID', text='ID Venda')
+        self.tree.heading('Chassi', text='Chassi')
+        self.tree.heading('CPF', text='CPF Cliente')
+        self.tree.heading('Data', text='Data')
+        self.tree.heading('Status', text='Status')
+        self.tree.heading('Preço', text='Preço')
+
+        # Ajustar o tamanho das colunas
+        self.tree.column('ID', width=150)
+        self.tree.column('Chassi', width=100)
+        self.tree.column('CPF', width=100)
+        self.tree.column('Data', width=100)
+        self.tree.column('Status', width=100)
+        self.tree.column('Preço', width=100)
+
+        # Posicionar o Treeview
+        self.tree.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        
+        self.listar_vendas()
+#################################################################
 
         # Adicionando a aba de Agenda de Revisões
         self.tab_agenda = ttk.Frame(self.notebook, padding=15)
@@ -212,16 +300,45 @@ class GerenteApp:
 
         btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", style="Custom.TButton", command=self.agendar_revisao)
         btn_agendar_revisao.grid(row=4, column=1, pady=10, sticky="n")
+      
+        # Seção para listar
+        label_listar_funcionarios = ttk.Label(self.tab_agenda, text="Revisões Agendadas", **estilo_label)
+        label_listar_funcionarios.grid(row=5, column=0, pady=(5), columnspan=2)
 
-        # Seção para listar revisões agendadas
-        label_listar_revisoes = ttk.Label(self.tab_agenda, text="Mostrar Agenda:", **estilo_label)
-        label_listar_revisoes.grid(row=5, column=0, pady=(5))
+        # Criando o Treeview para listar 
+        colunas = ('ID','Chassi', 'Data', 'CPF', 'Status', 'Custo')
+        self.tree = ttk.Treeview(self.tab_agenda, columns=colunas, show='headings')
 
-        # Botão para listar revisões e abrir um pop-up
-        btn_listar_revisoes = ttk.Button(self.tab_agenda, text="Listar Revisões", style="Custom.TButton", command=self.listar_revisoes_popup)
-        btn_listar_revisoes.grid(row=5, column=1, pady=5, sticky="n")
+        # Definindo os títulos das colunas
+        self.tree.heading('ID', text='ID Manutenção')
+        self.tree.heading('Chassi', text='Chassi')
+        self.tree.heading('Data', text='Data')
+        self.tree.heading('CPF', text='Cpf')
+        self.tree.heading('Status', text='Status')
+        self.tree.heading('Custo', text='Custo')
 
+        # Ajustar o tamanho das colunas
+        self.tree.column('ID', width=150)
+        self.tree.column('Chassi', width=100)
+        self.tree.column('Data', width=100)
+        self.tree.column('CPF', width=100)
+        self.tree.column('Status', width=100)
+        self.tree.column('Custo', width=100)
 
+        # Posicionar o Treeview
+        self.tree.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+
+        # Botões para editar e deletar funcionários
+        btn_editar_revisao = ttk.Button(self.tab_agenda, text="Editar revisão", style="Custom.TButton", command=self.atualizar_revisao)
+        btn_editar_revisao.grid(row=11, column=0, pady=10, sticky="n")
+
+        btn_deletar_revisao = ttk.Button(self.tab_agenda, text="Deletar revisão", style="Custom.TButton", command=self.remover_revisao)
+        btn_deletar_revisao.grid(row=11, column=1, pady=10, sticky="n")
+        
+        self.listar_revisoes()
+
+##########################################################################################
+#      
         # Adicionando a aba de Funcionários
         self.tab_funcionarios = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(self.tab_funcionarios, text="Funcionários")
@@ -249,26 +366,26 @@ class GerenteApp:
         btn_add_funcionario = ttk.Button(self.tab_funcionarios, text="Adicionar", style="Custom.TButton", command=self.adicionar_funcionario)
         btn_add_funcionario.grid(row=4, column=1, pady=10, sticky="n")
 
-        # Seção para listar funcionários
+        # Seção para listar 
         label_listar_funcionarios = ttk.Label(self.tab_funcionarios, text="Funcionários Cadastrados", **estilo_label)
         label_listar_funcionarios.grid(row=5, column=0, pady=(5), columnspan=2)
 
-        # Criando o Treeview para listar funcionários
+        # Criando o Treeview para listar 
         colunas = ('Nome', 'CPF', 'Cargo')
-        self.tree_funcionarios = ttk.Treeview(self.tab_funcionarios, columns=colunas, show='headings')
+        self.tree = ttk.Treeview(self.tab_funcionarios, columns=colunas, show='headings')
 
         # Definindo os títulos das colunas
-        self.tree_funcionarios.heading('Nome', text='Nome')
-        self.tree_funcionarios.heading('CPF', text='CPF')
-        self.tree_funcionarios.heading('Cargo', text='Cargo')
+        self.tree.heading('Nome', text='Nome')
+        self.tree.heading('CPF', text='CPF')
+        self.tree.heading('Cargo', text='Cargo')
 
         # Ajustar o tamanho das colunas
-        self.tree_funcionarios.column('Nome', width=150)
-        self.tree_funcionarios.column('CPF', width=120)
-        self.tree_funcionarios.column('Cargo', width=100)
+        self.tree.column('Nome', width=150)
+        self.tree.column('CPF', width=120)
+        self.tree.column('Cargo', width=100)
 
         # Posicionar o Treeview
-        self.tree_funcionarios.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 
         # Botões para editar e deletar funcionários
         btn_editar_funcionario = ttk.Button(self.tab_funcionarios, text="Editar Funcionário", style="Custom.TButton", command=self.editar_funcionario)
@@ -281,7 +398,7 @@ class GerenteApp:
         
 
 
-
+####################################################################################
 
     # Métodos CRUD para motos
     def adicionar_moto(self):
@@ -295,109 +412,135 @@ class GerenteApp:
         moto = Moto(modelo=modelo, ano=ano, preco=preco, cor=cor, chassi=chassi)
         self.moto_dao.adicionar_moto(moto)
         print("Moto adicionada com sucesso!")
+        
+        self.listar_motos()
 
 
-    def atualizar_moto(self):
-        chassi = self.entry_id_moto_atualizar.get()  # Chassi da moto
-        campo = self.entry_campo_atualizar_moto.get().lower().strip()  # Campo a ser atualizado
-        novo_valor = self.entry_valor_atualizar.get().strip()  # Novo valor a ser atualizado
+    def editar_moto(self):
+        # Obter o funcionário selecionado
+        selected_item = self.tree_moto.selection()
 
-        print(f"Campo a ser atualizado: {campo}")
-        print(f"Novo valor: {novo_valor}")
-
-        if campo == "preco":
-            try:
-                novo_valor = float(novo_valor)  # Converte para float
-                self.moto_dao.atualizar_moto(chassi=chassi, preco=novo_valor)
-            except ValueError:
-                print("Erro: O valor fornecido para 'preco' deve ser numérico.")
-                return
-        elif campo == "ano":
-            try:
-                novo_valor = int(novo_valor)  # Converte para int
-                self.moto_dao.atualizar_moto(chassi=chassi, ano=novo_valor)
-            except ValueError:
-                print("Erro: O valor fornecido para 'ano' deve ser um número inteiro.")
-                return
-        elif campo == "cor":
-            try:
-                novo_valor = str(novo_valor)  # Converte para str
-                self.moto_dao.atualizar_moto(chassi=chassi, cor=novo_valor)
-            except ValueError:
-                print("Erro: O valor fornecido para 'cor' deve ser uma string")
-                return
-        elif campo == "modelo":
-            try:
-                novo_valor = str(novo_valor)  # Converte para str
-                self.moto_dao.atualizar_moto(chassi=chassi, modelo=novo_valor)
-            except ValueError:
-                print("Erro: O valor fornecido para 'modelo' deve ser uma string.")
-                return
-        else:
-            print("Campo inválido. Só é possível atualizar 'preco','ano','cor' e 'modelo'.")
+        if not selected_item:
+            messagebox.showerror("Erro", "Selecione um funcionário para editar.")
             return
 
-        print("Moto atualizada com sucesso!")
+        item = self.tree_moto.item(selected_item)
+        moto_chassi = item['values'][0]  # Chassi
+        moto_ano = item['values'][1]    # ano
+        moto_preço = item['values'][2]  # preço
+        moto_cor = item['values'][3]  # cor
+        moto_modelo = item['values'][4]  # modelo
+
+        # # Aqui você deve obter os dados de usuario e senha do banco de dados se necessário
+        # usuario_atual = "usuario_exemplo"  # Substitua isso pelo valor correto
+        # senha_atual = "senha_exemplo"      # Substitua isso pelo valor correto
+
+        # Criar uma nova janela para editar o funcionário
+        editar_popup = tk.Toplevel(self.root)
+        editar_popup.title("Editar Funcionário")
+
+        # Criar campos de entrada para editar os dados
+        label_chassi = ttk.Label(editar_popup, text="Chassi:")
+        label_chassi.grid(row=0, column=0, padx=5, pady=5)
+        entry_chassi = ttk.Entry(editar_popup)
+        entry_chassi.insert(0, moto_chassi)  
+        entry_chassi.config(state='readonly')  # Não permitir editar o Chassi
+        entry_chassi.grid(row=0, column=1, padx=5, pady=5)
+
+        label_ano = ttk.Label(editar_popup, text="Ano:")
+        label_ano.grid(row=1, column=0, padx=5, pady=5)
+        entry_ano = ttk.Entry(editar_popup)
+        entry_ano.insert(0, moto_ano)  # Preencher o nome atual
+        entry_ano.grid(row=1, column=1, padx=5, pady=5)
+
+        label_preço = ttk.Label(editar_popup, text="Preço:")
+        label_preço.grid(row=2, column=0, padx=5, pady=5)
+        entry_preço = ttk.Entry(editar_popup)
+        entry_preço.insert(0, moto_preço)  # Preencher o nome atual
+        entry_preço.grid(row=2, column=1, padx=5, pady=5)
+
+        label_cor = ttk.Label(editar_popup, text="Cor:")
+        label_cor.grid(row=3, column=0, padx=5, pady=5)
+        entry_cor = ttk.Entry(editar_popup)
+        entry_cor.insert(0, moto_cor)  # Preencher o cargo atual
+        entry_cor.grid(row=3, column=1, padx=5, pady=5)
+
+        label_modelo = ttk.Label(editar_popup, text="Cor:")
+        label_modelo.grid(row=3, column=0, padx=5, pady=5)
+        entry_modelo = ttk.Entry(editar_popup)
+        entry_modelo.insert(0, moto_cor)  # Preencher o cargo atual
+        entry_modelo.grid(row=3, column=1, padx=5, pady=5)
+
+        # Botão para salvar as alterações
+        def salvar_edicao():
+            novo_ano = entry_ano.get()
+            novo_preço= entry_preço.get()
+            nova_cor= entry_preço.get()
+            novo_modelo= entry_modelo.get()
+
+            # Criar um objeto Funcionario com os dados atualizados
+            moto_atualizada = Moto(chassi=moto_chassi,ano=novo_ano,preco=novo_preço, cor=nova_cor, modelo=novo_modelo)
+
+            # Chamar o método para atualizar o funcionário no banco de dados
+            self.moto_dao.atualizar_moto(moto_atualizada)
+
+            # Fechar a janela popup
+            editar_popup.destroy()
+
+            # Atualizar a lista de funcionários no Treeview
+            self.listar_motos()
+
+        btn_salvar = ttk.Button(editar_popup, text="Salvar", style="Custom.TButton", command=salvar_edicao)
+        btn_salvar.grid(row=4, column=0, columnspan=2, pady=10)
+
+        # Tornar a janela modal
+        editar_popup.transient(self.root)
+        editar_popup.grab_set()
+        self.root.wait_window(editar_popup)
+            
+    def deletar_moto(self):
+        selected_item = self.tree_moto.selection()
+
+        if not selected_item:
+            messagebox.showerror("Erro", "Selecione uma moto para deletar.")
+            return
+
+        item = self.tree_moto.item(selected_item)
+        moto_id = item['values'][0]
+        print(moto_id)
+
+        try:
+            self.moto_dao.deletar_moto(moto_id)
+            messagebox.showinfo("Sucesso", "Moto deletada com sucesso!")
+            self.listar_motos()  # Atualizar a lista
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao deletar moto: {e}")    
 
 
-    def remover_moto(self):
-        id_moto = self.entry_id_moto_remover.get()
-        self.moto_dao.deletar_moto(id_moto)  # Verifique se o método de remoção se chama deletar_moto
-        print("Moto removida com sucesso!")
+    def listar_motos(self):
+        # Limpar o Treeview antes de listar os dados
+        for i in self.tree_moto.get_children():
+            self.tree_moto.delete(i)
 
-    def listar_motos_popup(self):
-        # Criar uma nova janela (pop-up) referenciando a janela principal
-        popup = tk.Toplevel(self.root)
-        popup.title("Lista de Motos")
-
-        # Definir o tamanho da nova janela
-        popup.geometry("600x300")
-
-        # Criar um Treeview para exibir as motos como uma tabela
-        colunas = ('Chassi', 'Ano', 'Preço', 'Cor', 'Modelo')
-        tree = ttk.Treeview(popup, columns=colunas, show='headings')
-
-        tree.column('Chassi', width=100)
-        tree.column('Ano', width=100)
-        tree.column('Preço', width=100)
-        tree.column('Cor', width=100)
-        tree.column('Modelo', width=100)
-
-        # Definir os títulos das colunas
-        for col in colunas:
-            tree.heading(col, text=col)
-            tree.column(col, anchor='center')
-
-        # Inserir os dados das motos no Treeview
+        # Buscar os funcionários no banco de dados
         motos = self.moto_dao.listar_motos()
-        print("Motos encontradas:", motos)  # Verifique o que está sendo retornado
 
+        # Verifique se a lista de funcionários não está vazia
         if motos:
+            # Inserir cada funcionário na Treeview
             for moto in motos:
-                # Verifique se a tupla tem 5 elementos
-                if len(moto) == 5:  # Certifique-se de que há 5 colunas
-                    chassi = moto[0]  # ID
-                    ano = moto[1]  # Ano
-                    preco = moto[2]  # Preço
-                    cor = moto[3]  # Cor
-                    modelo = moto[4]  # Modelo
-                    tree.insert('', tk.END, values=(chassi, ano, preco, cor, modelo))
-                else:
-                    print("Moto retornada com um número inesperado de campos:", moto)
+                # Lembrando que funcionario é uma tupla, então acessar por índices
+                chassi = moto[0]  # ID
+                ano = moto[1]  # Ano
+                preco = moto[2]  # Preço
+                cor = moto[3]  # Cor
+                modelo = moto[4]  # Modelo
+                self.tree_moto.insert('', tk.END, values=(chassi, ano, preco, cor, modelo))
         else:
-            # Caso não haja motos, mostrar uma linha indicando isso
-            tree.insert('', tk.END, values=('Nenhuma moto encontrada', '', '', '', ''))
-
-        # Posicionar o Treeview na janela pop-up
-        tree.pack(padx=10, pady=10, expand=True, fill='both')
-
-        # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
-        btn_fechar.pack(pady=10)
+            messagebox.showinfo("Informação", "Nenhum  encontrado.")
 
 
-
-
+####################################################################################
     # Métodos CRUD para clientes
     def adicionar_cliente(self):
         nome = self.entry_nome.get()
@@ -429,49 +572,25 @@ class GerenteApp:
             return
         
         print("Cliente atualizado com sucesso!")
+    
+    def listar_clientes(self):
+        # Limpar o Treeview antes de listar os dados
+        for i in self.tree.get_children():
+            self.tree.delete(i)
 
-    def listar_clientes_popup(self):
-        # Criar uma nova janela (pop-up) referenciando a janela principal
-        popup = tk.Toplevel(self.root)  # Use self.root se o root for a janela principal (tk.Tk)
-        popup.title("Lista de Clientes")
-
-        # Definir o tamanho da nova janela
-        popup.geometry("600x300")
-
-        # Criar um Treeview para exibir os clientes como uma tabela
-        colunas = ('CPF', 'Nome', 'Email')
-        tree = ttk.Treeview(popup, columns=colunas, show='headings')
-        
-        # Definir os títulos das colunas
-        tree.heading('CPF', text='CPF')
-        tree.heading('Nome', text='Nome')
-        tree.heading('Email', text='Email')
-
-        # Ajustar o tamanho das colunas
-        tree.column('CPF', width=150)
-        tree.column('Nome', width=200)
-        tree.column('Email', width=250)
-
-        # Inserir os dados dos clientes no Treeview
+        # Buscar os funcionários no banco de dados
         clientes = self.cliente_dao.listar_clientes()
-        
+
         if clientes:
             for cliente in clientes:
                 cpf = cliente[0]  # Primeiro campo (CPF)
                 nome = cliente[1]  # Segundo campo (Nome)
                 email = cliente[2]  # Terceiro campo (Email)
-                tree.insert('', tk.END, values=(cpf, nome, email))  # Inserir na tabela
+                self.tree.insert('', tk.END, values=(cpf, nome, email))  # Inserir na tabela
         else:
-            # Caso não haja clientes, mostrar uma linha indicando isso
-            tree.insert('', tk.END, values=('Nenhum cliente encontrado', '', ''))
+            messagebox.showinfo("Informação", "Nenhum item encontrado.")
 
-        # Posicionar o Treeview na janela pop-up
-        tree.pack(padx=10, pady=10, expand=True, fill='both')
-
-        # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
-        btn_fechar.pack(pady=10)
-
+######################################################################################
     def remover_moto_posvenda(self,chassi):
         self.moto_dao.deletar_moto(chassi)  # Verifique se o método de remoção se chama deletar_moto
         print("Moto removida com sucesso!")
@@ -515,39 +634,17 @@ class GerenteApp:
 
 
 
+    def listar_vendas(self):
+        # Limpar o Treeview antes de listar os dados
+        for i in self.tree.get_children():
+            self.tree.delete(i)
 
-    def listar_vendas_popup(self):
-        # Criar uma nova janela (pop-up) para listar as vendas
-        popup = tk.Toplevel(self.root)
-        popup.title("Vendas Realizadas")
-
-        # Definir o tamanho da nova janela
-        popup.geometry("700x300")  # Aumentei a largura para acomodar mais uma coluna
-
-        # Criar um Treeview para exibir as vendas como uma tabela
-        colunas = ('ID Venda', 'Chassi', 'CPF Cliente', 'Data', 'Status', 'Preço')  # Adicionando a coluna de Preço
-        tree = ttk.Treeview(popup, columns=colunas, show='headings')
-
-        # Definir os títulos das colunas
-        tree.heading('ID Venda', text='ID Venda')
-        tree.heading('Chassi', text='Chassi')
-        tree.heading('CPF Cliente', text='CPF Cliente')
-        tree.heading('Data', text='Data')
-        tree.heading('Status', text='Status')
-        tree.heading('Preço', text='Preço')  # Título da nova coluna
-
-        # Ajustar o tamanho das colunas
-        tree.column('ID Venda', width=100)
-        tree.column('Chassi', width=100)
-        tree.column('CPF Cliente', width=100)
-        tree.column('Data', width=100)
-        tree.column('Status', width=100)
-        tree.column('Preço', width=100)  # Tamanho da nova coluna
-
-        # Inserir os dados das vendas no Treeview
+        # Buscar os funcionários no banco de dados
         vendas = self.venda_dao.listar_vendas()
-        
+
+        # Verifique se a lista de funcionários não está vazia
         if vendas:
+            # Inserir cada funcionário na Treeview
             for venda in vendas:
                 id_venda = venda[0]  # Primeiro campo (ID da venda)
                 chassi = venda[3]    # Chassi
@@ -555,23 +652,13 @@ class GerenteApp:
                 data = venda[1]      # Data da venda
                 status = venda[2]    # Status da venda
                 preco = venda[5]     # Preço da venda (adicionando o preço)
-                tree.insert('', tk.END, values=(id_venda, chassi, cpf_cliente, data, status, preco))  # Adicionando o preço às inserções
+
+                self.tree.insert('', tk.END, values=(id_venda, chassi, cpf_cliente, data, status, preco))  # Adicionando o preço às inserções
         else:
-            # Caso não haja vendas, mostrar uma linha indicando isso
-            tree.insert('', tk.END, values=('Nenhuma venda encontrada', '', '', '', '', ''))
-
-        # Posicionar o Treeview na janela pop-up
-        tree.pack(padx=10, pady=10, expand=True, fill='both')
-
-        # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
-        btn_fechar.pack(pady=10)
+            messagebox.showinfo("Informação", "Nenhum funcionário encontrado.") 
 
 
-
-
-
-
+######################################################################
     def agendar_revisao(self):
         # Obter dados da entrada
         chassi_moto = self.entry_chassi_moto_revisao.get()
@@ -608,59 +695,38 @@ class GerenteApp:
         except Exception:
             messagebox.showerror("Erro", f"Digite um cpf válido")
 
-    def listar_revisoes_popup(self):
-        # Criar uma nova janela (pop-up) para listar as revisões
-        popup = tk.Toplevel(self.root)
-        popup.title("Revisões Agendadas")
+    def atualizar_revisao(self):
+        pass
+    
+    def remover_revisao(self):
+        pass
 
-        # Definir o tamanho da nova janela
-        popup.geometry("700x400")
+    def listar_revisoes(self):
+        # Limpar o Treeview antes de listar os dados
+        for i in self.tree.get_children():
+            self.tree.delete(i)
 
-        # Criar um Treeview para exibir as revisões como uma tabela
-        colunas = ('ID Manutenção', 'Chassi Moto', 'Data', 'CPF', 'Status Revisão','Custo')
-        tree = ttk.Treeview(popup, columns=colunas, show='headings')
-
-        # Definir os títulos das colunas
-        tree.heading('ID Manutenção', text='ID Manutenção')
-        tree.heading('Chassi Moto', text='Chassi Moto')
-        tree.heading('Data', text='Data')
-        tree.heading('CPF', text='CPF')
-        tree.heading('Status Revisão', text='Status Revisão')
-        tree.heading('Custo', text='Custo')
-
-        # Ajustar o tamanho das colunas
-        tree.column('ID Manutenção', width=100)
-        tree.column('Chassi Moto', width=100)
-        tree.column('Data', width=100)
-        tree.column('CPF', width=100)
-        tree.column('Status Revisão', width=120)
-        tree.column('Custo', width=100)
-
-        # Inserir os dados das revisões no Treeview
+        # Buscar os funcionários no banco de dados
         revisoes = self.agenda_revisao_dao.listar_revisoes()
 
+        # Verifique se a lista de funcionários não está vazia
         if revisoes:
+            # Inserir cada funcionário na Treeview
             for revisao in revisoes:
+                # Lembrando que funcionario é uma tupla, então acessar por índices
                 id_manutencao = revisao[0]  # ID da manutenção
                 chassi_moto = revisao[4]    # Chassi da moto
                 data = revisao[1]           # Data da revisão
                 cpf = revisao[5]       # Nome do mecânico (ajustar conforme sua lógica)
                 custo = revisao[3] # Status da revisão
                 status_revisao = revisao[2] # Status da revisão
-                tree.insert('', tk.END, values=(id_manutencao, chassi_moto, data, cpf, custo,status_revisao))
+
+                self.tree.insert('', tk.END, values=(id_manutencao, chassi_moto, data, cpf, custo,status_revisao))
+
         else:
-            # Caso não haja revisões, mostrar uma linha indicando isso
-            tree.insert('', tk.END, values=('Nenhuma revisão encontrada', '', '', '', ''))
+            messagebox.showinfo("Informação", "Nenhum funcionário encontrado.")
 
-        # Posicionar o Treeview na janela pop-up
-        tree.pack(padx=10, pady=10, expand=True, fill='both')
-
-        # Adicionar um botão para fechar o pop-up
-        btn_fechar = ttk.Button(popup, text="Fechar", style="Custom.TButton", command=popup.destroy)
-        btn_fechar.pack(pady=10)
-
-
-
+##########################################################################
     def adicionar_funcionario(self):
         nome = self.entry_nome_funcionario.get()
         cpf = self.entry_cpf_funcionario.get()
@@ -688,8 +754,8 @@ class GerenteApp:
 
     def listar_funcionarios(self):
         # Limpar o Treeview antes de listar os dados
-        for i in self.tree_funcionarios.get_children():
-            self.tree_funcionarios.delete(i)
+        for i in self.tree.get_children():
+            self.tree.delete(i)
 
         # Buscar os funcionários no banco de dados
         funcionarios = self.funcionario_dao.listar_funcionarios()
@@ -704,7 +770,7 @@ class GerenteApp:
                 cpf_funcionario = funcionario[0]
                 cargo_funcionario = funcionario[4]
 
-                self.tree_funcionarios.insert('', 'end', values=(nome_funcionario, cpf_funcionario, cargo_funcionario))
+                self.tree.insert('', 'end', values=(nome_funcionario, cpf_funcionario, cargo_funcionario))
         else:
             messagebox.showinfo("Informação", "Nenhum funcionário encontrado.")
 
@@ -712,13 +778,13 @@ class GerenteApp:
 
     def editar_funcionario(self):
         # Obter o funcionário selecionado
-        selected_item = self.tree_funcionarios.selection()
+        selected_item = self.tree.selection()
 
         if not selected_item:
             messagebox.showerror("Erro", "Selecione um funcionário para editar.")
             return
 
-        item = self.tree_funcionarios.item(selected_item)
+        item = self.tree.item(selected_item)
         funcionario_nome = item['values'][0]  # Nome
         funcionario_cpf = item['values'][1]    # CPF
         funcionario_cargo = item['values'][2]  # Cargo
@@ -776,19 +842,15 @@ class GerenteApp:
         editar_popup.grab_set()
         self.root.wait_window(editar_popup)
 
-
-
-
     def deletar_funcionario(self):
-        selected_item = self.tree_funcionarios.selection()
+        selected_item = self.tree.selection()
 
         if not selected_item:
             messagebox.showerror("Erro", "Selecione um funcionário para deletar.")
             return
 
-        item = self.tree_funcionarios.item(selected_item)
+        item = self.tree.item(selected_item)
         funcionario_id = item['values'][1]
-
 
         try:
             self.funcionario_dao.deletar_funcionario(funcionario_id)
@@ -796,8 +858,3 @@ class GerenteApp:
             self.listar_funcionarios()  # Atualizar a lista
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao deletar funcionário: {e}")
-
-
-    
- 
-
