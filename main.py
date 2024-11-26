@@ -27,3 +27,7 @@ if __name__ == "__main__":
 
 # adicionar funções para o mecanico, ex: atualizar custo e status
 # sistema de envio de email
+# adicionar botão sair
+# atualizar a lista sem sair
+# ideias para preencher os espaços vazios:
+#   colocar uma imagem e uma descrição na tela de cada funcionário

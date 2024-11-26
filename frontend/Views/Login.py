@@ -20,7 +20,7 @@ class LoginApp:
         
         # Estilos
         style = ttk.Style()
-        style.configure("Custom.TButton", font=("Arial", 12, "bold"), width=20, padding=12, relief="flat", background="#4CAF50", foreground="white")
+        style.configure("Custom.TButton", font=("Arial", 14, "bold"), width=20, padding=12, relief="flat", background="#4CAF50", foreground="white")
         style.map("Custom.TButton", background=[("active", "#45a049")])
         
         # Estilo do fundo
@@ -53,7 +53,7 @@ class LoginApp:
         # Estilos
         style = ttk.Style()
         style.configure("Custom.TButton",
-                        font=("Arial", 12, "bold"),
+                        font=("Arial", 13, "bold"),
                         width=20,
                         padding=12,
                         relief="flat",
