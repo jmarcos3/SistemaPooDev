@@ -48,22 +48,22 @@ class AgendaRevisaoDAO:
         conn.close()
         return revisao
 
-    def atualizar_revisao(self, id_revisao, data=None, custo=None, status_revisao=None, chassi_moto=None, cpf_cliente=None):
+    def atualizar_revisao(self, revisao):
         # Atualiza os dados de uma revisão específica
         conn = self.conectar()
         cursor = conn.cursor()
 
         # Atualiza os dados conforme os parâmetros fornecidos
-        if data:
-            cursor.execute('UPDATE AgendaRevisoes SET data = ? WHERE id_revisao = ?', (data, id_revisao))
-        if custo:
-            cursor.execute('UPDATE AgendaRevisoes SET custo = ? WHERE id_revisao = ?', (custo, id_revisao))
-        if status_revisao:
-            cursor.execute('UPDATE AgendaRevisoes SET status_revisao = ? WHERE id_revisao = ?', (status_revisao, id_revisao))
-        if chassi_moto:
-            cursor.execute('UPDATE AgendaRevisoes SET chassi_moto = ? WHERE id_revisao = ?', (chassi_moto, id_revisao))
-        if cpf_cliente:
-            cursor.execute('UPDATE AgendaRevisoes SET cpf_cliente = ? WHERE id_revisao = ?', (cpf_cliente, id_revisao))
+        if revisao.data:
+            cursor.execute('UPDATE AgendaRevisoes SET data = ? WHERE chassi_moto = ?', (revisao.data, revisao.chassi_moto))
+        if revisao.custo:
+            cursor.execute('UPDATE AgendaRevisoes SET custo = ? WHERE chassi_moto = ?', (revisao.custo, revisao.chassi_moto))
+        if revisao.status_revisao:
+            cursor.execute('UPDATE AgendaRevisoes SET status_revisao = ? WHERE chassi_moto = ?', (revisao.status_revisao, revisao.chassi_moto))
+        if revisao.chassi_moto:
+            cursor.execute('UPDATE AgendaRevisoes SET chassi_moto = ? WHERE chassi_moto = ?', (revisao.chassi_moto, revisao.chassi_moto))
+        if revisao.cpf_cliente:
+            cursor.execute('UPDATE AgendaRevisoes SET cpf_cliente = ? WHERE chassi_moto = ?', (revisao.cpf_cliente, revisao.chassi_moto))
 
         conn.commit()
         conn.close()

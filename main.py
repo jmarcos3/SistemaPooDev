@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from frontend.Views.Gerente import GerenteApp
 from frontend.Views.Vendedor import VendedorApp
 from frontend.Views.Mecanico import MecanicoApp
@@ -20,14 +19,13 @@ def open_view(root, role):
 # Iniciando a aplicação
 if __name__ == "__main__":
     root = tk.Tk()
-    #app = GerenteApp(root)
     app = LoginApp(root, open_view)  # Passa a função para abrir a view correta
     root.mainloop()
 
-
-# adicionar funções para o mecanico, ex: atualizar custo e status
+# editar uma venda
+# Placa das motos
+# protegido
+# cpf chave estrangeira
 # sistema de envio de email
 # adicionar botão sair
 # atualizar a lista sem sair
-# ideias para preencher os espaços vazios:
-#   colocar uma imagem e uma descrição na tela de cada funcionário
