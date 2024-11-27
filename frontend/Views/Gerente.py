@@ -178,35 +178,42 @@ class GerenteApp(telas):
         btn_gerar_venda = ttk.Button(self.tab_venda, text="Gerar Venda", style="Custom.TButton", command=self.adicionar_venda)
         btn_gerar_venda.grid(row=3, column=1, pady=5, sticky="w")
 
-###############################################################################################
         # Seção para listar 
         label_listar_funcionarios = ttk.Label(self.tab_venda, text="Lista de Vendas", **self.estilo_label)
         label_listar_funcionarios.grid(row=4, column=0, pady=(3), columnspan=2)
 
         # Criando o Treeview para listar 
         colunas = ('ID','Chassi', 'CPF', 'Data', 'Status', 'Preço')
-        self.tree = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
+        self.tree_venda = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
 
         # Definindo os títulos das colunas
-        self.tree.heading('ID', text='ID Venda')
-        self.tree.heading('Chassi', text='Chassi')
-        self.tree.heading('CPF', text='CPF Cliente')
-        self.tree.heading('Data', text='Data')
-        self.tree.heading('Status', text='Status')
-        self.tree.heading('Preço', text='Preço')
+        self.tree_venda.heading('ID', text='ID Venda')
+        self.tree_venda.heading('Chassi', text='Chassi')
+        self.tree_venda.heading('CPF', text='CPF Cliente')
+        self.tree_venda.heading('Data', text='Data')
+        self.tree_venda.heading('Status', text='Status')
+        self.tree_venda.heading('Preço', text='Preço')
 
         # Ajustar o tamanho das colunas
-        self.tree.column('ID', width=150)
-        self.tree.column('Chassi', width=100)
-        self.tree.column('CPF', width=100)
-        self.tree.column('Data', width=100)
-        self.tree.column('Status', width=100)
-        self.tree.column('Preço', width=100)
+        self.tree_venda.column('ID', width=150)
+        self.tree_venda.column('Chassi', width=100)
+        self.tree_venda.column('CPF', width=100)
+        self.tree_venda.column('Data', width=100)
+        self.tree_venda.column('Status', width=100)
+        self.tree_venda.column('Preço', width=100)
 
         # Posicionar o Treeview
-        self.tree.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree_venda.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+
+        btn_editar_venda = ttk.Button(self.tab_venda, text="Editar Venda", style="Custom.TButton", command=self.editar_venda)
+        btn_editar_venda.grid(row=8, column=0, pady=10, sticky="n")
+
+        btn_deletar_venda = ttk.Button(self.tab_venda, text="Deletar Venda", style="Custom.TButton", command=self.deletar_venda)
+        btn_deletar_venda.grid(row=8, column=1, pady=10, sticky="n")
+
         
         self.listar_vendas()
+
 #################################################################
 
         # Adicionando a aba de Agenda de Revisões

@@ -63,33 +63,32 @@ class SecretariaApp(telas):
         for row in range(7):  # Para cada linha usada
             self.tab_venda.rowconfigure(row, weight=1) 
 
-
         # Seção para listar 
         label_listar_funcionarios = ttk.Label(self.tab_venda, text="Lista de Vendas", **self.estilo_label)
         label_listar_funcionarios.grid(row=0, column=0, pady=(5), columnspan=2)
 
         # Criando o Treeview para listar 
         colunas = ('ID','Chassi', 'CPF', 'Data', 'Status', 'Preço')
-        self.tree = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
+        self.tree_venda = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
 
         # Definindo os títulos das colunas
-        self.tree.heading('ID', text='ID Venda')
-        self.tree.heading('Chassi', text='Chassi')
-        self.tree.heading('CPF', text='CPF Cliente')
-        self.tree.heading('Data', text='Data')
-        self.tree.heading('Status', text='Status')
-        self.tree.heading('Preço', text='Preço')
+        self.tree_venda.heading('ID', text='ID Venda')
+        self.tree_venda.heading('Chassi', text='Chassi')
+        self.tree_venda.heading('CPF', text='CPF Cliente')
+        self.tree_venda.heading('Data', text='Data')
+        self.tree_venda.heading('Status', text='Status')
+        self.tree_venda.heading('Preço', text='Preço')
 
         # Ajustar o tamanho das colunas
-        self.tree.column('ID', width=150)
-        self.tree.column('Chassi', width=100)
-        self.tree.column('CPF', width=100)
-        self.tree.column('Data', width=100)
-        self.tree.column('Status', width=100)
-        self.tree.column('Preço', width=100)
+        self.tree_venda.column('ID', width=150)
+        self.tree_venda.column('Chassi', width=100)
+        self.tree_venda.column('CPF', width=100)
+        self.tree_venda.column('Data', width=100)
+        self.tree_venda.column('Status', width=100)
+        self.tree_venda.column('Preço', width=100)
 
         # Posicionar o Treeview
-        self.tree.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree_venda.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
         
         self.listar_vendas()
 
@@ -126,28 +125,28 @@ class SecretariaApp(telas):
         label_listar_funcionarios = ttk.Label(self.tab_agenda, text="Revisões Agendadas", **self.estilo_label)
         label_listar_funcionarios.grid(row=4, column=0, pady=(5), columnspan=2)
 
-        # Criando o Treeview para listar 
-        colunas = ('ID','Chassi', 'Data', 'CPF', 'Status', 'Custo')
-        self.tree = ttk.Treeview(self.tab_agenda, columns=colunas, show='headings')
+        # Criando o Treeview para listar
+        colunas = ('ID', 'Chassi', 'Data', 'CPF', 'Status', 'Custo')
+        self.tree_revisao = ttk.Treeview(self.tab_agenda, columns=colunas, show='headings')
 
         # Definindo os títulos das colunas
-        self.tree.heading('ID', text='ID Revisão')
-        self.tree.heading('Chassi', text='Chassi')
-        self.tree.heading('Data', text='Data')
-        self.tree.heading('CPF', text='Cpf')
-        self.tree.heading('Status', text='Status')
-        self.tree.heading('Custo', text='Custo')
+        self.tree_revisao.heading('ID', text='ID Manutenção')
+        self.tree_revisao.heading('Chassi', text='Chassi')
+        self.tree_revisao.heading('Data', text='Data')
+        self.tree_revisao.heading('CPF', text='CPF Cliente')
+        self.tree_revisao.heading('Status', text='Status')
+        self.tree_revisao.heading('Custo', text='Custo')
 
         # Ajustar o tamanho das colunas
-        self.tree.column('ID', width=150)
-        self.tree.column('Chassi', width=100)
-        self.tree.column('Data', width=100)
-        self.tree.column('CPF', width=100)
-        self.tree.column('Status', width=100)
-        self.tree.column('Custo', width=100)
+        self.tree_revisao.column('ID', width=150)
+        self.tree_revisao.column('Chassi', width=100)
+        self.tree_revisao.column('Data', width=100)
+        self.tree_revisao.column('CPF', width=100)
+        self.tree_revisao.column('Status', width=100)
+        self.tree_revisao.column('Custo', width=100)
 
         # Posicionar o Treeview
-        self.tree.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree_revisao.grid(row=5, column=0, columnspan=2, padx=10, pady=5, sticky='nsew')
      
         self.listar_revisoes()
 

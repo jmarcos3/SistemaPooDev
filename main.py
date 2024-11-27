@@ -22,7 +22,6 @@ if __name__ == "__main__":
     app = LoginApp(root, open_view)  # Passa a função para abrir a view correta
     root.mainloop()
 
-# editar uma venda
 # Placa das motos
 # protegido
 # cpf chave estrangeira

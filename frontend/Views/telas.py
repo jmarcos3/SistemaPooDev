@@ -346,8 +346,8 @@ class telas(ABC):
 
     def listar_vendas(self):
         # Limpar o Treeview antes de listar os dados
-        for i in self.tree.get_children():
-            self.tree.delete(i)
+        for i in self.tree_venda.get_children():
+            self.tree_venda.delete(i)
 
         # Buscar os funcionários no banco de dados
         vendas = self.venda_dao.listar_vendas()
@@ -363,9 +363,118 @@ class telas(ABC):
                 status = venda[2]    # Status da venda
                 preco = venda[5]     # Preço da venda (adicionando o preço)
 
-                self.tree.insert('', tk.END, values=(id_venda, chassi, cpf_cliente, data, status, preco))  # Adicionando o preço às inserções
+                self.tree_venda.insert('', tk.END, values=(id_venda, chassi, cpf_cliente, data, status, preco))  # Adicionando o preço às inserções
         else:
             messagebox.showinfo("Informação", "Nenhum funcionário encontrado.") 
+
+    def editar_venda(self):
+        # Obter a venda selecionada
+        selected_item = self.tree_venda.selection()
+
+        if not selected_item:
+            messagebox.showerror("Erro", "Selecione uma venda para editar.")
+            return
+
+        item = self.tree_venda.item(selected_item)
+        venda_id = item['values'][0]  # ID da venda
+        venda_chassi = item['values'][1]  # Chassi
+        venda_data = item['values'][2]  # Data da venda
+        venda_cpf = item['values'][3]  # CPF do cliente
+        venda_status = item['values'][4]  # Status
+        venda_preco = item['values'][5]  # Preço
+
+        # Criar uma nova janela para editar a venda
+        editar_popup = tk.Toplevel(self.root)
+        editar_popup.title("Editar Venda")
+
+        # Criar campos de entrada para editar os dados
+        label_id = ttk.Label(editar_popup, text="ID:")
+        label_id.grid(row=0, column=0, padx=5, pady=5)
+        entry_id = ttk.Entry(editar_popup)
+        entry_id.insert(0, venda_id)  
+        entry_id.config(state='readonly')  # Não permitir editar
+        entry_id.grid(row=0, column=1, padx=5, pady=5)
+
+        label_chassi = ttk.Label(editar_popup, text="Chassi:")
+        label_chassi.grid(row=1, column=0, padx=5, pady=5)
+        entry_chassi = ttk.Entry(editar_popup)
+        entry_chassi.insert(0, venda_chassi)
+        entry_chassi.config(state='readonly')  # Não permitir editar   
+        entry_chassi.grid(row=1, column=1, padx=5, pady=5)
+
+        label_data = ttk.Label(editar_popup, text="Data:")
+        label_data.grid(row=2, column=0, padx=5, pady=5)
+        entry_data = ttk.Entry(editar_popup)
+        entry_data.insert(0, venda_data)  
+        entry_data.config(state='readonly')  # Não permitir editar 
+        entry_data.grid(row=2, column=1, padx=5, pady=5)
+
+        label_cpf = ttk.Label(editar_popup, text="CPF:")
+        label_cpf.grid(row=3, column=0, padx=5, pady=5)
+        entry_cpf = ttk.Entry(editar_popup)
+        entry_cpf.insert(0, venda_cpf)  
+        entry_cpf.config(state='readonly')  # Não permitir editar 
+        entry_cpf.grid(row=3, column=1, padx=5, pady=5)
+
+        label_status = ttk.Label(editar_popup, text="Status:")
+        label_status.grid(row=4, column=0, padx=5, pady=5)
+        entry_status = ttk.Entry(editar_popup)
+        entry_status.insert(0, venda_status)  
+        entry_status.grid(row=4, column=1, padx=5, pady=5)
+
+        label_preco = ttk.Label(editar_popup, text="Preço:")
+        label_preco.grid(row=5, column=0, padx=5, pady=5)
+        entry_preco = ttk.Entry(editar_popup)
+        entry_preco.insert(0, venda_preco)  
+        entry_preco.grid(row=5, column=1, padx=5, pady=5)
+
+        # Função para salvar as alterações
+        def salvar_edicao():
+            novo_status = entry_status.get()
+            novo_preco = entry_preco.get()
+
+            # Criar uma venda com os dados atualizados
+            venda_atualizada = Venda(data=venda_data, status=novo_status, chassi_moto=venda_chassi, 
+                                    cpf_cliente=venda_cpf, preco=novo_preco)
+
+            # Chamar o método para atualizar a venda no banco de dados
+            self.venda_dao.atualizar_venda(venda_atualizada)
+
+            # Fechar a janela popup
+            editar_popup.destroy()
+
+            # Atualizar a lista de vendas no Treeview
+            self.listar_vendas()
+
+        # Botão para salvar as alterações
+        btn_salvar = ttk.Button(editar_popup, text="Salvar", style="Custom.TButton", command=salvar_edicao)
+        btn_salvar.grid(row=6, column=0, columnspan=2, pady=10)
+
+        # Tornar a janela modal
+        editar_popup.transient(self.root)
+        editar_popup.grab_set()
+        self.root.wait_window(editar_popup)
+
+    def deletar_venda(self):
+        # Obter a venda selecionada
+        selected_item = self.tree_venda.selection()
+
+        if not selected_item:
+            messagebox.showerror("Erro", "Selecione uma venda para deletar.")
+            return
+
+        item = self.tree_venda.item(selected_item)
+        venda_id = item['values'][0]
+
+        try:
+            # Remover a venda no banco de dados
+            self.venda_dao.deletar_venda(venda_id)
+            messagebox.showinfo("Sucesso", "Venda deletada com sucesso!")
+            # Atualizar a lista de vendas
+            self.listar_vendas()
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao deletar a venda: {e}")
+
 
 
 ######################################################################

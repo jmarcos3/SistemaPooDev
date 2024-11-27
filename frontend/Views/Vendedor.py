@@ -90,23 +90,23 @@ class VendedorApp(telas):
 
         # Criando o Treeview para listar 
         colunas = ('CPF', 'Nome', 'Email')
-        self.tree = ttk.Treeview(self.tab_cliente, columns=colunas, show='headings')
+        self.tree_cliente = ttk.Treeview(self.tab_cliente, columns=colunas, show='headings')
 
         # Definindo os títulos das colunas
-        self.tree.heading('CPF', text='CPF')
-        self.tree.heading('Nome', text='Nome')
-        self.tree.heading('Email', text='Email')
+        self.tree_cliente.heading('CPF', text='CPF')
+        self.tree_cliente.heading('Nome', text='Nome')
+        self.tree_cliente.heading('Email', text='Email')
 
         # Ajustar o tamanho das colunas
-        self.tree.column('CPF', width=150)
-        self.tree.column('Nome', width=120)
-        self.tree.column('Email', width=200)
+        self.tree_cliente.column('CPF', width=150)
+        self.tree_cliente.column('Nome', width=120)
+        self.tree_cliente.column('Email', width=200)
 
         # Posicionar o Treeview
-        self.tree.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree_cliente.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 
-        # Botões para editar
-        btn_editar_cliente = ttk.Button(self.tab_cliente, text="Editar Cliente", style="Custom.TButton", command=self.atualizar_cliente)
+        # Botões para editar e deletar 
+        btn_editar_cliente = ttk.Button(self.tab_cliente, text="Editar Cliente", style="Custom.TButton", command=self.editar_cliente)
         btn_editar_cliente.grid(row=7, column=1, pady=10, sticky="n")
 
         # Listar clientes
@@ -147,25 +147,25 @@ class VendedorApp(telas):
 
         # Criando o Treeview para listar 
         colunas = ('ID','Chassi', 'CPF', 'Data', 'Status', 'Preço')
-        self.tree = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
+        self.tree_venda = ttk.Treeview(self.tab_venda, columns=colunas, show='headings')
 
         # Definindo os títulos das colunas
-        self.tree.heading('ID', text='ID Venda')
-        self.tree.heading('Chassi', text='Chassi')
-        self.tree.heading('CPF', text='CPF Cliente')
-        self.tree.heading('Data', text='Data')
-        self.tree.heading('Status', text='Status')
-        self.tree.heading('Preço', text='Preço')
+        self.tree_venda.heading('ID', text='ID Venda')
+        self.tree_venda.heading('Chassi', text='Chassi')
+        self.tree_venda.heading('CPF', text='CPF Cliente')
+        self.tree_venda.heading('Data', text='Data')
+        self.tree_venda.heading('Status', text='Status')
+        self.tree_venda.heading('Preço', text='Preço')
 
         # Ajustar o tamanho das colunas
-        self.tree.column('ID', width=150)
-        self.tree.column('Chassi', width=100)
-        self.tree.column('CPF', width=100)
-        self.tree.column('Data', width=100)
-        self.tree.column('Status', width=100)
-        self.tree.column('Preço', width=100)
+        self.tree_venda.column('ID', width=150)
+        self.tree_venda.column('Chassi', width=100)
+        self.tree_venda.column('CPF', width=100)
+        self.tree_venda.column('Data', width=100)
+        self.tree_venda.column('Status', width=100)
+        self.tree_venda.column('Preço', width=100)
 
         # Posicionar o Treeview
-        self.tree.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree_venda.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
         
         self.listar_vendas()
