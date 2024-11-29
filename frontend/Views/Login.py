@@ -6,7 +6,7 @@ from backend.Routes import FuncionarioDAO
 class LoginApp:
     def __init__(self, root, open_view_callback):
         self.root = root
-        self.root.title("Login")
+        self.root.title("Login da Concessionária de moto")
         self.center_window()  # Centraliza a janela
         self.root.state('zoomed')
         self.open_view_callback = open_view_callback

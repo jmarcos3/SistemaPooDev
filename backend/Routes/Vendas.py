@@ -47,23 +47,31 @@ class VendaDAO:
         venda = cursor.fetchone()
         conn.close()
         return venda
+    
+    def buscar_motoVendida(self, chassi):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM Vendas WHERE chassi_moto = ?', (chassi,))
+        moto = cursor.fetchone()
+        conn.close()
+        return moto
 
-    def atualizar_venda(self, id_compra, data=None, status=None, chassi_moto=None, cpf_cliente=None, preco=None):
+    def atualizar_venda(self, venda,id_compra):
         # Atualiza os dados de uma venda específica
         conn = self.conectar()
         cursor = conn.cursor()
         
         # Atualiza os dados conforme os parâmetros fornecidos
-        if data:
-            cursor.execute('UPDATE Vendas SET data = ? WHERE id_compra = ?', (data, id_compra))
-        if status:
-            cursor.execute('UPDATE Vendas SET status = ? WHERE id_compra = ?', (status, id_compra))
-        if chassi_moto:
-            cursor.execute('UPDATE Vendas SET chassi_moto = ? WHERE id_compra = ?', (chassi_moto, id_compra))
-        if cpf_cliente:
-            cursor.execute('UPDATE Vendas SET cpf_cliente = ? WHERE id_compra = ?', (cpf_cliente, id_compra))
-        if preco is not None:  # Verifica se o preço foi fornecido
-            cursor.execute('UPDATE Vendas SET preco = ? WHERE id_compra = ?', (preco, id_compra))
+        if venda.data:
+            cursor.execute('UPDATE Vendas SET data = ? WHERE id_compra = ?', (venda.data, id_compra))
+        if venda.status:
+            cursor.execute('UPDATE Vendas SET status = ? WHERE id_compra = ?', (venda.status, id_compra))
+        if venda.chassi_moto:
+            cursor.execute('UPDATE Vendas SET chassi_moto = ? WHERE id_compra = ?', (venda.chassi_moto, id_compra))
+        if venda.cpf_cliente:
+            cursor.execute('UPDATE Vendas SET cpf_cliente = ? WHERE id_compra = ?', (venda.cpf_cliente, id_compra))
+        if venda.preco is not None:  # Verifica se o preço foi fornecido
+            cursor.execute('UPDATE Vendas SET preco = ? WHERE id_compra = ?', (venda.preco, id_compra))
 
         conn.commit()
         conn.close()

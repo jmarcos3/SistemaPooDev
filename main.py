@@ -22,9 +22,15 @@ if __name__ == "__main__":
     app = LoginApp(root, open_view)  # Passa a função para abrir a view correta
     root.mainloop()
 
+# revisar: em funcionário senha_atual
+# revisar: ao atualizar moto duplicada na revisão muda para as duas
+
+# readme github
+# revisar comentários
+# aviso caso cliente já cadastrado
+
 # Placa das motos
-# protegido
+# moto nova e usada
 # cpf chave estrangeira
-# sistema de envio de email
 # adicionar botão sair
-# atualizar a lista sem sair
+
