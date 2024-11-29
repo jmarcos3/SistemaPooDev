@@ -8,14 +8,10 @@ class SecretariaApp(estilos):
     def __init__(self, root):
         super().__init__(root)
 
-        style = ttk.Style()
-        style.configure("Custom.TButton", font=("Arial", 12))
-        style.theme_use("default")
-        style.configure("TNotebook.Tab",
+        self.style.configure("TNotebook.Tab",
             font=("Arial", 13, "bold"),  # Defina o tamanho e estilo da fonte
             width=self.root.winfo_screenwidth() // len(["Motos", "Vendas", "Agenda de Revisões"]))
         
-        #///////////////////////////////////////////////////////////////////////////
         
         self.aba_motos = AbaMotos(root,self.notebook,"secretaria")
         self.aba_vendas = AbaVendas(root,self.notebook,"secretaria")

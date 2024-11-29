@@ -8,10 +8,7 @@ class VendedorApp(estilos):
     def __init__(self, root):
         super().__init__(root)
 
-        style = ttk.Style()
-        style.configure("Custom.TButton", font=("Arial", 14, "bold"))
-        style.theme_use("default")
-        style.configure("TNotebook.Tab",
+        self.style.configure("TNotebook.Tab",
             font=("Arial", 13, "bold"),  # Defina o tamanho e estilo da fonte
             width=self.root.winfo_screenwidth() // len(["Motos", "Clientes", "Vendas"])
         )

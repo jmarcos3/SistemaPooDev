@@ -10,27 +10,6 @@ class estilos(ABC):
         self.root.title("Sistema de Controle de Motos")
         self.root.state('zoomed')
 
-        # # Definindo o cargo
-        # cargos = {
-        #     "gerente": "Gerente",
-        #     "vendedor": "Vendedor",
-        #     "mecanico": "Mecânico",
-        #     "secretaria": "Secretária"
-        # }
-
-        # cargo_nome = cargos.get(cargo, "Cargo não encontrado")
-
-        # # Adicionando título com o cargo
-        # self.title_label = tk.Label(
-        #     root,
-        #     text=f"Concessionária de motos - Cargo: {cargo_nome}",
-        #     font=("Arial", 18, "bold"),
-        #     bg="#4CAF50",
-        #     fg="white",
-        #     pady=0
-        # )
-
-        #self.title_label.pack(fill="x")
         # Criando o notebook (abas)
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(fill="none", expand=False)
@@ -48,4 +27,6 @@ class estilos(ABC):
         # No construtor da classe AbaMotos, configure o estilo
         self.style.configure("TCombobox", selectbackground="white", selectforeground="black")
 
-# 
+        self.style.configure("Custom.TButton", font=("Arial", 12))
+
+        self.style.theme_use("default")

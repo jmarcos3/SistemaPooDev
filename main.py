@@ -22,6 +22,7 @@ if __name__ == "__main__":
     app = LoginApp(root, open_view)  # Passa a função para abrir a view correta
     root.mainloop()
 
+# troquei super por estilos
 # revisar: em funcionário senha_atual
 # revisar: ao atualizar moto duplicada na revisão muda para as duas
 
