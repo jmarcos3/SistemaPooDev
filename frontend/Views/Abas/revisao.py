@@ -75,19 +75,22 @@ class AbaAgenda(estilos):
         # Posicionar o Treeview
         self.tree_revisao.grid(row=(valor+1), column=0, columnspan=2, padx=10, pady=5, sticky='nsew')  # Ajustando o padding
 
-        if cargo != "gerente":
-            pass
-        else:
+        if cargo == "gerente" or cargo == "mecanico":
             # Botões para editar e deletar revisão
             btn_editar_revisao = ttk.Button(self.tab_agenda, text="Editar Revisão", style="Custom.TButton", command=self.editar_revisao)
             btn_editar_revisao.grid(row=6, column=0, pady=5, sticky="n")
+        else:
+            pass
 
+        if cargo != "gerente":
+            pass
+        else:
             btn_deletar_revisao = ttk.Button(self.tab_agenda, text="Deletar Revisão", style="Custom.TButton", command=self.deletar_revisao)
             btn_deletar_revisao.grid(row=6, column=1, pady=5, sticky="n")  # Ajustando o padding
 
         # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
         btn_sair = ttk.Button(self.tab_agenda, text="Sair", style="Custom.TButton", command=self.sair)
-        btn_sair.grid(row=14, column=1, padx=0, pady=0, sticky="e")
+        btn_sair.grid(row=6, column=1, padx=0, pady=0, sticky="e")
 
         self.listar_revisoes()    
 
@@ -263,8 +266,3 @@ class AbaAgenda(estilos):
         else:
             messagebox.showinfo("Informação", "Nenhuma revisão encontrada.")
 
-    def sair(self):
-        resposta = messagebox.askyesno("Sair", "Você tem certeza que deseja sair?")
-        if resposta:
-            # Fechar a janela principal ou redirecionar para a tela de login
-            self.root.quit()

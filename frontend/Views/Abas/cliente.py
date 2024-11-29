@@ -4,6 +4,7 @@ from tkinter import messagebox
 from ..estilos import estilos
 from backend.Routes import Cliente,ClienteDAO
 
+
 class AbaClientes(estilos):
     def __init__(self,root,notebook):
         super().__init__(root)
@@ -82,12 +83,18 @@ class AbaClientes(estilos):
         email = self.entry_email.get()
 
         cliente = Cliente(nome=nome, cpf=cpf, email=email)
-        self.cliente_dao.adicionar_cliente(cliente)
-
-        messagebox.showinfo("Sucesso", "Cliente adicionado com sucesso!")
-        self.entry_nome.delete(0, tk.END)
-        self.entry_cpf.delete(0, tk.END)
-        self.entry_email.delete(0, tk.END)
+        try:
+            item = self.cliente_dao.buscar_cliente(cpf)
+            if item == None:
+                self.cliente_dao.adicionar_cliente(cliente) 
+                messagebox.showinfo("Sucesso", "Cliente adicionado com sucesso!")
+                self.entry_nome.delete(0, tk.END)
+                self.entry_cpf.delete(0, tk.END)
+                self.entry_email.delete(0, tk.END)
+            else:
+                raise Exception
+        except Exception as e:
+            messagebox.showerror("Erro", f"Cliente já cadastrado")
 
 
         self.listar_clientes()
@@ -98,7 +105,7 @@ class AbaClientes(estilos):
         messagebox.showinfo("Sucesso", "Cliente removido com sucesso!")
 
     def editar_cliente(self):
-        # Obter o funcionário selecionado
+        # Obter cliente selecionado
         selected_item = self.tree_cliente.selection()
 
         if not selected_item:
@@ -115,7 +122,7 @@ class AbaClientes(estilos):
         # usuario_atual = "usuario_exemplo"  # Substitua isso pelo valor correto
         # senha_atual = "senha_exemplo"      # Substitua isso pelo valor correto
 
-        # Criar uma nova janela para editar o funcionário
+        # Criar uma nova janela para editar o cliente
         editar_popup = tk.Toplevel(self.root)
         editar_popup.title("Editar Cliente")
 
@@ -145,10 +152,10 @@ class AbaClientes(estilos):
             novo_email = entry_email.get()
 
 
-            # Criar um objeto Funcionario com os dados atualizados
+            # Criar um objeto cliente com os dados atualizados
             cliente_atualizado = Cliente(cpf=cliente_cpf,nome=novo_nome,email=novo_email)
 
-            # Chamar o método para atualizar o funcionário no banco de dados
+            # Chamar o método para atualizar o cliente no banco de dados
             self.cliente_dao.atualizar_cliente(cliente_atualizado)
 
             # Fechar a janela popup
@@ -156,7 +163,7 @@ class AbaClientes(estilos):
 
             messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso!")
 
-            # Atualizar a lista de funcionários no Treeview
+            # Atualizar a lista de clientes no Treeview
             self.listar_clientes()
 
         btn_salvar = ttk.Button(editar_popup, text="Salvar", style="Custom.TButton", command=salvar_edicao)
@@ -172,7 +179,7 @@ class AbaClientes(estilos):
         for i in self.tree_cliente.get_children():
             self.tree_cliente.delete(i)
 
-        # Buscar os funcionários no banco de dados
+        # Buscar os clientes no banco de dados
         clientes = self.cliente_dao.listar_clientes()
 
         if clientes:
@@ -183,9 +190,3 @@ class AbaClientes(estilos):
                 self.tree_cliente.insert('', tk.END, values=(cpf, nome, email))  # Inserir na tabela
         else:
             messagebox.showinfo("Informação", "Nenhum item encontrado.")
-
-    def sair(self):
-        resposta = messagebox.askyesno("Sair", "Você tem certeza que deseja sair?")
-        if resposta:
-            # Fechar a janela principal ou redirecionar para a tela de login
-            self.root.quit()

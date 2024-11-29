@@ -212,8 +212,3 @@ class AbaFuncionarios(estilos):
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao deletar funcionário: {e}")
     
-    def sair(self):
-        resposta = messagebox.askyesno("Sair", "Você tem certeza que deseja sair?")
-        if resposta:
-            # Fechar a janela principal ou redirecionar para a tela de login
-            self.root.quit()

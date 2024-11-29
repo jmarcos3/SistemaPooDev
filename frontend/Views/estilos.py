@@ -1,7 +1,9 @@
-import tkinter as tk
 from tkinter import ttk
-
+from tkinter import messagebox
 from abc import ABC
+import subprocess
+
+
 
 class estilos(ABC):
     def __init__(self,root):
@@ -30,3 +32,10 @@ class estilos(ABC):
         self.style.configure("Custom.TButton", font=("Arial", 12))
 
         self.style.theme_use("default")
+
+    def sair(self):
+        resposta = messagebox.askyesno("Sair", "Você tem certeza que deseja sair?")
+        if resposta:
+            # Fechar a janela principal ou redirecionar para a tela de login
+            self.root.destroy()
+            subprocess.Popen(["python","main.py"])

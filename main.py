@@ -16,22 +16,18 @@ def open_view(root, role):
     elif role == "Secretaria":
         SecretariaApp(root)
 
-# Iniciando a aplicação
-if __name__ == "__main__":
+def main():
     root = tk.Tk()
-    app = LoginApp(root, open_view)  # Passa a função para abrir a view correta
+    app = LoginApp(root, open_view)
     root.mainloop()
 
-# troquei super por estilos
-# revisar: em funcionário senha_atual
-# revisar: ao atualizar moto duplicada na revisão muda para as duas
 
-# readme github
-# revisar comentários
-# aviso caso cliente já cadastrado
+if __name__ == "__main__":
+    main()
 
+
+# revisar comentarios
 # Placa das motos
 # moto nova e usada
-# cpf chave estrangeira
-# adicionar botão sair
+
 
