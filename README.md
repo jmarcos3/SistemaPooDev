@@ -1,18 +1,64 @@
 # Sistema de Gerenciamento de Concessionária de Motos
 
-## Descrição
+## 📋 Descrição
 
-Este é um sistema de gerenciamento para concessionárias de motos, desenvolvido em Python utilizando a biblioteca Tkinter para a interface gráfica e SQLite para o gerenciamento de banco de dados. O sistema permite a administração de clientes, vendas, motos e agendamento de revisões.
+Este sistema de gerenciamento foi desenvolvido como parte da disciplina **Paradigmas Orientados a Objetos para Desenvolvimento de Software**, no curso de **Ciência da Computação** da **Universidade Estadual do Norte Fluminense (UENF)**. 
 
-## Funcionalidades
+O projeto tem como objetivo atender às necessidades de uma concessionária de motos, aplicando conceitos de programação orientada a objetos (POO). Construído em Python, o sistema utiliza a biblioteca Tkinter para criar a interface gráfica e SQLite para gerenciar o banco de dados, oferecendo funcionalidades como administração de clientes, vendas, motos e agendamentos de revisões.
 
-- **Cadastro de Clientes**: Permite adicionar, atualizar, listar e remover clientes.
-- **Gerenciamento de Vendas**: Facilita o registro e acompanhamento de vendas, incluindo informações sobre chassi, CPF do cliente e preço.
-- **Cadastro de Motos**: Possibilita o registro e gerenciamento das motos disponíveis na concessionária.
-- **Agendamento de Revisões**: Permite agendar revisões para as motos, registrando o mecânico responsável e a data da revisão.
+O sistema é estruturado para diferentes papéis dentro da concessionária: gerentes, vendedores, mecânicos e secretárias, cada um com permissões específicas para realizar suas funções, refletindo a separação de responsabilidades e o encapsulamento, fundamentos da POO.
 
-## Tecnologias Utilizadas
 
-- **Python**: Linguagem de programação utilizada para o desenvolvimento do sistema.
-- **Tkinter**: Biblioteca padrão do Python para criação de interfaces gráficas.
-- **SQLite**: Sistema de gerenciamento de banco de dados leve e integrado ao Python.
+## 🎯 Funcionalidades por Papel
+
+### Gerente
+- Acesso completo ao sistema.
+- Visualizar, Adicionar, editar e remover:
+  - **Motos**
+  - **Clientes**
+  - **Vendas**
+  - **Revisões**
+  - **Funcionários**
+    
+### Vendedor
+- Visualizar motos cadastradas.
+- Adicionar e editar clientes.
+- Cadastrar e visualizar vendas.
+
+### Mecânico
+- Visualizar agendamentos de revisão.
+- Atualizar o status das revisões.
+
+### Secretária
+- Visualizar motos e vendas.
+- Criar e visualizar agendamentos de revisão.
+
+## 📦 Funcionalidades Gerais
+
+- **Cadastro de Clientes**: 
+  - Adicionar, atualizar, listar e remover clientes no sistema, com registro de **nome**, **CPF** e **e-mail**.
+
+- **Gerenciamento de Vendas**: 
+  - Registro de vendas utilizando o **CPF do cliente** e o **chassi da moto** para associar a transação.
+  - Visualização e edição de vendas realizadas.
+
+- **Cadastro de Motos**: 
+  - Adicionar novas motos ao sistema com os seguintes dados: **modelo**, **ano**, **preço**, **cor** e **chassi**.
+  - Atualizar informações ou remover motos do estoque.
+
+- **Agendamento de Revisões**: 
+  - Criar agendamentos de revisões, vinculando a revisão ao **chassi da moto** e ao **CPF do cliente**.
+  - Registrar o mecânico responsável e a data programada.
+
+- **Cadastro de Funcionários**:
+  - Gerenciar funcionários, registrando **nome**, **CPF** e **cargo**.
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Python**: 
+  - Linguagem principal para desenvolvimento.
+- **Tkinter**: 
+  - Biblioteca nativa do Python para interfaces gráficas.
+- **SQLite**: 
+  - Sistema de banco de dados leve e eficiente integrado ao Python.
+
