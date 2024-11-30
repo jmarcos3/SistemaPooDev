@@ -7,16 +7,20 @@ import datetime
 
 class AbaAgenda(estilos):
     def __init__(self, root,notebook, cargo):
-        super().__init__()
+        super().__init__(root)
 
-        self.agenda_revisao_dao = AgendaRevisaoDAO('db.db')
+        self.agenda_dao = AgendaRevisaoDAO('db.db')
         self.vendas_dao = VendaDAO('db.db')
         self.cliente_dao = ClienteDAO('db.db')
 
         if cargo == "gerente" or cargo =="secretaria":
             valor = 4
+            posicao = 6
+            coluna = 0
         else:
             valor = 1
+            posicao = 3
+            coluna = 1
 
     # aba de Agenda de Revisões
         self.tab_agenda = ttk.Frame(notebook, padding=10)  # Reduzindo o padding
@@ -78,7 +82,7 @@ class AbaAgenda(estilos):
         if cargo == "gerente" or cargo == "mecanico":
             # Botões para editar e deletar revisão
             btn_editar_revisao = ttk.Button(self.tab_agenda, text="Editar Revisão", style="Custom.TButton", command=self.editar_revisao)
-            btn_editar_revisao.grid(row=6, column=0, pady=5, sticky="n")
+            btn_editar_revisao.grid(row=posicao, column=coluna, pady=5, sticky="n")
         else:
             pass
 
@@ -87,7 +91,7 @@ class AbaAgenda(estilos):
         else:
             btn_deletar_revisao = ttk.Button(self.tab_agenda, text="Deletar Revisão", style="Custom.TButton", command=self.deletar_revisao)
             btn_deletar_revisao.grid(row=6, column=1, pady=5, sticky="n")  # Ajustando o padding
-
+        
         # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
         btn_sair = ttk.Button(self.tab_agenda, text="Sair", style="Custom.TButton", command=self.sair)
         btn_sair.grid(row=6, column=1, padx=0, pady=0, sticky="e")
@@ -106,20 +110,20 @@ class AbaAgenda(estilos):
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
+        # Verifica chassi valido
         try:
             item = self.vendas_dao.buscar_motoVendida(chassi_moto)
-            if item != None:
-                pass
-            else:
-                raise Exception
+            if item is None:
+                raise Exception("Digite um chassi válido!")
         except Exception as e:
-            messagebox.showerror("Erro", f"Digite um chassi válido")
+            messagebox.showerror("Erro", str(e))
+            return 
 
         try:
             item = self.cliente_dao.buscar_cliente(cpf)
             if item != None:
                 revisao = Revisao(data=data_revisao, custo=250, status_revisao="Aguardando Moto", chassi_moto=chassi_moto, cpf_cliente=cpf)
-                self.agenda_revisao_dao.adicionar_revisao(revisao)
+                self.agenda_dao.adicionar_revisao(revisao)
 
                 messagebox.showinfo("Sucesso", "Revisão agendada com sucesso!")
                 self.entry_chassi_moto_revisao.delete(0, tk.END)
@@ -206,7 +210,7 @@ class AbaAgenda(estilos):
             revisao_atualizada = Revisao(data=revisao_data,custo=novo_custo,status_revisao=novo_status,chassi_moto=revisao_chassi,cpf_cliente=revisao_cpf)
 
             # Chamar o método para atualizar o funcionário no banco de dados
-            self.agenda_revisao_dao.atualizar_revisao(revisao_atualizada)
+            self.agenda_dao.atualizar_revisao(revisao_atualizada)
 
             # Fechar a janela popup
             editar_popup.destroy()
@@ -235,7 +239,7 @@ class AbaAgenda(estilos):
         revisao_id = item['values'][0]
 
         try:
-            self.agenda_revisao_dao.deletar_revisao(revisao_id)
+            self.agenda_dao.deletar_revisao(revisao_id)
             messagebox.showinfo("Sucesso", "Revisão deletada com sucesso!")
             self.listar_revisoes()  # Atualizar a lista
         except Exception as e:
@@ -247,7 +251,7 @@ class AbaAgenda(estilos):
             self.tree_revisao.delete(i)
 
         # Buscar os funcionários no banco de dados
-        revisoes = self.agenda_revisao_dao.listar_revisoes()
+        revisoes = self.agenda_dao.listar_revisoes()
 
         # Verifique se a lista de funcionários não está vazia
         if revisoes:

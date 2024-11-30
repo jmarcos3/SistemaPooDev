@@ -6,7 +6,7 @@ from backend.Routes import Moto,MotoDAO
 
 class AbaMotos(estilos):
     def __init__(self,root,notebook,cargo):
-        super().__init__()
+        super().__init__(root)
 
         self.moto_dao = MotoDAO('db.db')  # Altere o nome do banco conforme necessário
         
@@ -15,7 +15,7 @@ class AbaMotos(estilos):
         else:
             valor = 1
 
-       # Aba de Motos"
+       # Aba de Motos
         self.tab_motos = ttk.Frame(notebook, padding=15)
         notebook.add(self.tab_motos, text="Motos")
 
@@ -30,7 +30,7 @@ class AbaMotos(estilos):
         else:
             # Seção para adicionar moto
             label_adicionar_moto = ttk.Label(self.tab_motos, text="Adicionar Moto", **self.estilo_label)
-            label_adicionar_moto.grid(row=0, column=0, columnspan=2, pady=(5, 15))
+            label_adicionar_moto.grid(row=0, column=0, columnspan=2, pady=5)
 
             label_modelo = ttk.Label(self.tab_motos, text="Modelo:", **self.estilo_label)
             label_modelo.grid(row=1, column=0, padx=5, pady=5, sticky="e")
@@ -65,11 +65,11 @@ class AbaMotos(estilos):
             self.entry_chassi.grid(row=5, column=1, padx=5, pady=5, sticky="w")
 
             btn_adicionar_moto = ttk.Button(self.tab_motos, text="Adicionar moto", style="Custom.TButton", command=self.adicionar_moto)
-            btn_adicionar_moto.grid(row=6, column=1, pady=10, sticky="w")
+            btn_adicionar_moto.grid(row=6, column=1, pady=5, sticky="w")
 
         # Seção para listar 
         label_listar_motos = ttk.Label(self.tab_motos, text="Motos Cadastradas", **self.estilo_label)
-        label_listar_motos.grid(row=valor, column=0, pady=(5), columnspan=2)
+        label_listar_motos.grid(row=valor, column=0, pady=5, columnspan=2)
 
         # Criando o Treeview para listar 
         colunas = ('Chassi', 'Ano', 'Preço', 'Cor','Modelo')
@@ -90,7 +90,7 @@ class AbaMotos(estilos):
         self.tree_moto.column('Modelo', width=100)
 
         # Posicionar o Treeview
-        self.tree_moto.grid(row=(valor+1), column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
+        self.tree_moto.grid(row=(valor+1), column=0, columnspan=2, padx=10, pady=5, sticky='nsew')
         
 
         if cargo != "gerente":
@@ -98,10 +98,10 @@ class AbaMotos(estilos):
         else:
             # Botões para editar e deletar motos
             btn_editar_moto = ttk.Button(self.tab_motos, text="Editar Moto", style="Custom.TButton", command=self.editar_moto)
-            btn_editar_moto.grid(row=11, column=0, pady=10, sticky="n")
+            btn_editar_moto.grid(row=11, column=0, pady=5, sticky="n")
 
             btn_deletar_moto = ttk.Button(self.tab_motos, text="Deletar Moto", style="Custom.TButton", command=self.deletar_moto)
-            btn_deletar_moto.grid(row=11, column=1, pady=10, sticky="n")
+            btn_deletar_moto.grid(row=11, column=1, pady=5, sticky="n")
         
         # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
         btn_sair = ttk.Button(self.tab_motos, text="Sair", style="Custom.TButton", command=self.sair)
@@ -123,13 +123,21 @@ class AbaMotos(estilos):
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
-        preco = float(preco_str)
+        try:
+            preco = float(preco_str)
+        except ValueError:
+            messagebox.showerror("Erro", "O preço deve ser um número válido.")
+            return
 
         if cor == "Selecione a cor":
             messagebox.showerror("Erro", "Por favor, selecione uma cor válida.")
             return
 
-        # Aqui você poderia adicionar uma lógica para mudar o status se for necessário
+            # Verifica se o chassi já existe no banco de dados
+        if self.moto_dao.buscar_moto(chassi):
+            messagebox.showerror("Erro", f"Já existe uma moto com o chassi {chassi}.")
+            return
+            
         moto = Moto(modelo=modelo, ano=ano, preco=preco, cor=cor, chassi=chassi)
         self.moto_dao.adicionar_moto(moto)
 

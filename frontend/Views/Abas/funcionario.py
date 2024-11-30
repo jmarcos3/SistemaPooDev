@@ -6,7 +6,7 @@ from backend.Routes import Funcionario,FuncionarioDAO
 
 class AbaFuncionarios(estilos):
     def __init__(self,root,notebook,cargo):
-        super().__init__()
+        super().__init__(root)
         self.funcionario_dao = FuncionarioDAO('db.db')
 
         # Adicionando a aba de Funcionários
@@ -204,7 +204,6 @@ class AbaFuncionarios(estilos):
 
         item = self.tree.item(selected_item)
         funcionario_id = item['values'][1]
-
         try:
             self.funcionario_dao.deletar_funcionario(funcionario_id)
             messagebox.showinfo("Sucesso", "Funcionário deletado com sucesso!")

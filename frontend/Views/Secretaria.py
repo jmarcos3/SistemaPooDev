@@ -1,10 +1,10 @@
 from tkinter import ttk
-from .estilos2 import estilos2
+from .baseTelas import baseTelas
 from .Abas.moto import AbaMotos
 from .Abas.venda import AbaVendas
 from .Abas.revisao import AbaAgenda
 
-class SecretariaApp(estilos2):
+class SecretariaApp(baseTelas):
     def __init__(self, root):
         super().__init__(root,"secretaria")
     

@@ -3,25 +3,24 @@ from tkinter import messagebox
 from abc import ABC
 import subprocess
 
-
-
 class estilos(ABC):
-    def __init__(self):
+    def __init__(self, root):
 
+        self.root = root
+        
         # Estilos personalizados
         self.estilo_label = {"font": ("Arial", 16, "bold"), "foreground": "#333"}
-        self.estilo_entrada = {"width": 25, "font": ("Arial", 14)}
+        self.estilo_entrada = {"width": 20, "font": ("Arial", 14)}
 
         self.style = ttk.Style()
         self.style.configure("Custom.TButton", font=("Arial", 14))
 
-        # Estilo para o botão de deslogar
+        # Estilo para o botão d e deslogar
         self.style.configure("TButton", font=("Arial", 12), padding=5)
 
         # No construtor da classe AbaMotos, configure o estilo
         self.style.configure("TCombobox", selectbackground="white", selectforeground="black")
 
-        self.style.configure("Custom.TButton", font=("Arial", 12))
 
         self.style.theme_use("default")
 

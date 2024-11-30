@@ -7,7 +7,7 @@ from backend.Routes import Cliente,ClienteDAO
 
 class AbaClientes(estilos):
     def __init__(self,root,notebook,cargo):
-        super().__init__()
+        super().__init__(root)
         
 
         self.cliente_dao = ClienteDAO('db.db')
@@ -95,7 +95,7 @@ class AbaClientes(estilos):
             else:
                 raise Exception
         except Exception as e:
-            messagebox.showerror("Erro", f"Cliente já cadastrado")
+            messagebox.showerror("Erro", f"CPF já cadastrado")
 
 
         self.listar_clientes()

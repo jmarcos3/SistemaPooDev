@@ -7,7 +7,7 @@ import datetime
 
 class AbaVendas(estilos):
     def __init__(self,root,notebook,cargo):
-        super().__init__()
+        super().__init__(root)
 
         self.cliente_dao = ClienteDAO('db.db')
         self.venda_dao = VendaDAO('db.db')
@@ -82,9 +82,6 @@ class AbaVendas(estilos):
             btn_editar_venda = ttk.Button(self.tab_venda, text="Editar Venda", style="Custom.TButton", command=self.editar_venda)
             btn_editar_venda.grid(row=8, column=0, pady=10, sticky="n")    
             
-            btn_deletar_venda = ttk.Button(self.tab_venda, text="Deletar Venda", style="Custom.TButton", command=self.deletar_venda)
-            btn_deletar_venda.grid(row=8, column=1, pady=10, sticky="n")
-
         # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
         btn_sair = ttk.Button(self.tab_venda, text="Sair", style="Custom.TButton", command=self.sair)
         btn_sair.grid(row=14, column=1, padx=0, pady=0, sticky="e")
@@ -254,22 +251,3 @@ class AbaVendas(estilos):
         editar_popup.grab_set()
         self.root.wait_window(editar_popup)
 
-    def deletar_venda(self):
-        # Obter a venda selecionada
-        selected_item = self.tree_venda.selection()
-
-        if not selected_item:
-            messagebox.showerror("Erro", "Selecione uma venda para deletar.")
-            return
-
-        item = self.tree_venda.item(selected_item)
-        venda_id = item['values'][0]
-
-        try:
-            # Remover a venda no banco de dados
-            self.venda_dao.deletar_venda(venda_id)
-            messagebox.showinfo("Sucesso", "Venda deletada com sucesso!")
-            # Atualizar a lista de vendas
-            self.listar_vendas()
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro ao deletar a venda: {e}")
