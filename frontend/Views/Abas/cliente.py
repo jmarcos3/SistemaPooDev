@@ -6,8 +6,9 @@ from backend.Routes import Cliente,ClienteDAO
 
 
 class AbaClientes(estilos):
-    def __init__(self,root,notebook):
-        super().__init__(root)
+    def __init__(self,root,notebook,cargo):
+        super().__init__()
+        
 
         self.cliente_dao = ClienteDAO('db.db')
         # Aba de Clientes

@@ -6,8 +6,8 @@ from backend.Routes import Revisao,AgendaRevisaoDAO,VendaDAO,ClienteDAO
 import datetime
 
 class AbaAgenda(estilos):
-    def __init__(self, root, notebook, cargo):
-        super().__init__(root)
+    def __init__(self, root,notebook, cargo):
+        super().__init__()
 
         self.agenda_revisao_dao = AgendaRevisaoDAO('db.db')
         self.vendas_dao = VendaDAO('db.db')

@@ -6,15 +6,7 @@ import subprocess
 
 
 class estilos(ABC):
-    def __init__(self,root):
-
-        self.root = root
-        self.root.title("Sistema de Controle de Motos")
-        self.root.state('zoomed')
-
-        # Criando o notebook (abas)
-        self.notebook = ttk.Notebook(self.root)
-        self.notebook.pack(fill="none", expand=False)
+    def __init__(self):
 
         # Estilos personalizados
         self.estilo_label = {"font": ("Arial", 16, "bold"), "foreground": "#333"}
@@ -32,6 +24,8 @@ class estilos(ABC):
         self.style.configure("Custom.TButton", font=("Arial", 12))
 
         self.style.theme_use("default")
+
+
 
     def sair(self):
         resposta = messagebox.askyesno("Sair", "Você tem certeza que deseja sair?")

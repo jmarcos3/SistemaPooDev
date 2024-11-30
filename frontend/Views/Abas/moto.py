@@ -6,8 +6,7 @@ from backend.Routes import Moto,MotoDAO
 
 class AbaMotos(estilos):
     def __init__(self,root,notebook,cargo):
-        super().__init__(root)
-
+        super().__init__()
 
         self.moto_dao = MotoDAO('db.db')  # Altere o nome do banco conforme necessário
         

@@ -7,7 +7,7 @@ import datetime
 
 class AbaVendas(estilos):
     def __init__(self,root,notebook,cargo):
-        super().__init__(root)
+        super().__init__()
 
         self.cliente_dao = ClienteDAO('db.db')
         self.venda_dao = VendaDAO('db.db')

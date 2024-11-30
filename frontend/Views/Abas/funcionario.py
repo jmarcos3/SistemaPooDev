@@ -5,8 +5,8 @@ from ..estilos import estilos
 from backend.Routes import Funcionario,FuncionarioDAO
 
 class AbaFuncionarios(estilos):
-    def __init__(self,root,notebook):
-        super().__init__(root)
+    def __init__(self,root,notebook,cargo):
+        super().__init__()
         self.funcionario_dao = FuncionarioDAO('db.db')
 
         # Adicionando a aba de Funcionários
