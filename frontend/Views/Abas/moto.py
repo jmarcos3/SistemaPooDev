@@ -30,33 +30,33 @@ class AbaMotos(estilos):
         else:
             # Seção para adicionar moto
             label_adicionar_moto = ttk.Label(self.tab_motos, text="Adicionar Moto", **self.estilo_label)
-            label_adicionar_moto.grid(row=0, column=0, columnspan=2, pady=5)
+            label_adicionar_moto.grid(row=0, column=0, columnspan=2, pady=(0,5))
 
             label_modelo = ttk.Label(self.tab_motos, text="Modelo:", **self.estilo_label)
-            label_modelo.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+            label_modelo.grid(row=1, column=0, padx=5, pady=3, sticky="e")
             self.entry_modelo = ttk.Entry(self.tab_motos, **self.estilo_entrada)
-            self.entry_modelo.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+            self.entry_modelo.grid(row=1, column=1, padx=5, pady=3, sticky="w")
 
             label_ano = ttk.Label(self.tab_motos, text="Ano:", **self.estilo_label)
-            label_ano.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+            label_ano.grid(row=2, column=0, padx=5, pady=3, sticky="e")
             self.entry_ano = ttk.Entry(self.tab_motos, **self.estilo_entrada)
-            self.entry_ano.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+            self.entry_ano.grid(row=2, column=1, padx=5, pady=3, sticky="w")
 
             label_preco = ttk.Label(self.tab_motos, text="Preço:", **self.estilo_label)
-            label_preco.grid(row=3, column=0, padx=5, pady=5, sticky="e")
+            label_preco.grid(row=3, column=0, padx=5, pady=3, sticky="e")
             self.entry_preco = ttk.Entry(self.tab_motos, **self.estilo_entrada)
-            self.entry_preco.grid(row=3, column=1, padx=5, pady=5, sticky="w")
+            self.entry_preco.grid(row=3, column=1, padx=5, pady=3, sticky="w")
 
             # Substituindo o campo de entrada de cor por um Combobox
             label_cor = ttk.Label(self.tab_motos, text="Cor:", **self.estilo_label)
-            label_cor.grid(row=4, column=0, padx=5, pady=5, sticky="e")
+            label_cor.grid(row=4, column=0, padx=5, pady=3, sticky="e")
 
             # Combobox para seleção de cor
             cores_disponiveis = ["Amarelo", "Azul", "Bege", "Branca", "Cinza", "Dourada", "Grená", 
             "Laranja", "Marrom", "Prata", "Preta", "Rosa", "Roxa", "Verde", "Vermelha", "Fantasia"]
 
             self.combo_cor = ttk.Combobox(self.tab_motos, values=cores_disponiveis, state="readonly", **self.estilo_entrada)
-            self.combo_cor.grid(row=4, column=1, padx=5, pady=5, sticky="w")
+            self.combo_cor.grid(row=4, column=1, padx=5, pady=3, sticky="w")
             self.combo_cor.set("Selecione a cor")  # Placeholder inicial
 
             label_chassi = ttk.Label(self.tab_motos, text="Chassi:", **self.estilo_label)
@@ -69,7 +69,7 @@ class AbaMotos(estilos):
 
         # Seção para listar 
         label_listar_motos = ttk.Label(self.tab_motos, text="Motos Cadastradas", **self.estilo_label)
-        label_listar_motos.grid(row=valor, column=0, pady=5, columnspan=2)
+        label_listar_motos.grid(row=valor, column=0, pady=(15,0), columnspan=2)
 
         # Criando o Treeview para listar 
         colunas = ('Chassi', 'Ano', 'Preço', 'Cor','Modelo')
@@ -153,7 +153,7 @@ class AbaMotos(estilos):
 
 
     def editar_moto(self):
-        # Obter o funcionário selecionado
+        # Obter o moto selecionado
         selected_item = self.tree_moto.selection()
 
         if not selected_item:
@@ -167,11 +167,7 @@ class AbaMotos(estilos):
         moto_cor = item['values'][3]  # cor
         moto_modelo = item['values'][4]  # modelo
 
-        # # Aqui você deve obter os dados de usuario e senha do banco de dados se necessário
-        # usuario_atual = "usuario_exemplo"  # Substitua isso pelo valor correto
-        # senha_atual = "senha_exemplo"      # Substitua isso pelo valor correto
-
-        # Criar uma nova janela para editar o funcionário
+        # Criar uma nova janela para editar o moto
         editar_popup = tk.Toplevel(self.root)
         editar_popup.title("Editar Moto")
 
@@ -218,7 +214,7 @@ class AbaMotos(estilos):
             # Criar um objeto Funcionario com os dados atualizados
             moto_atualizada = Moto(chassi=moto_chassi,ano=novo_ano,preco=novo_preço, cor=nova_cor, modelo=novo_modelo)
 
-            # Chamar o método para atualizar o funcionário no banco de dados
+            # Chamar o método para atualizar o moto no banco de dados
             self.moto_dao.atualizar_moto(moto_atualizada)
 
             # Fechar a janela popup
@@ -226,7 +222,7 @@ class AbaMotos(estilos):
 
             messagebox.showinfo("Sucesso", "Moto atualizada com sucesso!")
             
-            # Atualizar a lista de funcionários no Treeview
+            # Atualizar a lista de motos no Treeview
             self.listar_motos()
 
         btn_salvar = ttk.Button(editar_popup, text="Salvar", style="Custom.TButton", command=salvar_edicao)
@@ -261,14 +257,13 @@ class AbaMotos(estilos):
         for i in self.tree_moto.get_children():
             self.tree_moto.delete(i)
 
-        # Buscar os funcionários no banco de dados
+        # Buscar os motos no banco de dados
         motos = self.moto_dao.listar_motos()
 
-        # Verifique se a lista de funcionários não está vazia
+        # Verifique se a lista de motos não está vazia
         if motos:
-            # Inserir cada funcionário na Treeview
+            # Inserir cada moto na Treeview
             for moto in motos:
-                # Lembrando que funcionario é uma tupla, então acessar por índices
                 chassi = moto[0]  # ID
                 ano = moto[1]  # Ano
                 preco = moto[2]  # Preço

@@ -25,14 +25,14 @@ class AbaVendas(estilos):
         # Configurando pesos das colunas e linhas para centralização
         self.tab_venda.columnconfigure(0, weight=1)  # Coluna da esquerda
         self.tab_venda.columnconfigure(1, weight=1)  # Coluna da direita
-        for row in range(7):  # Para cada linha usada
+        for row in range(7):
             self.tab_venda.rowconfigure(row, weight=1)
         
         
         if cargo == "gerente" or cargo == "vendedor":
             # Seção para gerar venda
             label_gerar_venda = ttk.Label(self.tab_venda, text="Gerar Venda", **self.estilo_label)
-            label_gerar_venda.grid(row=0, column=0, columnspan=2, pady=(0, 15))
+            label_gerar_venda.grid(row=0, column=0, columnspan=2, pady=(0, 5))
 
             label_cpf_cliente = ttk.Label(self.tab_venda, text="CPF Cliente:", **self.estilo_label)
             label_cpf_cliente.grid(row=1, column=0, padx=5, pady=3, sticky="e")
@@ -51,7 +51,7 @@ class AbaVendas(estilos):
 
         # Seção para listar 
         label_listar_vendas = ttk.Label(self.tab_venda, text="Lista de Vendas", **self.estilo_label)
-        label_listar_vendas.grid(row=valor, column=0, pady=(3), columnspan=2)
+        label_listar_vendas.grid(row=valor, column=0, pady=(15, 0), columnspan=2)
 
         # Criando o Treeview para listar 
         colunas = ('ID','Chassi', 'CPF', 'Data', 'Status', 'Preço')
@@ -82,15 +82,13 @@ class AbaVendas(estilos):
             btn_editar_venda = ttk.Button(self.tab_venda, text="Editar Venda", style="Custom.TButton", command=self.editar_venda)
             btn_editar_venda.grid(row=8, column=0, pady=10, sticky="n")    
             
-        # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
         btn_sair = ttk.Button(self.tab_venda, text="Sair", style="Custom.TButton", command=self.sair)
         btn_sair.grid(row=14, column=1, padx=0, pady=0, sticky="e")
 
         self.listar_vendas()
 
-######################################################################################
     def remover_moto_posvenda(self,chassi):
-        self.moto_dao.deletar_moto(chassi)  # Verifique se o método de remoção se chama deletar_moto
+        self.moto_dao.deletar_moto(chassi)
         print("Moto removida com sucesso!")
 
     def adicionar_venda(self):
@@ -114,7 +112,7 @@ class AbaVendas(estilos):
         try:
             item = self.moto_dao.buscar_moto(chassi_moto)
             if item != None: 
-                data_venda = datetime.datetime.now().strftime("%Y-%m-%d")
+                data_venda = datetime.datetime.now().strftime("%d-%m-%Y")
                 status = "Preparando"
                 preco = self.moto_dao.buscar_preco(chassi_moto)
                 self.remover_moto_posvenda(chassi_moto)
@@ -137,29 +135,28 @@ class AbaVendas(estilos):
             messagebox.showerror("Erro", "Todos os campos precisam ser preenchidos")
 
 
-
     def listar_vendas(self):
         # Limpar o Treeview antes de listar os dados
         for i in self.tree_venda.get_children():
             self.tree_venda.delete(i)
 
-        # Buscar os funcionários no banco de dados
+        # Buscar as vendas no banco de dados
         vendas = self.venda_dao.listar_vendas()
 
-        # Verifique se a lista de funcionários não está vazia
+        # Verifique se a lista de vendas não está vazia
         if vendas:
-            # Inserir cada funcionário na Treeview
+            # Inserir cada venda na Treeview
             for venda in vendas:
-                id_venda = venda[0]  # Primeiro campo (ID da venda)
+                id_venda = venda[0]  # ID da venda
                 chassi = venda[3]    # Chassi
                 cpf_cliente = venda[4] # CPF do cliente
                 data = venda[1]      # Data da venda
                 status = venda[2]    # Status da venda
-                preco = venda[5]     # Preço da venda (adicionando o preço)
+                preco = venda[5]     # Preço da venda 
 
                 self.tree_venda.insert('', tk.END, values=(id_venda, chassi, cpf_cliente, data, status, preco))  # Adicionando o preço às inserções
         else:
-            messagebox.showinfo("Informação", "Nenhum funcionário encontrado.") 
+            messagebox.showinfo("Informação", "Nenhuma venda encontrada.") 
 
     def editar_venda(self):
         # Obter a venda selecionada
@@ -229,7 +226,7 @@ class AbaVendas(estilos):
 
             # Criar uma venda com os dados atualizados
             venda_atualizada = Venda(data=venda_data, status=novo_status, chassi_moto=venda_chassi, 
-                                    cpf_cliente=venda_cpf, preco=novo_preco)
+                                     cpf_cliente=venda_cpf, preco=novo_preco)
 
             # Chamar o método para atualizar a venda no banco de dados
             self.venda_dao.atualizar_venda(venda_atualizada,venda_id)

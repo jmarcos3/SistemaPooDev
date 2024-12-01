@@ -7,7 +7,6 @@ class baseTelas(ABC):
         self.root.title("Sistema de Controle de Motos")
         self.root.state('zoomed')
 
-        # Definir título visível na tela
         self.titulo = Label(
             self.root,
             text=f"Sistema de Controle de Motos - Cargo: {cargo.capitalize()}",
@@ -30,7 +29,7 @@ class baseTelas(ABC):
         self.style = ttk.Style()
 
         self.style.configure("TNotebook.Tab",
-            font=("Arial", 500, "bold"),  # Defina o tamanho e estilo da fonte
+            font=("Arial", 500, "bold"),
             width = abas
         )
 

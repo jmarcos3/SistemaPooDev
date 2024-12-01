@@ -11,7 +11,6 @@ class GerenteApp(baseTelas):
     def __init__(self, root):
         super().__init__(root,"gerente")
 
-        # Métodos de manipulação
         self.aba_motos = AbaMotos(root,self.notebook,"gerente")
         self.aba_clientes = AbaClientes(root,self.notebook,"gerente")
         self.aba_vendas = AbaVendas(root,self.notebook,"gerente")

@@ -22,20 +22,20 @@ class AbaAgenda(estilos):
             posicao = 3
             coluna = 1
 
-    # aba de Agenda de Revisões
-        self.tab_agenda = ttk.Frame(notebook, padding=10)  # Reduzindo o padding
+        # aba de Agenda de Revisões
+        self.tab_agenda = ttk.Frame(notebook, padding=10) 
         notebook.add(self.tab_agenda, text="Agenda de Revisões")
 
         # Configurando pesos das colunas e linhas para centralização
         self.tab_agenda.columnconfigure(0, weight=1)  # Coluna da esquerda
         self.tab_agenda.columnconfigure(1, weight=1)  # Coluna da direita
-        for row in range(7):  # Para cada linha usada
+        for row in range(7):  
             self.tab_agenda.rowconfigure(row, weight=1)
 
         if cargo == "gerente" or cargo =="secretaria":
             # Seção para agendar revisão
             label_agendar_revisao = ttk.Label(self.tab_agenda, text="Agendar Revisão", **self.estilo_label)
-            label_agendar_revisao.grid(row=0, column=0, columnspan=2, pady=(5, 10))  # Ajustando o padding
+            label_agendar_revisao.grid(row=0, column=0, columnspan=2, pady=(0, 5))  
 
             label_chassi_moto_revisao = ttk.Label(self.tab_agenda, text="Chassi:", **self.estilo_label)
             label_chassi_moto_revisao.grid(row=1, column=0, padx=5, pady=5, sticky="e")
@@ -43,18 +43,18 @@ class AbaAgenda(estilos):
             self.entry_chassi_moto_revisao.grid(row=1, column=1, padx=5, pady=5, sticky="w")
 
             label_cpf_cliente_revisao = ttk.Label(self.tab_agenda, text="CPF do Cliente:", **self.estilo_label)
-            label_cpf_cliente_revisao.grid(row=2, column=0, padx=5, pady=5, sticky="e")  # Corrigido o row
+            label_cpf_cliente_revisao.grid(row=2, column=0, padx=5, pady=5, sticky="e")  
             self.entry_cpf_cliente_revisao = ttk.Entry(self.tab_agenda, **self.estilo_entrada)
             self.entry_cpf_cliente_revisao.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
             btn_agendar_revisao = ttk.Button(self.tab_agenda, text="Agendar Revisão", style="Custom.TButton", command=self.agendar_revisao)
-            btn_agendar_revisao.grid(row=3, column=1, pady=5, sticky="w")  # Ajustando o padding
+            btn_agendar_revisao.grid(row=3, column=1, pady=5, sticky="w")  
         else:
             pass
 
         # Seção para listar
         label_listar_revisoes = ttk.Label(self.tab_agenda, text="Revisões Agendadas", **self.estilo_label)
-        label_listar_revisoes.grid(row=valor, column=0, pady=(5), columnspan=2)
+        label_listar_revisoes.grid(row=valor, column=0, pady=(15,0 ), columnspan=2)
 
         # Criando o Treeview para listar
         colunas = ('ID', 'Chassi', 'Data', 'CPF', 'Status', 'Custo')
@@ -77,10 +77,9 @@ class AbaAgenda(estilos):
         self.tree_revisao.column('Custo', width=100)
 
         # Posicionar o Treeview
-        self.tree_revisao.grid(row=(valor+1), column=0, columnspan=2, padx=10, pady=5, sticky='nsew')  # Ajustando o padding
+        self.tree_revisao.grid(row=(valor+1), column=0, columnspan=2, padx=10, pady=5, sticky='nsew') 
 
         if cargo == "gerente" or cargo == "mecanico":
-            # Botões para editar e deletar revisão
             btn_editar_revisao = ttk.Button(self.tab_agenda, text="Editar Revisão", style="Custom.TButton", command=self.editar_revisao)
             btn_editar_revisao.grid(row=posicao, column=coluna, pady=5, sticky="n")
         else:
@@ -90,19 +89,17 @@ class AbaAgenda(estilos):
             pass
         else:
             btn_deletar_revisao = ttk.Button(self.tab_agenda, text="Deletar Revisão", style="Custom.TButton", command=self.deletar_revisao)
-            btn_deletar_revisao.grid(row=6, column=1, pady=5, sticky="n")  # Ajustando o padding
+            btn_deletar_revisao.grid(row=6, column=1, pady=5, sticky="n") 
         
-        # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
         btn_sair = ttk.Button(self.tab_agenda, text="Sair", style="Custom.TButton", command=self.sair)
         btn_sair.grid(row=6, column=1, padx=0, pady=0, sticky="e")
 
         self.listar_revisoes()    
 
-##############################################################
     def agendar_revisao(self):
         # Obter dados da entrada
         chassi_moto = self.entry_chassi_moto_revisao.get()
-        data_revisao = datetime.datetime.now().strftime("%Y-%m-%d")
+        data_revisao = datetime.datetime.now().strftime("%d-%m-%Y")
         cpf = self.entry_cpf_cliente_revisao.get()
 
         # Validar entradas
@@ -141,7 +138,7 @@ class AbaAgenda(estilos):
         self.entry_cpf_cliente_revisao.delete(0, tk.END)
 
     def editar_revisao(self):
-        # Obter o funcionário selecionado
+        # Obter a revisao selecionado
         selected_item = self.tree_revisao.selection()
 
         if not selected_item:
@@ -156,15 +153,15 @@ class AbaAgenda(estilos):
         revisao_status = item['values'][4]  # status
         revisao_custo = item['values'][5]  # custo
 
-        # Criar uma nova janela para editar o funcionário
+        # Criar uma nova janela para editar o revisao
         editar_popup = tk.Toplevel(self.root)
-        editar_popup.title("Editar Funcionário")
+        editar_popup.title("Editar Revisão")
 
         # Criar campos de entrada para editar os dados
         label_id = ttk.Label(editar_popup, text="ID:")
         label_id.grid(row=0, column=0, padx=5, pady=5)
         entry_id = ttk.Entry(editar_popup)
-        entry_id.insert(0, revisao_id)  #
+        entry_id.insert(0, revisao_id)  
         entry_id.config(state='readonly')  # Não permitir editar
         entry_id.grid(row=0, column=1, padx=5, pady=5)
 
@@ -206,10 +203,10 @@ class AbaAgenda(estilos):
             novo_status = entry_status.get()
             novo_custo = entry_custo.get()
 
-            # Criar um objeto Funcionario com os dados atualizados
+            # Criar um objeto revisao com os dados atualizados
             revisao_atualizada = Revisao(data=revisao_data,custo=novo_custo,status_revisao=novo_status,chassi_moto=revisao_chassi,cpf_cliente=revisao_cpf)
 
-            # Chamar o método para atualizar o funcionário no banco de dados
+            # Chamar o método para atualizar o revisao no banco de dados
             self.agenda_dao.atualizar_revisao(revisao_atualizada)
 
             # Fechar a janela popup
@@ -217,7 +214,7 @@ class AbaAgenda(estilos):
 
             messagebox.showinfo("Sucesso", "Revisão atualizada com sucesso!")
 
-            # Atualizar a lista de funcionários no Treeview
+            # Atualizar a lista de revisao no Treeview
             self.listar_revisoes()
 
         btn_salvar = ttk.Button(editar_popup, text="Salvar", style="Custom.TButton", command=salvar_edicao)
@@ -250,18 +247,17 @@ class AbaAgenda(estilos):
         for i in self.tree_revisao.get_children():
             self.tree_revisao.delete(i)
 
-        # Buscar os funcionários no banco de dados
+        # Buscar os revisao no banco de dados
         revisoes = self.agenda_dao.listar_revisoes()
 
-        # Verifique se a lista de funcionários não está vazia
+        # Verifica se a lista de revisao não está vazia
         if revisoes:
-            # Inserir cada funcionário na Treeview
+            # Inserir cada revisao na Treeview
             for revisao in revisoes:
-                # Lembrando que funcionario é uma tupla, então acessar por índices
                 id_manutencao = revisao[0]  # ID da manutenção
                 chassi_moto = revisao[4]    # Chassi da moto
                 data = revisao[1]           # Data da revisão
-                cpf = revisao[5]       # Nome do mecânico (ajustar conforme sua lógica)
+                cpf = revisao[5]       # Nome do mecânico
                 custo = revisao[3] # Status da revisão
                 status_revisao = revisao[2] # Status da revisão
 

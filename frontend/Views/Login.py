@@ -7,11 +7,11 @@ class LoginApp:
     def __init__(self, root, open_view_callback):
         self.root = root
         self.root.title("Login da Concessionária de moto")
-        self.center_window()  # Centraliza a janela
+        self.center_window()
         self.root.state('zoomed')
         self.open_view_callback = open_view_callback
         
-        # Inicializando DAOs
+        # Inicializando DAO
         self.funcionario_dao = FuncionarioDAO('db.db')
 
         # Configuração de fontes
@@ -27,28 +27,28 @@ class LoginApp:
         self.root.configure(bg="#f7f7f7")
         
         # Titulo
-        self.title_label = tk.Label(root, text="Concessionária de motos", font=("Arial", 24, "bold"), bg="#4CAF50", fg="white", pady=20)
-        self.title_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="ew")
+        self.title_label = tk.Label(root, text="Concessionária de motos", font=("Arial", 24, "bold"), bg="#4CAF50", fg="white", pady=10)
+        self.title_label.grid(row=0, column=0, columnspan=2, pady=0, sticky="ew")
 
         self.login_label = tk.Label(root, text="Acesso ao sistema", font=font_large, bg="#f7f7f7", fg="#333")
-        self.login_label.grid(row=1, column=0, columnspan=2, pady=10, sticky="ew")
+        self.login_label.grid(row=1, column=0, columnspan=2, pady=20, sticky="ew")
 
         # Espaçamento
         self.top_padding = tk.Label(root, text="", bg="#f7f7f7")
         self.top_padding.grid(row=1, column=0, pady=10)
 
-        # Alinhar os rótulos e campos de entrada
+        # Alinha os rótulos e campos de entrada
         self.username_label = tk.Label(root, text="Usuário:", font=font_large, bg="#f7f7f7", fg="#333")
-        self.username_label.grid(row=2, column=0, padx=20, sticky="e", pady=5)  # Ajustado o espaçamento
+        self.username_label.grid(row=2, column=0, padx=20, sticky="e", pady=5)
 
         self.username_entry = tk.Entry(root, font=font_medium, bd=2, relief="flat", width=30, highlightbackground="#4CAF50", highlightthickness=2)
-        self.username_entry.grid(row=2, column=1, pady=5, padx=10, sticky="w")  # Ajuste com padding para aproximar
+        self.username_entry.grid(row=2, column=1, pady=5, padx=10, sticky="w") 
 
         self.password_label = tk.Label(root, text="Senha:", font=font_large, bg="#f7f7f7", fg="#333")
-        self.password_label.grid(row=3, column=0, padx=20, sticky="e", pady=5)  # Ajustado o espaçamento
+        self.password_label.grid(row=3, column=0, padx=20, sticky="e", pady=5)  
 
         self.password_entry = tk.Entry(root, show="*", font=font_medium, bd=2, relief="flat", width=30, highlightbackground="#4CAF50", highlightthickness=2)
-        self.password_entry.grid(row=3, column=1, pady=5, padx=10, sticky="w")  # Ajuste com padding para aproximar
+        self.password_entry.grid(row=3, column=1, pady=5, padx=10, sticky="w")  
 
         # Estilos
         style = ttk.Style()
@@ -57,8 +57,8 @@ class LoginApp:
                         width=20,
                         padding=12,
                         relief="flat",
-                        background="#4CAF50",  # Cor de fundo
-                        foreground="black")  # Cor do texto
+                        background="#4CAF50",  
+                        foreground="black")
         style.map("Custom.TButton",
                 background=[("active", "#45a049")],  # Cor do fundo ao passar o mouse
                 foreground=[("active", "black")])  # Cor do texto ao passar o mouse
@@ -68,7 +68,6 @@ class LoginApp:
         self.login_button.grid(row=4, column=0, columnspan=2, pady=30)
 
 
-        # Ajustando as colunas para que fiquem centralizadas
         self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_columnconfigure(1, weight=1)
 

@@ -15,10 +15,10 @@ class estilos(ABC):
         self.style = ttk.Style()
         self.style.configure("Custom.TButton", font=("Arial", 14))
 
-        # Estilo para o botão d e deslogar
+        # Estilo para o botão de deslogar
         self.style.configure("TButton", font=("Arial", 12), padding=5)
 
-        # No construtor da classe AbaMotos, configure o estilo
+        # Menu de cores da moto
         self.style.configure("TCombobox", selectbackground="white", selectforeground="black")
 
 
@@ -29,6 +29,6 @@ class estilos(ABC):
     def sair(self):
         resposta = messagebox.askyesno("Sair", "Você tem certeza que deseja sair?")
         if resposta:
-            # Fechar a janela principal ou redirecionar para a tela de login
+            # Redirecionar para a tela de login
             self.root.destroy()
             subprocess.Popen(["python","main.py"])

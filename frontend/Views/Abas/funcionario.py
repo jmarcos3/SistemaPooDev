@@ -21,7 +21,7 @@ class AbaFuncionarios(estilos):
 
         # Seção para adicionar funcionário
         label_add_funcionario = ttk.Label(self.tab_funcionarios, text="Adicionar Funcionário", **self.estilo_label)
-        label_add_funcionario.grid(row=0, column=0, columnspan=2, pady=(5, 10))  # Ajustando o padding
+        label_add_funcionario.grid(row=0, column=0, columnspan=2, pady=(0, 5))  # Ajustando o padding
 
         label_nome_funcionario = ttk.Label(self.tab_funcionarios, text="Nome:", **self.estilo_label)
         label_nome_funcionario.grid(row=1, column=0, padx=5, pady=5, sticky="e")
@@ -44,7 +44,7 @@ class AbaFuncionarios(estilos):
 
         # Seção para listar
         label_listar_funcionarios = ttk.Label(self.tab_funcionarios, text="Funcionários Cadastrados", **self.estilo_label)
-        label_listar_funcionarios.grid(row=5, column=0, pady=(5), columnspan=2)
+        label_listar_funcionarios.grid(row=5, column=0, pady=(15, 0), columnspan=2)
 
         # Criando o Treeview para listar
         colunas = ('Nome', 'CPF', 'Cargo')
@@ -76,7 +76,6 @@ class AbaFuncionarios(estilos):
 
         self.listar_funcionarios()
 
-##########################################################################
     def adicionar_funcionario(self):
         nome = self.entry_nome_funcionario.get()
         cpf = self.entry_cpf_funcionario.get()
@@ -87,7 +86,6 @@ class AbaFuncionarios(estilos):
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
-       
         # Inserir o funcionário no banco de dados
         try:
             funcionario = Funcionario(cpf=cpf,nome=nome,usuario=cpf,senha=cpf,funcao=cargo)
@@ -125,8 +123,6 @@ class AbaFuncionarios(estilos):
         else:
             messagebox.showinfo("Informação", "Nenhum funcionário encontrado.")
 
-
-
     def editar_funcionario(self):
         # Obter o funcionário selecionado
         selected_item = self.tree.selection()
@@ -139,10 +135,6 @@ class AbaFuncionarios(estilos):
         funcionario_nome = item['values'][0]  # Nome
         funcionario_cpf = item['values'][1]    # CPF
         funcionario_cargo = item['values'][2]  # Cargo
-
-        # # Aqui você deve obter os dados de usuario e senha do banco de dados se necessário
-        # usuario_atual = "usuario_exemplo"  # Substitua isso pelo valor correto
-        # senha_atual = "senha_exemplo"      # Substitua isso pelo valor correto
 
         # Criar uma nova janela para editar o funcionário
         editar_popup = tk.Toplevel(self.root)

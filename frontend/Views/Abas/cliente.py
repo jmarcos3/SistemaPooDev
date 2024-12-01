@@ -4,12 +4,10 @@ from tkinter import messagebox
 from ..estilos import estilos
 from backend.Routes import Cliente,ClienteDAO
 
-
 class AbaClientes(estilos):
     def __init__(self,root,notebook,cargo):
         super().__init__(root)
         
-
         self.cliente_dao = ClienteDAO('db.db')
         # Aba de Clientes
         self.tab_cliente = ttk.Frame(notebook, padding=15)
@@ -23,7 +21,7 @@ class AbaClientes(estilos):
 
         # Seção para adicionar cliente
         label_adicionar_cliente = ttk.Label(self.tab_cliente, text="Adicionar Cliente", **self.estilo_label)
-        label_adicionar_cliente.grid(row=0, column=0, columnspan=2, pady=(0, 15))
+        label_adicionar_cliente.grid(row=0, column=0, columnspan=2, pady=(0, 5))
 
         label_nome = ttk.Label(self.tab_cliente, text="Nome:", **self.estilo_label)
         label_nome.grid(row=1, column=0, padx=5, pady=5, sticky="e")
@@ -45,7 +43,7 @@ class AbaClientes(estilos):
 
         # Seção para listar clientes
         label_listar_clientes = ttk.Label(self.tab_cliente, text="Clientes Cadastrados", **self.estilo_label)
-        label_listar_clientes.grid(row=5, column=0, pady=(5), columnspan=2)
+        label_listar_clientes.grid(row=5, column=0, pady=(15, 0), columnspan=2)
 
         # Criando o Treeview para listar 
         colunas = ('CPF', 'Nome', 'Email')
@@ -75,9 +73,7 @@ class AbaClientes(estilos):
         # Listar clientes
         self.listar_clientes()
     
-########################################################
 
-# Métodos CRUD para clientes
     def adicionar_cliente(self):
         nome = self.entry_nome.get()
         cpf = self.entry_cpf.get()
@@ -100,11 +96,6 @@ class AbaClientes(estilos):
 
         self.listar_clientes()
 
-    def remover_cliente(self):
-        cpf = self.entry_remover_cpf.get()
-        self.cliente_dao.remover_cliente(cpf)
-        messagebox.showinfo("Sucesso", "Cliente removido com sucesso!")
-
     def editar_cliente(self):
         # Obter cliente selecionado
         selected_item = self.tree_cliente.selection()
@@ -117,11 +108,6 @@ class AbaClientes(estilos):
         cliente_cpf = item['values'][0]  # cpf
         cliente_nome = item['values'][1]    # nome
         cliente_email = item['values'][2]  # email
-
-
-        # # Aqui você deve obter os dados de usuario e senha do banco de dados se necessário
-        # usuario_atual = "usuario_exemplo"  # Substitua isso pelo valor correto
-        # senha_atual = "senha_exemplo"      # Substitua isso pelo valor correto
 
         # Criar uma nova janela para editar o cliente
         editar_popup = tk.Toplevel(self.root)
@@ -151,7 +137,6 @@ class AbaClientes(estilos):
         def salvar_edicao():
             novo_nome = entry_nome.get()
             novo_email = entry_email.get()
-
 
             # Criar um objeto cliente com os dados atualizados
             cliente_atualizado = Cliente(cpf=cliente_cpf,nome=novo_nome,email=novo_email)

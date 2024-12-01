@@ -3,9 +3,9 @@ from frontend.Views.Gerente import GerenteApp
 from frontend.Views.Vendedor import VendedorApp
 from frontend.Views.Mecanico import MecanicoApp
 from frontend.Views.Secretaria import SecretariaApp
-from frontend.Views.Login import LoginApp  # Importa a tela de login
+from frontend.Views.Login import LoginApp
 
-# Função para abrir a view correta com base na função do usuário
+# Função para abrir a view correta com base no cargo do usuário
 def open_view(root, role):
     if role == "Gerente":
         GerenteApp(root)
