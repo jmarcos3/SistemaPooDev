@@ -108,9 +108,17 @@ class AbaMotos(estilos):
         btn_sair.grid(row=14, column=1, padx=0, pady=0, sticky="e")
 
         self.listar_motos()
-        
-###################################################################################
+        # Vincular o evento de mudança de aba para chamar listar_motos
 
+        def on_tab_changed(event):
+            selected_tab = event.widget.select()  # Obtém o identificador da aba selecionada
+            if event.widget.tab(selected_tab, "text") == "Motos":  # Verifica se é a aba de Motos
+                self.listar_motos()
+
+        notebook.bind("<<NotebookTabChanged>>", on_tab_changed)
+
+###################################################################################
+    
     # Métodos CRUD para motos
     def adicionar_moto(self):
         modelo = self.entry_modelo.get()
@@ -153,7 +161,7 @@ class AbaMotos(estilos):
 
 
     def editar_moto(self):
-        # Obter o moto selecionado
+        # Obter o moto selecionada
         selected_item = self.tree_moto.selection()
 
         if not selected_item:
@@ -182,25 +190,25 @@ class AbaMotos(estilos):
         label_ano = ttk.Label(editar_popup, text="Ano:")
         label_ano.grid(row=1, column=0, padx=5, pady=5)
         entry_ano = ttk.Entry(editar_popup)
-        entry_ano.insert(0, moto_ano)  # Preencher o nome atual
+        entry_ano.insert(0, moto_ano)  
         entry_ano.grid(row=1, column=1, padx=5, pady=5)
 
         label_preço = ttk.Label(editar_popup, text="Preço:")
         label_preço.grid(row=2, column=0, padx=5, pady=5)
         entry_preço = ttk.Entry(editar_popup)
-        entry_preço.insert(0, moto_preço)  # Preencher o nome atual
+        entry_preço.insert(0, moto_preço)  
         entry_preço.grid(row=2, column=1, padx=5, pady=5)
 
         label_cor = ttk.Label(editar_popup, text="Cor:")
         label_cor.grid(row=3, column=0, padx=5, pady=5)
         entry_cor = ttk.Entry(editar_popup)
-        entry_cor.insert(0, moto_cor)  # Preencher o cargo atual
+        entry_cor.insert(0, moto_cor)  
         entry_cor.grid(row=3, column=1, padx=5, pady=5)
 
         label_modelo = ttk.Label(editar_popup, text="Modelo:")
         label_modelo.grid(row=4, column=0, padx=5, pady=5)
         entry_modelo = ttk.Entry(editar_popup)
-        entry_modelo.insert(0, moto_modelo)  # Preencher o cargo atual
+        entry_modelo.insert(0, moto_modelo)  
         entry_modelo.grid(row=4, column=1, padx=5, pady=5)
 
         
@@ -211,7 +219,6 @@ class AbaMotos(estilos):
             nova_cor= entry_cor.get()
             novo_modelo= entry_modelo.get()
 
-            # Criar um objeto Funcionario com os dados atualizados
             moto_atualizada = Moto(chassi=moto_chassi,ano=novo_ano,preco=novo_preço, cor=nova_cor, modelo=novo_modelo)
 
             # Chamar o método para atualizar o moto no banco de dados
@@ -264,12 +271,12 @@ class AbaMotos(estilos):
         if motos:
             # Inserir cada moto na Treeview
             for moto in motos:
-                chassi = moto[0]  # ID
+                chassi = moto[0] 
                 ano = moto[1]  # Ano
                 preco = moto[2]  # Preço
                 cor = moto[3]  # Cor
                 modelo = moto[4]  # Modelo
                 self.tree_moto.insert('', tk.END, values=(chassi, ano, preco, cor, modelo))
         else:
-            messagebox.showinfo("Informação", "Nenhum  encontrado.")
+            pass
 

@@ -18,16 +18,11 @@ def open_view(root, role):
 
 def main():
     root = tk.Tk()
-    app = LoginApp(root, open_view)
+    LoginApp(root, open_view)
     root.mainloop()
 
 
 if __name__ == "__main__":
     main()
-
-
-# revisar comentarios
-# Placa das motos
-# moto nova e usada
 
 

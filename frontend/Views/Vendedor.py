@@ -1,4 +1,3 @@
-from tkinter import ttk
 from .baseTelas import baseTelas
 from .Abas.venda import AbaVendas
 from .Abas.cliente import AbaClientes

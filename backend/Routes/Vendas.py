@@ -48,10 +48,10 @@ class VendaDAO:
         conn.close()
         return venda
     
-    def buscar_motoVendida(self, chassi):
+    def buscar_motoVendida(self, chassi,cpf):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM Vendas WHERE chassi_moto = ?', (chassi,))
+        cursor.execute('SELECT * FROM Vendas WHERE chassi_moto = ? and cpf_cliente = ?', (chassi,cpf))
         moto = cursor.fetchone()
         conn.close()
         return moto
@@ -85,42 +85,3 @@ class VendaDAO:
         conn.commit()
         conn.close()
         print("Venda deletada com sucesso!")
-
-# Testando o CRUD para vendas
-if __name__ == "__main__":
-    venda_dao = VendaDAO('db.db')
-
-    # Criar algumas vendas
-    venda1 = Venda("2023-10-15", "Preparando", "ABC123456789", "12345678900", 21000.0)
-    venda2 = Venda("2023-10-16", "A caminho", "DEF987654321", "98765432100", 15000.0)
-    
-    # Adicionar vendas ao banco de dados
-    venda_dao.adicionar_venda(venda1)
-    venda_dao.adicionar_venda(venda2)
-
-    # Listar todas as vendas
-    print("Lista de Vendas:")
-    for venda in venda_dao.listar_vendas():
-        print(venda)
-
-    # Buscar uma venda específica
-    print("\nBuscando Venda com ID 1:")
-    print(venda_dao.buscar_venda(1))
-
-    # Atualizar uma venda
-    print("\nAtualizando o status da venda com ID 1...")
-    venda_dao.atualizar_venda(1, status="Pronto", preco=22000.0)  # Atualizando o preço também
-
-    # Listar todas as vendas após atualização
-    print("\nLista de Vendas após atualização:")
-    for venda in venda_dao.listar_vendas():
-        print(venda)
-
-    # Deletar uma venda
-    print("\nDeletando a venda com ID 2...")
-    venda_dao.deletar_venda(2)
-
-    # Listar todas as vendas após exclusão
-    print("\nLista de Vendas após exclusão:")
-    for venda in venda_dao.listar_vendas():
-        print(venda)

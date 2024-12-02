@@ -109,16 +109,10 @@ class AbaAgenda(estilos):
 
         # Verifica chassi valido
         try:
-            item = self.vendas_dao.buscar_motoVendida(chassi_moto)
+            item = self.vendas_dao.buscar_motoVendida(chassi_moto,cpf)
             if item is None:
-                raise Exception("Digite um chassi válido!")
-        except Exception as e:
-            messagebox.showerror("Erro", str(e))
-            return 
-
-        try:
-            item = self.cliente_dao.buscar_cliente(cpf)
-            if item != None:
+                raise Exception("Digite valores válidos para o agendamento!")
+            else: 
                 revisao = Revisao(data=data_revisao, custo=250, status_revisao="Aguardando Moto", chassi_moto=chassi_moto, cpf_cliente=cpf)
                 self.agenda_dao.adicionar_revisao(revisao)
 
@@ -126,12 +120,11 @@ class AbaAgenda(estilos):
                 self.entry_chassi_moto_revisao.delete(0, tk.END)
                 self.entry_cpf_cliente_revisao.delete(0, tk.END)
 
-                self.listar_revisoes()
-                
-            else: 
-                raise Exception      
+                self.listar_revisoes()      
         except Exception as e:
-            messagebox.showerror("Erro", f"Digite um cpf válido")
+            messagebox.showerror("Erro", str(e))
+            return 
+
         
         # Limpar campos após agendar
         self.entry_chassi_moto_revisao.delete(0, tk.END)
@@ -264,5 +257,5 @@ class AbaAgenda(estilos):
                 self.tree_revisao.insert('', tk.END, values=(id_manutencao, chassi_moto, data, cpf, custo,status_revisao))
 
         else:
-            messagebox.showinfo("Informação", "Nenhuma revisão encontrada.")
+            pass
 

@@ -98,7 +98,30 @@ class AbaVendas(estilos):
         try:
             item = self.cliente_dao.buscar_cliente(cpf_cliente)
             if item != None: 
-                print('pass')
+                try:
+                    item = self.moto_dao.buscar_moto(chassi_moto)
+                    if item != None: 
+                        data_venda = datetime.datetime.now().strftime("%d-%m-%Y")
+                        status = "Preparando"
+                        preco = self.moto_dao.buscar_preco(chassi_moto)
+                        self.remover_moto_posvenda(chassi_moto)
+                        venda = Venda(data=data_venda, status=status, chassi_moto=chassi_moto, cpf_cliente=cpf_cliente, preco=preco[0])
+                        self.venda_dao.adicionar_venda(venda)
+
+                        messagebox.showinfo("Sucesso", "Venda adicionada com sucesso!")
+                        self.entry_cpf_cliente.delete(0, tk.END)
+                        self.entry_chassi_moto.delete(0, tk.END)
+
+                        self.listar_vendas()
+                    else:
+                        if chassi_moto == "":
+                            raise ValueError
+                        else:
+                            raise TypeError
+                except TypeError:
+                    messagebox.showerror("Erro", "Digite uma moto cadastrada")  
+                except ValueError:
+                    messagebox.showerror("Erro", "Todos os campos precisam ser preenchidos")
             else:
                 if cpf_cliente == "":
                     raise ValueError
@@ -109,30 +132,7 @@ class AbaVendas(estilos):
         except ValueError:
             messagebox.showerror("Erro", "Todos os campos precisam ser preenchidos")
 
-        try:
-            item = self.moto_dao.buscar_moto(chassi_moto)
-            if item != None: 
-                data_venda = datetime.datetime.now().strftime("%d-%m-%Y")
-                status = "Preparando"
-                preco = self.moto_dao.buscar_preco(chassi_moto)
-                self.remover_moto_posvenda(chassi_moto)
-                venda = Venda(data=data_venda, status=status, chassi_moto=chassi_moto, cpf_cliente=cpf_cliente, preco=preco[0])
-                self.venda_dao.adicionar_venda(venda)
 
-                messagebox.showinfo("Sucesso", "Venda adicionada com sucesso!")
-                self.entry_cpf_cliente.delete(0, tk.END)
-                self.entry_chassi_moto.delete(0, tk.END)
-
-                self.listar_vendas()
-            else:
-                if chassi_moto == "":
-                    raise ValueError
-                else:
-                    raise TypeError
-        except TypeError:
-            messagebox.showerror("Erro", "Digite uma moto cadastrada")  
-        except ValueError:
-            messagebox.showerror("Erro", "Todos os campos precisam ser preenchidos")
 
 
     def listar_vendas(self):
@@ -156,7 +156,7 @@ class AbaVendas(estilos):
 
                 self.tree_venda.insert('', tk.END, values=(id_venda, chassi, cpf_cliente, data, status, preco))  # Adicionando o preço às inserções
         else:
-            messagebox.showinfo("Informação", "Nenhuma venda encontrada.") 
+            pass
 
     def editar_venda(self):
         # Obter a venda selecionada

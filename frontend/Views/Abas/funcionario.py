@@ -70,12 +70,13 @@ class AbaFuncionarios(estilos):
         btn_deletar_funcionario = ttk.Button(self.tab_funcionarios, text="Deletar Funcionário", style="Custom.TButton", command=self.deletar_funcionario)
         btn_deletar_funcionario.grid(row=7, column=1, pady=5, sticky="n")  # Ajustando o padding
 
-        # Botão de deslogar na parte superior direita, ao lado de "Adicionar Moto"
+        # Botão de deslogar na parte inferior direita
         btn_sair = ttk.Button(self.tab_funcionarios, text="Sair", style="Custom.TButton", command=self.sair)
         btn_sair.grid(row=14, column=1, padx=0, pady=0, sticky="e")
 
         self.listar_funcionarios()
 
+    # Métodos #
     def adicionar_funcionario(self):
         nome = self.entry_nome_funcionario.get()
         cpf = self.entry_cpf_funcionario.get()
@@ -113,15 +114,14 @@ class AbaFuncionarios(estilos):
         if funcionarios:
             # Inserir cada funcionário na Treeview
             for funcionario in funcionarios:
-                # Lembrando que funcionario é uma tupla, então acessar por índices
-                
+                # Lembrando que funcionario é uma tupla, então acessar por índices   
                 nome_funcionario = funcionario[1]
                 cpf_funcionario = funcionario[0]
                 cargo_funcionario = funcionario[4]
 
                 self.tree.insert('', 'end', values=(nome_funcionario, cpf_funcionario, cargo_funcionario))
         else:
-            messagebox.showinfo("Informação", "Nenhum funcionário encontrado.")
+            pass
 
     def editar_funcionario(self):
         # Obter o funcionário selecionado

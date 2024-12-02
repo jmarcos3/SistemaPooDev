@@ -60,45 +60,17 @@ class FuncionarioDAO:
     def fechar_conexao(self):
         self.conn.close()
 
-# Testando o CRUD orientado a objetos
+# Adicionando Funcionarios para conseguir passar da tela de login
 if __name__ == "__main__":
     funcionaro_dao = FuncionarioDAO('db.db')
 
     # Criando objetos de funcionários
-    funcionario1 = Funcionario("12345678900", "João Silva", "joao123", "senha123", "vendedor")
-    funcionario2 = Funcionario("98765432100", "Maria Oliveira", "maria456", "senha456", "gerente")
+    funcionario1 = Funcionario("12345678900", "João Silva", "1", "1", "Gerente")
+    funcionario2 = Funcionario("98765432100", "Maria Oliveira", "2", "2", "Gerente")
 
     # Adicionar funcionários ao banco de dados
     funcionaro_dao.adicionar_funcionario(funcionario1)
     funcionaro_dao.adicionar_funcionario(funcionario2)
-
-    # Listar todos os funcionários
-    print("Lista de Funcionários:")
-    for funcionario in funcionaro_dao.listar_funcionarios():
-        print(funcionario)
-
-    # Buscar um funcionário pelo CPF
-    print("\nBuscar Funcionário com CPF 12345678900:")
-    print(funcionaro_dao.buscar_funcionario("12345678900"))
-
-    # Atualizar o nome do funcionário
-    print("\nAtualizando o nome do funcionário com CPF 12345678900 para 'João Pedro'...")
-    funcionario1.nome = "João Pedro"
-    funcionaro_dao.atualizar_funcionario(funcionario1)
-
-    # Listar todos os funcionários após atualização
-    print("\nLista de Funcionários após atualização:")
-    for funcionario in funcionaro_dao.listar_funcionarios():
-        print(funcionario)
-
-    # Deletar um funcionário
-    print("\nDeletando o funcionário com CPF 98765432100...")
-    funcionaro_dao.deletar_funcionario("98765432100")
-
-    # Listar todos os funcionários após exclusão
-    print("\nLista de Funcionários após exclusão:")
-    for funcionario in funcionaro_dao.listar_funcionarios():
-        print(funcionario)
 
     # Fechar a conexão com o banco de dados
     funcionaro_dao.fechar_conexao()

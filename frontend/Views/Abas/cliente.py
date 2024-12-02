@@ -73,7 +73,7 @@ class AbaClientes(estilos):
         # Listar clientes
         self.listar_clientes()
     
-
+    # Métodos #
     def adicionar_cliente(self):
         nome = self.entry_nome.get()
         cpf = self.entry_cpf.get()
@@ -118,19 +118,19 @@ class AbaClientes(estilos):
         label_chassi.grid(row=0, column=0, padx=5, pady=5)
         entry_chassi = ttk.Entry(editar_popup)
         entry_chassi.insert(0, cliente_cpf)  
-        entry_chassi.config(state='readonly')  # Não permitir editar o Chassi
+        entry_chassi.config(state='readonly')  # Não permitir editar
         entry_chassi.grid(row=0, column=1, padx=5, pady=5)
 
         label_nome = ttk.Label(editar_popup, text="Nome:")
         label_nome.grid(row=1, column=0, padx=5, pady=5)
         entry_nome = ttk.Entry(editar_popup)
-        entry_nome.insert(0, cliente_nome)  # Preencher o nome atual
+        entry_nome.insert(0, cliente_nome)  
         entry_nome.grid(row=1, column=1, padx=5, pady=5)
 
         label_email = ttk.Label(editar_popup, text="email:")
         label_email.grid(row=2, column=0, padx=5, pady=5)
         entry_email = ttk.Entry(editar_popup)
-        entry_email.insert(0, cliente_email)  # Preencher o nome atual
+        entry_email.insert(0, cliente_email) 
         entry_email.grid(row=2, column=1, padx=5, pady=5)
 
         # Botão para salvar as alterações
@@ -175,4 +175,4 @@ class AbaClientes(estilos):
                 email = cliente[2]  # Terceiro campo (Email)
                 self.tree_cliente.insert('', tk.END, values=(cpf, nome, email))  # Inserir na tabela
         else:
-            messagebox.showinfo("Informação", "Nenhum item encontrado.")
+            pass

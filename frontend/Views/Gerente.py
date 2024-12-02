@@ -1,5 +1,3 @@
-from tkinter import ttk
-import tkinter as tk
 from .baseTelas import baseTelas
 from .Abas.moto import AbaMotos
 from .Abas.cliente import AbaClientes
