@@ -1,64 +1,81 @@
-# Sistema de Gerenciamento de Concessionária de Motos
+# 🏍️ Motorcycle Dealership Management System
 
-## 📋 Descrição
+## 📋 Overview
 
-Este sistema de gerenciamento foi desenvolvido como parte da disciplina **Paradigmas Orientados a Objetos para Desenvolvimento de Software**, no curso de **Ciência da Computação** da **Universidade Estadual do Norte Fluminense (UENF)**. 
+This management system was developed as part of the **Object-Oriented Programming Paradigms for Software Development** course in the **Computer Science** program at the **Universidade Estadual do Norte Fluminense (UENF)**.
 
-O projeto tem como objetivo atender às necessidades de uma concessionária de motos, aplicando conceitos de programação orientada a objetos (POO). Construído em Python, o sistema utiliza a biblioteca Tkinter para criar a interface gráfica e SQLite para gerenciar o banco de dados, oferecendo funcionalidades como administração de clientes, vendas, motos e agendamentos de revisões.
+Built in **Python** with a **Tkinter** GUI and **SQLite** for persistence, the application models the key operations of a motorcycle dealership. It applies core OOP principles—encapsulation, inheritance and responsibility segregation—by defining distinct user roles (Manager, Salesperson, Mechanic, Secretary), each with tailored permissions.
 
-O sistema é estruturado para diferentes papéis dentro da concessionária: gerentes, vendedores, mecânicos e secretárias, cada um com permissões específicas para realizar suas funções, refletindo a separação de responsabilidades e o encapsulamento, fundamentos da POO.
+---
 
+## 🎯 Role-Based Features
 
-## 🎯 Funcionalidades por Papel
+### Manager
+- Full system access
+- Create, read, update, delete (CRUD) for:
+  - Motorcycles
+  - Customers
+  - Sales
+  - Service appointments
+  - Employees
 
-### Gerente
-- Acesso completo ao sistema.
-- Visualizar, Adicionar, editar e remover:
-  - **Motos**
-  - **Clientes**
-  - **Vendas**
-  - **Revisões**
-  - **Funcionários**
-    
-### Vendedor
-- Visualizar motos cadastradas.
-- Adicionar e editar clientes.
-- Cadastrar e visualizar vendas.
+### Salesperson
+- Browse available motorcycles
+- Add & edit customer records
+- Register and view sales
 
-### Mecânico
-- Visualizar agendamentos de revisão.
-- Atualizar o status das revisões.
+### Mechanic
+- View scheduled service appointments
+- Update service status
 
-### Secretária
-- Visualizar motos e vendas.
-- Criar e visualizar agendamentos de revisão.
+### Secretary
+- View motorcycles and sales
+- Schedule and view service appointments
 
-## 📦 Funcionalidades Gerais
+---
 
-- **Cadastro de Clientes**: 
-  - Adicionar, atualizar, listar e remover clientes no sistema, com registro de **nome**, **CPF** e **e-mail**.
+## 📦 Core Functionality
 
-- **Gerenciamento de Vendas**: 
-  - Registro de vendas utilizando o **CPF do cliente** e o **chassi da moto** para associar a transação.
-  - Visualização e edição de vendas realizadas.
+1. **Customer Management**  
+   - Add, update, list and remove customers  
+   - Captures: name, CPF, email
 
-- **Cadastro de Motos**: 
-  - Adicionar novas motos ao sistema com os seguintes dados: **modelo**, **ano**, **preço**, **cor** e **chassi**.
-  - Atualizar informações ou remover motos do estoque.
+2. **Motorcycle Inventory**  
+   - Add new bikes with model, year, color, price and chassis  
+   - Update details or remove stock
 
-- **Agendamento de Revisões**: 
-  - Criar agendamentos de revisões, vinculando a revisão ao **chassi da moto** e ao **CPF do cliente**.
-  - Registrar o mecânico responsável e a data programada.
+3. **Sales Processing**  
+   - Record sales by linking customer CPF to motorcycle chassis  
+   - View and edit completed transactions
 
-- **Cadastro de Funcionários**:
-  - Gerenciar funcionários, registrando **nome**, **CPF** e **cargo**.
+4. **Service Scheduling**  
+   - Create appointments tied to a customer (CPF) and motorcycle (chassis)  
+   - Assign a mechanic and set the service date  
+   - Track service status
 
-## 🛠️ Tecnologias Utilizadas
+5. **Employee Directory**  
+   - Manage staff records (name, CPF, role)  
 
-- **Python**: 
-  - Linguagem principal para desenvolvimento.
-- **Tkinter**: 
-  - Biblioteca nativa do Python para interfaces gráficas.
-- **SQLite**: 
-  - Sistema de banco de dados leve e eficiente integrado ao Python.
+---
 
+## 🛠️ Technologies
+
+- **Python** — Core application logic  
+- **Tkinter** — Native GUI toolkit  
+- **SQLite** — Lightweight embedded database  
+
+---
+
+## 🔍 Key Learnings
+
+- Designing modular, role-based systems with clear separation of concerns  
+- Applying OOP principles (encapsulation, inheritance, polymorphism) in Python  
+- Building desktop GUIs with Tkinter  
+- Persisting data in an embedded database with SQLite  
+- Structuring code for maintainability and scalability  
+
+---
+
+## 🤝 Contact
+
+Developed by **[Your Name]** as part of UENF’s Computer Science curriculum.  
