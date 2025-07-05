@@ -76,6 +76,3 @@ Built in **Python** with a **Tkinter** GUI and **SQLite** for persistence, the a
 
 ---
 
-## 🤝 Contact
-
-Developed by **[Your Name]** as part of UENF’s Computer Science curriculum.  
